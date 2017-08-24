@@ -1363,11 +1363,11 @@ public class ChannelBillController implements Serializable {
             UtilityController.addErrorMessage("Please Select Specility and Doctor.");
             return true;
         }
-        if (getArea() == null) {
-            errorText = "Please Select Area.";
-            UtilityController.addErrorMessage("Please Select Area.");
-            return true;
-        }
+//        if (getArea() == null) {
+//            errorText = "Please Select Area.";
+//            UtilityController.addErrorMessage("Please Select Area.");
+//            return true;
+//        }
 
         removeAgencyNullBill(getbookingController().getSelectedServiceSession());
 
@@ -1900,7 +1900,8 @@ public class ChannelBillController implements Serializable {
                 //or arogya add vat for full bill,is not forign,and vatable marked
                 if (getSessionController().getInstitutionPreference().getApplicationInstitution() == ApplicationInstitution.Arogya) {
                     if (getbookingController().getSelectedServiceSession().getOriginatingSession().isVatable()
-                            && !isForiegn()) {
+                            && !isForiegn()
+                            && f.getFeeType() == FeeType.Staff) {
                         bf.setFeeGrossValue(bf.getFeeValue());
                         bf.setFeeVat(bf.getFeeValue() * finalVariables.getVATPercentage());
                         bf.setFeeVatPlusValue(bf.getFeeValue() * finalVariables.getVATPercentageWithAmount());

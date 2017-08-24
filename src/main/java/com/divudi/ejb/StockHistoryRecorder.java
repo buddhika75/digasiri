@@ -9,6 +9,7 @@ import com.divudi.data.FeeType;
 import com.divudi.data.HistoryType;
 import com.divudi.data.PersonInstitutionType;
 import com.divudi.entity.Department;
+import com.divudi.entity.Doctor;
 import com.divudi.entity.FeeChange;
 import com.divudi.entity.Item;
 import com.divudi.entity.ItemFee;
@@ -146,21 +147,21 @@ public class StockHistoryRecorder {
 //        //System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
     }
 
-//    @SuppressWarnings("unused")
-//    @Schedule(hour = "01", minute = "15", second = "00", dayOfMonth = "*", info = "Daily Mornining", persistent = false)
-//    public void myTimerDailyChannelShedule() {
-//        Date startTime = new Date();
-//        System.out.println("Start Create Shedule " + startTime);
-//
-//        for (Staff s : staffs()) {
-//            generateSessions(s);
-//        }
-//
-//        System.out.println("Start and End Create Shedule " + startTime + " - " + new Date());
-//
-//        //System.out.println("End writing stock history: " + new Date());
-////        //System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
-//    }
+    @SuppressWarnings("unused")
+    @Schedule(hour = "01", minute = "15", second = "00", dayOfMonth = "*", info = "Daily Mornining", persistent = false)
+    public void myTimerDailyChannelShedule() {
+        Date startTime = new Date();
+        System.out.println("Start Create Shedule " + startTime);
+
+        for (Staff s : staffs()) {
+            generateSessions(s);
+        }
+
+        System.out.println("Start and End Create Shedule " + startTime + " - " + new Date());
+
+        //System.out.println("End writing stock history: " + new Date());
+//        //System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
+    }
 
     public void generateSessions(Staff staff) {
         String sql;
@@ -201,21 +202,24 @@ public class StockHistoryRecorder {
     }
 
     public List<Staff> staffs() {
-        String sql;
+         String sql;
         Map m = new HashMap();
-        List<Staff> consultants = new ArrayList<>();
-        sql = " select pi.staff from PersonInstitution pi where pi.retired=false "
-                + " and pi.type=:typ "
-                + " order by pi.staff.person.name ";
+        List<Staff> docters=new ArrayList<>();
+//        List<Staff> consultants = new ArrayList<>();
+//        sql = " select pi.staff from PersonInstitution pi where pi.retired=false "
+//                + " and pi.type=:typ "
+//                + " order by pi.staff.person.name ";
 
-        m.put("typ", PersonInstitutionType.Channelling);
-
+//        m.put("typ", PersonInstitutionType.Channelling);
+//        m.put(m, Staff.)
+           sql="select s from Staff s where s.retired=false and type(s) =:class";
+           m.put("class",Doctor.class );
         System.out.println("m = " + m);
         System.out.println("sql = " + sql);
-        consultants = staffFacade.findBySQL(sql, m);
-        System.out.println("consultants.size() = " + consultants.size());
+        docters = staffFacade.findBySQL(sql, m);
+        System.out.println("docters.size() = " + docters.size());
 
-        return consultants;
+        return docters;
     }
 
     public void generateDailyServiceSessionsFromWeekdaySessionsNewByServiceSessionId(List<Long> inputSessions, Date d) {

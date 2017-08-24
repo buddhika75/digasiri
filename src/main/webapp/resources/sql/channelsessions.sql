@@ -1,0 +1,1 @@
+select `PERSON_ID`, `DTYPE`, id,`RETIRED`,`RETIREDAT` from staff  order by `RETIREDAT` desc limit 30;

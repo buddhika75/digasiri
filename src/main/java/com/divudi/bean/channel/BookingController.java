@@ -1005,9 +1005,11 @@ public class BookingController implements Serializable {
                 ss.getOriginatingSession().setTotalFfee(fetchForiegnFee(ss.getOriginatingSession(), paymentMethod));
 
                 if (ss.getOriginatingSession().isVatable()) {
-                    ss.setTotalFee(ss.getTotalFee() * finalVariables.getVATPercentageWithAmount());
-                    ss.getOriginatingSession().setTotalFee(ss.getOriginatingSession().getTotalFfee() * finalVariables.getVATPercentageWithAmount());
-
+                    //all bill vat
+//                    ss.setTotalFee(ss.getTotalFee() * finalVariables.getVATPercentageWithAmount());
+//                    ss.getOriginatingSession().setTotalFee(ss.getOriginatingSession().getTotalFee() * finalVariables.getVATPercentageWithAmount());
+                    ss.setTotalFee(fetchLocalFeeOnlyStaffVat(ss.getOriginatingSession(), paymentMethod));
+                    ss.getOriginatingSession().setTotalFee(fetchLocalFeeOnlyStaffVat(ss.getOriginatingSession(), paymentMethod));
                 }
             } else {
                 ss.setTotalFee(fetchLocalFeeOnlyStaffVat(ss.getOriginatingSession(), paymentMethod));

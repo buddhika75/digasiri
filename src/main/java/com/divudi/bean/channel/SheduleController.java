@@ -13,6 +13,7 @@ import com.divudi.ejb.CommonFunctions;
 import com.divudi.ejb.StockHistoryRecorder;
 import com.divudi.entity.BillSession;
 import com.divudi.entity.Department;
+import com.divudi.entity.Doctor;
 import com.divudi.entity.FeeChange;
 import com.divudi.entity.ItemFee;
 import com.divudi.entity.ServiceSession;
@@ -498,6 +499,13 @@ public class SheduleController implements Serializable {
             i.setServiceSession(serviceSession);
             i.setItem(serviceSession);
             i.setInstitution(serviceSession.getInstitution());
+            if (i.getFeeType()== FeeType.Staff) {
+                i.setStaff(serviceSession.getStaff());
+                System.out.println("serviceSession.getStaff() = " + serviceSession.getStaff());
+                i.setSpeciality(serviceSession.getStaff().getSpeciality());
+                System.out.println("serviceSession.getSpeciality() = " + serviceSession.getSpeciality());
+            }
+            
             if (i.getId() == null) {
                 i.setCreatedAt(new Date());
                 i.setCreater(sessionController.getLoggedUser());
@@ -548,6 +556,33 @@ public class SheduleController implements Serializable {
         prepareAdd();
         getItems();
     }
+    //create for session crete by aruna
+    public void createSessionManually(){
+    for (Staff s : staffs()) {
+             stockHistoryRecorder.generateSessions(s);
+        }
+    }
+    public List<Staff> staffs() {
+        String sql;
+        Map m = new HashMap();
+        List<Staff> docters=new ArrayList<>();
+//        List<Staff> consultants = new ArrayList<>();
+//        sql = " select pi.staff from PersonInstitution pi where pi.retired=false "
+//                + " and pi.type=:typ "
+//                + " order by pi.staff.person.name ";
+
+//        m.put("typ", PersonInstitutionType.Channelling);
+//        m.put(m, Staff.)
+           sql="select s from Staff s where s.retired=false and type(s) =:class";
+           m.put("class",Doctor.class );
+        System.out.println("m = " + m);
+        System.out.println("sql = " + sql);
+        docters = staffFacade.findBySQL(sql, m);
+        System.out.println("docters.size() = " + docters.size());
+
+        return docters;
+    }
+
     
     public void createFutureSessionsManually(){
         if (currentStaff==null) {
