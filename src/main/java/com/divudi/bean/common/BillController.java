@@ -225,6 +225,25 @@ public class BillController implements Serializable {
     public List<Bill> getSelectedBills() {
         return selectedBills;
     }
+    
+    
+    
+    
+    
+    public void deleteChannellingBills(){
+        if(toDate==null){
+            JsfUtil.addErrorMessage("Date?");
+            return;
+        }
+        String j;
+        j="select b from Bill b where b.billDate > :bd and (b.biillType=:bt1 or b.biillType=:bt2 or b.biillType=:bt3 or b.biillType=:bt4) ";
+        Map m = new HashMap();
+        m.put("bd", toDate);
+        Bill b = new Bill();
+        b.getBillDate();
+        b.getBillType();
+        
+    }
 
     public void setSelectedBills(List<Bill> selectedBills) {
         this.selectedBills = selectedBills;

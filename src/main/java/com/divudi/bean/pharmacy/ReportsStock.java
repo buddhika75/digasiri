@@ -519,6 +519,40 @@ public class ReportsStock implements Serializable {
 
         commonController.printReportDetails(fromDate, toDate, startTime, "Pharmacy/Reports/Stock Reports/Stock Report by expir(/faces/pharmacy/pharmacy_report_department_stock_by_batch_expiary.xhtml)");
     }
+    
+    
+    public void fillDepartmentExpiaryStocksCategory() {
+        Date startTime = new Date();
+
+        if (department == null) {
+            UtilityController.addErrorMessage("Please select a department");
+            return;
+        }
+        Map m = new HashMap();
+        String sql;
+        sql = "select s "
+                + " from Stock s "
+                + " where s.stock > :st "
+                + " and s.itemBatch.item.category=:cat "
+                + " and s.department=:d "
+                + " and s.itemBatch.dateOfExpire "
+                + " between :fd and :td "
+                + " order by s.itemBatch.dateOfExpire";
+        m.put("d", department);
+        m.put("fd", getFromDate());
+        m.put("td", getToDate());
+        m.put("st", 0.0);
+        m.put("cat", category);
+        stocks = getStockFacade().findBySQL(sql, m);
+        stockPurchaseValue = 0.0;
+        stockSaleValue = 0.0;
+        for (Stock ts : stocks) {
+            stockPurchaseValue = stockPurchaseValue + (ts.getItemBatch().getPurcahseRate() * ts.getStock());
+            stockSaleValue = stockSaleValue + (ts.getItemBatch().getRetailsaleRate() * ts.getStock());
+        }
+
+        commonController.printReportDetails(fromDate, toDate, startTime, "Pharmacy/Reports/Stock Reports/Stock Report by expir(/faces/pharmacy/pharmacy_report_department_stock_by_batch_expiary.xhtml)");
+    }
 
     public void addComment(Stock st) {
         if (st != null) {
