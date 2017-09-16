@@ -44,6 +44,7 @@ import com.divudi.facade.ItemBatchFacade;
 import com.divudi.facade.PaymentFacade;
 import com.divudi.facade.PharmaceuticalBillItemFacade;
 import com.divudi.facade.WebUserFacade;
+import com.divudi.facade.util.JsfUtil;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -507,6 +508,34 @@ public class BillSearch implements Serializable {
         return lazyBills;
     }
 
+    public void listAllBills() {
+        bills = null;
+        String sql;
+        Map temMap = new HashMap();
+        sql = "select b "
+                + " from BilledBill b "
+                + " where b.billType =:billType and "
+                + " b.createdAt between :fromDate and :toDate and "
+                + " b.retired=false and "
+                + " b.paymentMethod =:pm "
+                + " order by b.id ";
+        temMap.put("billType", billType);
+        temMap.put("pm", paymentMethod);
+        temMap.put("toDate", getToDate());
+        temMap.put("fromDate", getFromDate());
+        List<Bill> lst = getBillFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
+        //System.err.println("SIZE : " + lst.size());
+        bills = lst;
+    }
+
+    public void saveAllBills() {
+        for (Bill sb : bills) {
+            getBillFacade().edit(sb);
+        }
+        JsfUtil.addErrorMessage("Saved");
+        bills = new ArrayList<>();
+    }
+
     public void createTableByKeyword2() {
         lazyBills = null;
         String sql;
@@ -630,7 +659,7 @@ public class BillSearch implements Serializable {
         }
         if (getBill().getPatientEncounter().isPaymentFinalized()) {
             UtilityController.addErrorMessage("Final Payment is Finalized You can't Return");
-            return"";
+            return "";
         }
 //        if (refundAmount == 0.0) {
 //            UtilityController.addErrorMessage("There is no item to Refund");
