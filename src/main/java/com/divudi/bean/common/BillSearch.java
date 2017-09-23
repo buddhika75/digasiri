@@ -514,13 +514,18 @@ public class BillSearch implements Serializable {
         Map temMap = new HashMap();
         sql = "select b "
                 + " from BilledBill b "
-                + " where b.billType =:billType and "
-                + " b.createdAt between :fromDate and :toDate and "
-                + " b.retired=false and "
-                + " b.paymentMethod =:pm "
-                + " order by b.id ";
-        temMap.put("billType", billType);
-        temMap.put("pm", paymentMethod);
+                + " where b.createdAt between :fromDate and :toDate "
+                + " and b.retired=false ";
+
+        if (billType != null) {
+            sql += " and b.billType =:billType ";
+            temMap.put("billType", billType);
+        }
+        if (paymentMethod != null) {
+            sql += " and b.paymentMethod =:pm ";
+            temMap.put("pm", paymentMethod);
+        }
+        sql += " order by b.id ";
         temMap.put("toDate", getToDate());
         temMap.put("fromDate", getFromDate());
         List<Bill> lst = getBillFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);

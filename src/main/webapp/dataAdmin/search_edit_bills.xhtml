@@ -33,6 +33,7 @@
                                 <h:panelGrid columns="2" >
                                     <h:outputLabel value="Bill Type"/>
                                     <p:selectOneMenu value="#{billSearch.billType}" >
+                                        <f:selectItem itemLabel="Any Bill Type" ></f:selectItem>
                                         <f:selectItems value="#{enumController.billTypes}" ></f:selectItems>
                                     </p:selectOneMenu>
                                 </h:panelGrid>
@@ -40,6 +41,7 @@
                                 <h:panelGrid columns="2" >
                                     <h:outputLabel value="Payment Method"/>
                                     <p:selectOneMenu value="#{billSearch.paymentMethod}" >
+                                        <f:selectItem itemLabel="Any Payment Method" ></f:selectItem>
                                         <f:selectItems value="#{enumController.paymentMethods}" ></f:selectItems>
                                     </p:selectOneMenu>
                                 </h:panelGrid>
@@ -61,12 +63,17 @@
 
                         <br/><br/>
 
-                        <p:dataTable id="tblBills" value="#{billSearch.bills}" var="bill"  >
+                        <p:dataTable id="tblBills" value="#{billSearch.bills}" var="bill"  rows="20"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,20,50">
                             <f:facet name="header">
                                 <h:outputLabel value="Bills"/>
                             </f:facet>
 
-                            <p:column headerText="Bill No 1" style="text-align: left;">
+                            <p:column headerText="Bill No 1" style="text-align: left;" 
+                                      sortBy="#{bill.insId}"
+                                      filterBy="#{bill.insId}">
                                 <f:facet name="header">
                                     <h:outputLabel value="Bill No 1"/>
                                 </f:facet>
@@ -75,7 +82,9 @@
                                 </p:inputText>
                             </p:column>
 
-                            <p:column headerText="Bill No 2" style="text-align: left;">
+                            <p:column headerText="Bill No 2" style="text-align: left;"
+                                      sortBy="#{bill.deptId}"
+                                      filterBy="#{bill.deptId}" >
                                 <f:facet name="header">
                                     <h:outputLabel value="Bill No 2"/>
                                 </f:facet>
@@ -85,7 +94,8 @@
                             </p:column>
 
 
-                            <p:column headerText="Bill Date" >
+                            <p:column headerText="Bill Date" sortBy="#{bill.billDate}"
+                                      >
                                 <f:facet name="header" >
                                     <h:outputLabel value="Bill Date"/>
                                 </f:facet>
@@ -96,7 +106,9 @@
 
 
 
-                            <p:column headerText="Client" >
+                            <p:column headerText="Client" 
+                                      sortBy="#{bill.patient.person.nameWithTitle}"
+                                      filterBy="#{bill.patient.person.nameWithTitle}">
                                 <f:facet name="header">
                                     <h:outputLabel value="Client"/>
                                 </f:facet>
@@ -107,37 +119,66 @@
                             </p:column>
 
 
+                            <p:column headerText="Bill Type" style="text-align:right;" rendered="#{billSearch.billType eq null}"
+                                      sortBy="#{bill.billType}"
+                                      filterBy="#{bill.billType}">
+                                <f:facet name="header">
+                                    <h:outputLabel value="Bill Type"/>
+                                </f:facet>
+                                <h:outputLabel value="#{bill.billType}" >
+                                </h:outputLabel>
+                            </p:column>
 
-                            <p:column headerText="Gross Value" style="text-align:right;">
+
+                            <p:column headerText="Payment Method" style="text-align:right;" rendered="#{billSearch.paymentMethod eq null}"
+                                      sortBy="#{bill.paymentMethod}"
+                                      filterBy="#{bill.paymentMethod}">
+                                <f:facet name="header">
+                                    <h:outputLabel value="Payment Method"/>
+                                </f:facet>
+                                <h:outputLabel value="#{bill.paymentMethod}" >
+                                </h:outputLabel>
+                            </p:column>
+
+
+                            <p:column headerText="Gross Value" style="text-align:right;" sortBy="#{bill.total}"
+                                      filterBy="#{bill.total}">
                                 <f:facet name="header">
                                     <h:outputLabel value="Gross Value"/>
                                 </f:facet>
-                                <p:inputText value="#{bill.total}" >
-                                    <p:ajax event="blur" update="@this" ></p:ajax>
+                                <h:outputLabel value="#{bill.total}" >
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
-                                </p:inputText>
+                                </h:outputLabel>
                             </p:column>
-                            <p:column headerText="Discount" style="text-align:right;">
+                            <p:column headerText="Discount" style="text-align:right;" sortBy="#{bill.discount}"
+                                      filterBy="#{bill.discount}">
                                 <f:facet name="header">
                                     <h:outputLabel value="Discount"/>
                                 </f:facet>
-                                <p:inputText value="#{bill.discount}" >
-                                    <p:ajax event="blur" update="@this" ></p:ajax>
+                                <h:outputLabel value="#{bill.discount}" >
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
-                                </p:inputText>
+                                </h:outputLabel>
                             </p:column>
-
-                            <p:column  style="text-align:right;">
+                            <p:column headerText="Discount" style="text-align:right;" sortBy="#{bill.vat}"
+                                      filterBy="#{bill.vat}">
+                                <f:facet name="header">
+                                    <h:outputLabel value="VAT"/>
+                                </f:facet>
+                                <h:outputLabel value="#{bill.vat}" >
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column  style="text-align:right;" sortBy="#{bill.netTotal}"
+                                       filterBy="#{bill.netTotal}">
                                 <f:facet name="header">
                                     <h:outputLabel value="Net Value"/>
                                 </f:facet>
-                                <p:inputText value="#{bill.netTotal}" >
-                                    <p:ajax event="blur" update="@this" ></p:ajax>
+                                <h:outputLabel value="#{bill.netTotal}" >
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
-                                </p:inputText>
+                                </h:outputLabel>
                             </p:column>
 
-                           
+
 
                         </p:dataTable>
 
