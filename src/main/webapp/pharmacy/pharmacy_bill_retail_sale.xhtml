@@ -514,6 +514,7 @@
                                          action="#" style="display: none;" ></p:commandButton>
                         <p:defaultCommand  target="btnPrint" />  
 
+                        
                         <div class="nonPrintBlock" >
                             <p:commandButton accesskey="p" id="btnPrint" value="Print" ajax="false" action="#" >
                                 <p:printer target="gpBillPreview" ></p:printer>
@@ -530,11 +531,11 @@
                         </div>
 
                         <h:panelGroup   id="gpBillPreview" >
-
+sdsdfsd
                             <h:panelGroup   id="gpBillPreviewSingle" >
                                 
                             </h:panelGroup>
-
+#{sessionController.institutionPreference.pharmacyBillPaperType eq 'PosPaper'}
                             <h:panelGroup   id="gpBillWithOutItem" rendered="#{sessionController.institutionPreference.pharmacyBillPaperType eq 'PosPaper'}">
                                 <div>
                                     <h:panelGroup rendered="#{sessionController.institutionPreference.pharmacyBillPrabodha eq false and sessionController.institutionPreference.pharmacyBillWithOutItem eq true}" > 

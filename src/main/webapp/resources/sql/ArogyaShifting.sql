@@ -6,3 +6,6 @@ alter table bill add SMSEDUSER_ID long null;
 alter table billitem modify totime datetime null;
 alter table billitem add vat double null;
 alter table payment modify paymentmethod varchar(255) null;
+alter table paymentscheme DROP COLUMN  totime;
+alter table paymentscheme add totime datetime null;
+alter table USERPREFERENCE modify PHARMACYBILLPAPERTYPE varchar(255) null;
