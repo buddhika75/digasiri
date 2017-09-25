@@ -104,7 +104,7 @@ public class ServiceSessionLeaveController implements Serializable {
             return true;
         }
 
-        if (getCurrent().getDeactivateComment() == null || getCurrent().getDeactivateComment().isEmpty()) {
+        if (getCurrent().getDeactivateComment() == null) {
             UtilityController.addErrorMessage("Please Enter a Reson For Leave");
             return true;
         }
@@ -117,7 +117,7 @@ public class ServiceSessionLeaveController implements Serializable {
 
     private boolean errorCheckForServiceSessoinLeaveByDate() {
 
-        if (getCurrent().getDeactivateComment() == null ||getCurrent().getDeactivateComment().isEmpty()) {
+        if (getCurrent().getDeactivateComment() == null) {
             UtilityController.addErrorMessage("Please Enter a Reson For Leave");
             return true;
         }
@@ -197,7 +197,7 @@ public class ServiceSessionLeaveController implements Serializable {
         System.out.println("hm = " + hm);
         System.out.println("slq = " + slq);
         System.out.println("serviceSessionLeaves.size() = " + serviceSessionLeaves.size());
-        bookingController.generateSessionsOnlyId();
+        bookingController.generateSessions();
     }
 
     public void addLeave() {
