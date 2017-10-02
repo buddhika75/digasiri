@@ -21,4 +21,5 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="java:app/dsAro" object-type="user" pool-name="mysql_arogya_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/dsA1" object-type="user" pool-name="mysql_arogya1_rootPool"/>
 </resources>
