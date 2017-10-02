@@ -8,23 +8,33 @@
     <h:body>
         <ui:composition template="/resources/template/template.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <h:panelGrid columns="3" columnClasses="grid1 grid1">
+
+
+                <div class="ui-g" >
+                    <div class="ui-g-12 ui-md-3 ui-lg-3" >
                         <p:panel header="Manage Users"  rendered="#{webUserController.hasPrivilege('AdminManagingUsers') or sessionController.firstLogin }" >
-                            <h:panelGrid columns="1" >
-                                <p:commandButton styleClass="linkButton" ajax="false" value="Add New User" action="admin_add_new_user" actionListener="#{webUserController.prepairAddNewUser}" onclick="onSubmitButton();"/>
-                                <p:commandButton  styleClass="linkButton" ajax="false" value="View Users" action="admin_view_user" onclick="onSubmitButton();"/>
-                                <p:commandButton  styleClass="linkButton" ajax="false" value="Change Passwords" action="admin_change_password" onclick="onSubmitButton();"/>
-
-                                <p:commandButton  styleClass="linkButton" ajax="false" value="Manage Privileges" action="admin_user_privilages" onclick="onSubmitButton();"/>                                
-                                <p:commandButton  styleClass="linkButton" ajax="false" value="Add PaymentScheme to User" action="admin_user_paymentScheme" onclick="onSubmitButton();"/>
-                                <p:commandButton  styleClass="linkButton" ajax="false" value="Add Department to User" action="admin_user_department" onclick="onSubmitButton();"/>
-                                <p:commandButton  styleClass="linkButton" ajax="false" value="View User Login Details" action="admin_logins_all" onclick="onSubmitButton();"/>
-
-                            </h:panelGrid>
+                            <h:form>
+                                <h:panelGrid columns="1" >
+                                    <p:commandButton styleClass="linkButton" ajax="false" value="Add New User" action="admin_add_new_user" actionListener="#{webUserController.prepairAddNewUser}" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="View Users" action="admin_view_user" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Change Passwords" action="admin_change_password" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Manage Privileges" action="admin_user_privilages" onclick="onSubmitButton();"/>                                
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Add Department to User" action="admin_user_department" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Add PaymentScheme to User" action="admin_user_paymentScheme" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="User Login Details" action="admin_logins_all" onclick="onSubmitButton();"/>
+                                </h:panelGrid>
+                            </h:form>
                         </p:panel>
-                    </h:panelGrid>
-                </h:form>
+                    </div>
+                    <div class="ui-g-12 ui-md-9 ui-lg-9" >
+                        <ui:insert name="manageusers">
+                            <p:panel header="Last Logins" >
+                                
+                            </p:panel>
+                        </ui:insert>
+                    </div>
+                </div>
+
             </ui:define>
         </ui:composition>
     </h:body>

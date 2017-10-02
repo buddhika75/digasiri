@@ -62,13 +62,13 @@ public class LoginController implements Serializable {
     }
 
     public Date getToDate() {
+        if (toDate == null) {
+            toDate = CommonFunctions.getEndOfDay();
+        }
         return toDate;
     }
 
     public void setToDate(Date toDate) {
-        if(toDate==null){
-            toDate=CommonFunctions.getEndOfDay();
-        }
         this.toDate = toDate;
     }
 
@@ -80,6 +80,11 @@ public class LoginController implements Serializable {
         this.longin = longin;
     }
 
+    public String toManageUsers(){
+        fillLoginsLastTen();
+        return "/admin_manage_users";
+    }
+    
     public void fillLogins() {
         String sql;
         Map m = new HashMap();
@@ -88,8 +93,16 @@ public class LoginController implements Serializable {
         sql = "select l from Logins l where l.logedAt between :fromDate and :toDate or l.logoutAt between :fromDate and :toDate  order by l.logedAt, l.logoutAt";
         logins = getFacade().findBySQL(sql, m, TemporalType.TIMESTAMP);
     }
-
     
+    public void fillLoginsLastTen() {
+        String sql;
+        Map m = new HashMap();
+        m.put("fromDate", fromDate);
+        m.put("toDate", toDate);
+        sql = "select l from Logins l where l.logedAt between :fromDate and :toDate or l.logoutAt between :fromDate and :toDate  order by l.logedAt, l.logoutAt";
+        logins = getFacade().findBySQL(sql, m, TemporalType.TIMESTAMP,10);
+    }
+
     public List<Logins> getLogins() {
         return logins;
     }
