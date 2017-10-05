@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:body>
         <ui:composition template="/resources/template/template.xhtml">
@@ -31,7 +32,34 @@
                     <div class="ui-g-12 ui-md-9 ui-lg-9" >
                         <ui:insert name="manageusers">
                             <p:panel header="Last Logins" >
+                                <p:dataTable value="#{loginController.logins}" var="b" >
+                                    <p:column headerText="Institution" sortBy="#{b.institution.name}" filterBy="#{b.institution.name}">
+                                        <h:outputLabel value="#{b.institution.name}" ></h:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Department"  sortBy="#{b.department.name}" filterBy="#{b.department.name}">
+                                        <h:outputLabel value="#{b.department.name}" ></h:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Name"  sortBy="#{b.webUser.webUserPerson.name}" filterBy="#{b.webUser.webUserPerson.name}">
+                                        <h:outputLabel value="#{b.webUser.webUserPerson.name}" >
+                                        </h:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Login At"  sortBy="#{b.logedAt}" >
+                                        <h:outputLabel value="#{b.logedAt}" >
+                                            <f:convertDateTime pattern="dd MM yy hh:mm:ss a" />
+                                        </h:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="Log out at"  sortBy="#{b.logoutAt}" >
+                                        <h:outputLabel value="#{b.logoutAt}" >
+                                            <f:convertDateTime pattern="dd MM yy hh:mm:ss a" />
+                                        </h:outputLabel>
+                                    </p:column>
+                                    <p:column headerText="IP"  sortBy="#{b.ipaddress}" filterBy="#{b.ipaddress}">
+                                        <h:outputLabel value="#{b.ipaddress}" >
+                                        </h:outputLabel>
+                                    </p:column>
 
+                                </p:dataTable>    
+                                
                             </p:panel>
                         </ui:insert>
                     </div>
