@@ -1044,3 +1044,9 @@ table.standardTable td {
     /*background-image: url("#{resource['image/user_add.png']}");*/
 }
 
+.barca {
+   height: 20px;
+   width: 10px;
+   color: greenyellow;
+   background-color: red;
+}
