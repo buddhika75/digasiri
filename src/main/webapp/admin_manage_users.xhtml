@@ -20,8 +20,10 @@
                                     <p:commandButton  styleClass="linkButton" ajax="false" value="Change Passwords" action="admin_change_password" onclick="onSubmitButton();"/>
                                     <p:commandButton  styleClass="linkButton" ajax="false" value="Manage Privileges" action="admin_user_privilages" onclick="onSubmitButton();"/>                                
                                     <p:commandButton  styleClass="linkButton" ajax="false" value="Add Department to User" action="admin_user_department" onclick="onSubmitButton();"/>
-                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Add PaymentScheme to User" action="admin_user_paymentScheme" onclick="onSubmitButton();"/>
                                     <p:commandButton  styleClass="linkButton" ajax="false" value="User Login Details" action="admin_logins_all" onclick="onSubmitButton();"/>
+                                    <ui:insert name="userimage">
+                                        <p:graphicImage library="image" name="manageusers.png" width="95%" ></p:graphicImage>
+                                    </ui:insert>
                                 </h:panelGrid>
                             </h:form>
                         </p:panel>
@@ -29,7 +31,7 @@
                     <div class="ui-g-12 ui-md-9 ui-lg-9" >
                         <ui:insert name="manageusers">
                             <p:panel header="Last Logins" >
-                                
+
                             </p:panel>
                         </ui:insert>
                     </div>

@@ -8,20 +8,24 @@
 
     <h:body>
         <ui:composition template="/admin_manage_users.xhtml">
+            
+            <ui:define name="userimage" >
+                <p:graphicImage library="image" name="user_add.png" width="95%" ></p:graphicImage>
+            </ui:define>
             <ui:define name="manageusers">
 
                 <h:panelGroup rendered="#{!webUserController.hasPrivilege('AdminManagingUsers')}" >
                     You are NOT authorized
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{webUserController.hasPrivilege('AdminManagingUsers')}" >
+                <h:panelGroup rendered="#{webUserController.hasPrivilege('AdminManagingUsers')}"  >
 
                     <h:form>
 
 
-                        <p:panel header="Add New User" >
+                        <p:panel header="Add New User" styleClass="useradd" >
 
-                            <p:panelGrid id="pg1" columns="2" style="text-align: left;" >
+                            <p:panelGrid id="pg1" columns="2" style="text-align: left; "  styleClass="noBorderGrid2">
 
                                 <p:outputLabel value="Staff" rendered="#{webUserController.createOnlyUserForExsistingUser}" ></p:outputLabel>
                                 <autocomplete:completeStaff value="#{webUserController.staff}" rendered="#{webUserController.createOnlyUserForExsistingUser}" />
@@ -77,7 +81,7 @@
 
                         </p:panel>
 
-
+                      
 
                     </h:form>
                 </h:panelGroup>

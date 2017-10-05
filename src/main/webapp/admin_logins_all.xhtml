@@ -3,36 +3,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:autocomplete="http://java.sun.com/jsf/composite/autocomplete"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:body>
-
-        <ui:composition template="/resources/template/template.xhtml">
-
-            <ui:define name="content">
+        <ui:composition template="/admin_manage_users.xhtml">
+             <ui:define name="userimage" >
+                <p:graphicImage library="image" name="user_logins.png" width="95%" ></p:graphicImage>
+            </ui:define>
+            <ui:define name="manageusers">
                 <h:form>
                     <p:panel id="panelReport" >
                         <f:facet name ="header" >
                             <h:outputLabel styleClass="noPrintButton"  value="Logins Report" />
+
+
+                        </f:facet>
+                        <p:panelGrid columns="9" styleClass="noBorderGrid1" >
+                            <h:outputLabel styleClass="noPrintButton"  value="From" />
                             <p:calendar styleClass="noPrintButton" value="#{loginController.fromDate}" pattern="dd MMMM yyyy hh:mm:ss a" >
                             </p:calendar>
+                            <p:spacer height="1" width="10" ></p:spacer>
+
+                            <h:outputLabel styleClass="noPrintButton"  value="To" />
                             <p:calendar styleClass="noPrintButton" value="#{loginController.toDate}" pattern="dd MMMM yyyy hh:mm:ss a" >
                             </p:calendar>
-
+                            <p:spacer height="1" width="10" ></p:spacer>
                             <p:commandButton id="btnRefresh" actionListener="#{loginController.fillLogins()}"
                                              styleClass="noPrintButton" value="Process"
                                              ajax="false" 
                                              onclick="onSubmitButton();">                               
                             </p:commandButton>
-                            <p:defaultCommand target="btnRefresh"/>
-                            
                             <p:commandButton styleClass="noPrintButton" value="Print" ajax="false" >
                                 <p:printer target="panelReport" />
                             </p:commandButton>
-                            
-                        </f:facet>
-
+                            <p:defaultCommand target="btnRefresh"/>
+                        </p:panelGrid>
 
                         <p:panel styleClass="printBlock" >
                             <h:outputLabel value="#{labels.topic}" styleClass="rh1" style="font-size: 18px;" /> 
@@ -52,31 +59,27 @@
                         </p:panel>
 
                         <p:dataTable value="#{loginController.logins}" var="b" >
-                            <p:column headerText="Institution" >
+                            <p:column headerText="Institution" sortBy="#{b.institution.name}" filterBy="#{b.institution.name}">
                                 <h:outputLabel value="#{b.institution.name}" ></h:outputLabel>
                             </p:column>
-                            <p:column headerText="Department">
+                            <p:column headerText="Department"  sortBy="#{b.department.name}" filterBy="#{b.department.name}">
                                 <h:outputLabel value="#{b.department.name}" ></h:outputLabel>
                             </p:column>
-                            <p:column headerText="Code">
-                                <h:outputLabel value="#{b.webUser.code}" >
-                                </h:outputLabel>
-                            </p:column>
-                            <p:column headerText="Name">
+                            <p:column headerText="Name"  sortBy="#{b.webUser.webUserPerson.name}" filterBy="#{b.webUser.webUserPerson.name}">
                                 <h:outputLabel value="#{b.webUser.webUserPerson.name}" >
                                 </h:outputLabel>
                             </p:column>
-                            <p:column headerText="Login At">
+                            <p:column headerText="Login At"  sortBy="#{b.logedAt}" >
                                 <h:outputLabel value="#{b.logedAt}" >
                                     <f:convertDateTime pattern="dd MM yy hh:mm:ss a" />
                                 </h:outputLabel>
                             </p:column>
-                            <p:column headerText="Log out at">
+                            <p:column headerText="Log out at"  sortBy="#{b.logoutAt}" >
                                 <h:outputLabel value="#{b.logoutAt}" >
                                     <f:convertDateTime pattern="dd MM yy hh:mm:ss a" />
                                 </h:outputLabel>
                             </p:column>
-                            <p:column headerText="IP">
+                            <p:column headerText="IP"  sortBy="#{b.ipaddress}" filterBy="#{b.ipaddress}">
                                 <h:outputLabel value="#{b.ipaddress}" >
                                 </h:outputLabel>
                             </p:column>
@@ -87,6 +90,8 @@
 
                 </h:form>
             </ui:define>
+
+
 
 
 

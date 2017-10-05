@@ -823,7 +823,7 @@ body {
 .standedicon{
     width: 30px;
     height: 30px;
-
+    margin: 3px;
     border: 1px #888888 solid;
 
     -webkit-border-radius: 5px;
@@ -1034,3 +1034,13 @@ table.standardTable td {
 .noBorderGrid1.ui-panelgrid .ui-panelgrid-cell {
     border: none;
 }
+
+
+
+.noBorderGrid2.ui-panelgrid>*>tr,
+.noBorderGrid2.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+    background:none;
+    /*background-image: url("#{resource['image/user_add.png']}");*/
+}
+

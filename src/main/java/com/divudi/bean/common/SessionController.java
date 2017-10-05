@@ -388,7 +388,7 @@ public class SessionController implements Serializable, HttpSessionListener {
         }
     }
 
-    private boolean loginWithoutDepartment() {
+        private boolean loginWithoutDepartment() {
 
         getApplicationEjb().recordAppStart();
 
@@ -642,8 +642,25 @@ public class SessionController implements Serializable, HttpSessionListener {
         String temSQL;
         temSQL = "SELECT u FROM WebUser u WHERE u.retired = false";
         List<WebUser> allUsers = getFacede().findBySQL(temSQL);
+        System.out.println("allUsers = " + allUsers);
         for (WebUser u : allUsers) {
-            if (getSecurityController().decrypt(u.getName()).equalsIgnoreCase(userName)) {
+            System.out.println("u = " + u);
+            if (u.getName()==null) {
+                 continue;
+            }
+            System.out.println("userName = " + userName);
+            System.out.println("u.getName() = " + u.getName());
+            System.out.println("getSecurityController() = " + getSecurityController());
+            Boolean usernameFound=false;
+            try{
+                usernameFound=getSecurityController().decrypt(u.getName()).equalsIgnoreCase(userName);
+                System.out.println("usernameFound = " + usernameFound);
+            }catch(Exception e){
+                usernameFound=false;
+                System.out.println("Error");
+                System.out.println("e = " + e);
+            }
+            if (usernameFound==true) {
                 if (getSecurityController().matchPassword(passord, u.getWebUserPassword())) {
                     departments = listLoggableDepts(u);
                     if (departments.isEmpty()) {
@@ -695,12 +712,10 @@ public class SessionController implements Serializable, HttpSessionListener {
                         selectDepartment();
                         UtilityController.addSuccessMessage("Logged successfully. Department is " + department.getName());
                     } else {
-                        
-                        
-                        UtilityController.addSuccessMessage("Logged successfully!!!." +"\n Please select a department.");
 
-                        UtilityController.addSuccessMessage(setGreetingMsg() +" "+ loggedUser.getWebUserPerson().getName());
-                        
+                        UtilityController.addSuccessMessage("Logged successfully!!!." + "\n Please select a department.");
+
+                        UtilityController.addSuccessMessage(setGreetingMsg() + " " + loggedUser.getWebUserPerson().getName());
 
                     }
                     if (getApplicationController().isLogged(u) != null) {

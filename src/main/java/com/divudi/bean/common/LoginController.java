@@ -94,13 +94,14 @@ public class LoginController implements Serializable {
         logins = getFacade().findBySQL(sql, m, TemporalType.TIMESTAMP);
     }
     
-    public void fillLoginsLastTen() {
+    public String fillLoginsLastTen() {
         String sql;
         Map m = new HashMap();
         m.put("fromDate", fromDate);
         m.put("toDate", toDate);
         sql = "select l from Logins l where l.logedAt between :fromDate and :toDate or l.logoutAt between :fromDate and :toDate  order by l.logedAt, l.logoutAt";
         logins = getFacade().findBySQL(sql, m, TemporalType.TIMESTAMP,10);
+        return "/admin_manage_users";
     }
 
     public List<Logins> getLogins() {
