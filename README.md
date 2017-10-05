@@ -1,1 +1,1 @@
-HMIS by Lakmedipro Pvt Ltd
+HMIS by Sunila Software Solutions
