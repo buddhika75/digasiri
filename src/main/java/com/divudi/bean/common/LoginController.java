@@ -97,9 +97,9 @@ public class LoginController implements Serializable {
     public String fillLoginsLastTen() {
         String sql;
         Map m = new HashMap();
-        sql = "select l from Logins l where order by l.logedAt desc";
+        sql = "select l from Logins l order by l.logedAt desc";
         logins = getFacade().findBySQL(sql, m, TemporalType.TIMESTAMP,10);
-        return "/admin_manage_users";
+        return "/admin/users/index";
     }
 
     public List<Logins> getLogins() {

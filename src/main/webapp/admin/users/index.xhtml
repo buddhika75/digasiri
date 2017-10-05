@@ -16,12 +16,12 @@
                         <p:panel header="Manage Users"  rendered="#{webUserController.hasPrivilege('AdminManagingUsers') or sessionController.firstLogin }" >
                             <h:form>
                                 <h:panelGrid columns="1" >
-                                    <p:commandButton styleClass="linkButton" ajax="false" value="Add New User" action="admin_add_new_user" actionListener="#{webUserController.prepairAddNewUser}" onclick="onSubmitButton();"/>
-                                    <p:commandButton  styleClass="linkButton" ajax="false" value="View Users" action="admin_view_user" onclick="onSubmitButton();"/>
-                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Change Passwords" action="admin_change_password" onclick="onSubmitButton();"/>
-                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Manage Privileges" action="admin_user_privilages" onclick="onSubmitButton();"/>                                
-                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Add Department to User" action="admin_user_department" onclick="onSubmitButton();"/>
-                                    <p:commandButton  styleClass="linkButton" ajax="false" value="User Login Details" action="admin_logins_all" onclick="onSubmitButton();"/>
+                                    <p:commandButton styleClass="linkButton" ajax="false" value="Add New User" action="add_new" actionListener="#{webUserController.prepairAddNewUser}" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="View Users" action="view_users" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Change Passwords" action="change_password" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Manage Privileges" action="privileges" onclick="onSubmitButton();"/>                                
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="Add Department to User" action="user_departments" onclick="onSubmitButton();"/>
+                                    <p:commandButton  styleClass="linkButton" ajax="false" value="User Login Details" action="logins" onclick="onSubmitButton();"/>
                                     <ui:insert name="userimage">
                                         <p:graphicImage library="image" name="manageusers.png" width="95%" ></p:graphicImage>
                                     </ui:insert>
