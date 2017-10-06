@@ -82,7 +82,18 @@ public class ServiceSession extends Item implements Serializable {
     @Transient
     Boolean arival;
     @Transient
-    boolean serviceSessionCreateForOriginatingSession=false;
+    boolean serviceSessionCreateForOriginatingSession = false;
+    @Transient
+    String sessionDateStr;
+
+    public String getSessionDateStr() {
+        if (sessionDate == null) {
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        String dateStr = sdf.format(sessionDate);
+        return dateStr;
+    }
 
     public SessionNumberGenerator getSessionNumberGenerator() {
         return sessionNumberGenerator;
@@ -214,7 +225,7 @@ public class ServiceSession extends Item implements Serializable {
     }
 
     public String getDayString() {
-        if (sessionWeekday==null) {
+        if (sessionWeekday == null) {
             return "";
         }
         switch (sessionWeekday) {

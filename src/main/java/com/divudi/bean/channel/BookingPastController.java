@@ -12,7 +12,6 @@ import com.divudi.data.FeeType;
 import com.divudi.data.PersonInstitutionType;
 import com.divudi.data.Title;
 import com.divudi.ejb.ChannelBean;
-import com.divudi.ejb.CommonFunctions;
 import com.divudi.ejb.FinalVariables;
 import com.divudi.entity.Bill;
 import com.divudi.entity.BillItem;
@@ -90,8 +89,6 @@ public class BookingPastController implements Serializable {
     private ChannelSearchController channelSearchController;
     @Inject
     DoctorSpecialityController doctorSpecialityController;
-    @Inject
-    CommonFunctions commonFunctions;
     ///////////////////
     @EJB
     private StaffFacade staffFacade;
@@ -158,7 +155,6 @@ public class BookingPastController implements Serializable {
 
     public String nurse() {
         if (preSet()) {
-            getChannelReportController().fillNurseViewPb();
             return "channel_nurse_view";
         } else {
             return "";
@@ -167,7 +163,6 @@ public class BookingPastController implements Serializable {
 
     public String doctor() {
         if (preSet()) {
-            getChannelReportController().fillDoctorView();
             return "channel_doctor_view";
         } else {
             return "";
@@ -198,6 +193,58 @@ public class BookingPastController implements Serializable {
         }
     }
 
+    public String paidView() {
+        if (preSet()) {
+            getChannelReportController().fillPaidView();
+            return "channel_paid_view";
+        } else {
+            return "";
+        }
+    }
+    
+    public String presentView() {
+        if (preSet()) {
+            getChannelReportController().fillPresentView();
+            return "channel_present_view";
+        } else {
+            return "";
+        }
+    }
+    
+    public String paidAllView() {
+        if (preSet()) {
+            getChannelReportController().fillPaidAllView();
+            return "channel_paid_all_view";
+        } else {
+            return "";
+        }
+    }
+    
+    public String presentAllView() {
+        if (preSet()) {
+            getChannelReportController().fillPresentAllView();
+            return "channel_present_all_view";
+        } else {
+            return "";
+        }
+    }
+    
+    public void markAsPresent() {
+        getSelectedBillSession().setAbsent(false);
+        getSelectedBillSession().setAbsentMarkedAt(new Date());
+        getSelectedBillSession().setAbsentUnmarkedUser(getSessionController().getLoggedUser());
+        getBillSessionFacade().edit(getSelectedBillSession());
+        UtilityController.addSuccessMessage("Marked as Present");
+    }
+
+    public void markAsAbsent() {
+        getSelectedBillSession().setAbsent(true);
+        getSelectedBillSession().setAbsentMarkedAt(new Date());
+        getSelectedBillSession().setAbsentMarkedUser(getSessionController().getLoggedUser());
+        getBillSessionFacade().edit(getSelectedBillSession());
+        UtilityController.addSuccessMessage("Marked as Absent");
+    }
+    
     public Title[] getTitle() {
         return Title.values();
     }
@@ -302,42 +349,6 @@ public class BookingPastController implements Serializable {
         }
 
         return flag;
-    }
-    
-    public void listnerMarkAbsent() {
-        Date td=getCommonFunctions().getEndOfDay();
-        Date fd=getCommonFunctions().getStartOfDay(getSelectedBillSession().getSessionDate());
-        System.out.println("fd = " + fd);
-        System.out.println("td = " + td);
-        long lng = getCommonFunctions().getDayCount(fd, td);
-        System.out.println("lng = " + lng);
-        if (Math.abs(lng) > 2) {
-            UtilityController.addErrorMessage("Date Range is too Long");
-            return;
-        }
-        if (getSelectedBillSession().isAbsent()) {
-            getSelectedBillSession().setAbsentMarkedAt(new Date());
-            getSelectedBillSession().setAbsentMarkedUser(getSessionController().getLoggedUser());
-        }else{
-            getSelectedBillSession().setAbsentUnmarkedAt(new Date());
-            getSelectedBillSession().setAbsentUnmarkedUser(getSessionController().getLoggedUser());
-        }
-
-        getBillSessionFacade().edit(getSelectedBillSession());
-        //System.out.println(getSelectedBillSession().getBill().getPatient());
-        if (getSelectedBillSession().isAbsent()) {
-            UtilityController.addSuccessMessage("Mark As Absent");
-            if (getSelectedBillSession().getBill().getPaidBill()!=null) {
-                getSelectedBillSession().getBill().getPaidBill().getSingleBillSession().setAbsent(true);
-                getBillSessionFacade().edit(getSelectedBillSession().getBill().getPaidBill().getSingleBillSession());
-            }
-        }else{
-            UtilityController.addSuccessMessage("Mark As Present");
-            if (getSelectedBillSession().getBill().getPaidBill()!=null) {
-                getSelectedBillSession().getBill().getPaidBill().getSingleBillSession().setAbsent(false);
-                getBillSessionFacade().edit(getSelectedBillSession().getBill().getPaidBill().getSingleBillSession());
-            }
-        }
     }
 
     public void updateSerial() {
@@ -876,7 +887,6 @@ public class BookingPastController implements Serializable {
             UtilityController.addErrorMessage("Please select Service Session");
             return false;
         }
-
         getChannelReportController().setServiceSession(selectedServiceSession);
         return true;
     }
@@ -1006,13 +1016,5 @@ public class BookingPastController implements Serializable {
 
     public void setSelectTextSession(String selectTextSession) {
         this.selectTextSession = selectTextSession;
-    }
-
-    public CommonFunctions getCommonFunctions() {
-        return commonFunctions;
-    }
-
-    public void setCommonFunctions(CommonFunctions commonFunctions) {
-        this.commonFunctions = commonFunctions;
     }
 }

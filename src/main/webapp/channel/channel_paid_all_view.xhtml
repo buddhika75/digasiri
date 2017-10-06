@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:body >
+        <ui:composition template="/resources/template/template.xhtml">
+            <ui:define name="content">
+
+
+                <h:form>
+                    <p:panel >
+                        <f:facet name="header" >
+                            <p:outputLabel value="Paid Patient View" ></p:outputLabel>
+                        </f:facet>
+                        <p:commandButton value="Print" ajax="fasle" action="#">
+                            <p:printer target="tbl"/>           
+                        </p:commandButton>
+                        <p:commandButton value="Download" ajax="false" >
+                            <p:dataExporter target="tbl" type="xls" fileName="Paid Patients"></p:dataExporter>
+                        </p:commandButton>
+                        <p:commandButton ajax="false" action="/channel/channel_booking" value="Bookings" ></p:commandButton>
+                        <p:commandButton ajax="false" action="/channel/channel_booking_past" value="Past Bookings" rendered="#{webUserController.hasPrivilege('ChannellingPastBooking')}"></p:commandButton>
+
+                        <p:dataTable id="tbl" value="#{channelReportController.paidViewSessions}" var="bs" 
+                                     sortBy="#{bs.bill.billClass}" rowIndexVar="n">
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column colspan="6" headerText="Appointment Date : #{channelReportController.serviceSession.sessionDateStr}" ></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="No" />
+                                    <p:column headerText="Bill No" />
+                                    <p:column headerText="Consultant" ></p:column>
+                                    <p:column headerText="Name" />
+                                    <p:column headerText="Doctor Fee" />
+                                    <p:column headerText="Total Fee" />
+                                </p:row>
+                            </p:columnGroup>
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="4" footerText="Totals" />
+                                    <p:column footerText="#{channelReportController.netTotalStr}" ></p:column>
+                                    <p:column footerText="#{channelReportController.grantNetTotalStr}" ></p:column>
+                                </p:row>
+                            </p:columnGroup>
+
+                            <p:column headerText="No" width="20" style="width: 20px;">
+                                <p:outputLabel value="#{n+1}" ></p:outputLabel>
+                            </p:column>               
+                            <p:column headerText="Serial" width="20">
+                                <p:outputLabel value="#{bs.bill.deptId}" ></p:outputLabel>
+                            </p:column>    
+                            <p:column headerText="Consultant" footerText="Totals">
+                                <p:outputLabel value="#{bs.serviceSession.staff.person.nameWithTitle}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Patient Name" >
+                                <p:outputLabel value="#{bs.bill.patient.person.nameWithTitle}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Doctor Fee" styleClass="numberCol" footerText="#{bs.bill.staffFee}">
+                                <h:outputLabel value="#{bs.bill.staffFee}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Total Amount" styleClass="numberCol" footerText="#{bs.bill.netTotal}">
+                                <h:outputLabel value="#{bs.bill.netTotal}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                        </p:dataTable>
+
+                    </p:panel>
+
+                </h:form>
+            </ui:define>
+
+
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

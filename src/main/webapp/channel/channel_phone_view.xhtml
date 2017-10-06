@@ -8,35 +8,33 @@
 
     <ui:define name="content">        
         <h:form>
-            <p:panel id="phoneView" styleClass="noBorder summeryBorder">
+            <p:panel>
+                <f:facet name="header">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Phone View"/>
+                        <p:outputLabel/>
+                        <p:outputLabel value="Consultant"/>
+                        <p:outputLabel value="#{channelReportController.serviceSession.staff.person.nameWithTitle}"/>
+                        <p:outputLabel value="Date"/>
+                        <h:outputLabel value="#{channelReportController.serviceSession.sessionAt}" >
+                            <f:convertDateTime pattern="dd MM yyyy"/>
+                        </h:outputLabel>
+                        <p:outputLabel value="Session Name"/>
+                        <h:outputLabel value="#{channelReportController.serviceSession.name}" />
+                    </h:panelGrid>
 
-                <p:commandButton value="Print" ajax="fasle" action="#" styleClass="noPrintButton">
+                </f:facet>
+                <p:commandButton value="Print" ajax="fasle" action="#">
                     <p:printer target="phoneView"/>           
                 </p:commandButton>
-                <p:commandButton ajax="false" action="/channel/channel_booking" value="Back" styleClass="noPrintButton"></p:commandButton>
+                <p:commandButton ajax="false" action="/channel/channel_booking" value="Bookings" ></p:commandButton>
+                <p:commandButton ajax="false" action="/channel/channel_booking_past" value="Past Bookings" rendered="#{webUserController.hasPrivilege('ChannellingPastBooking')}"></p:commandButton>
 
-                <p:dataTable  value="#{channelReportController.billSessionsNurse}" var="bs">
-                    <f:facet name="header">
-                        <p:outputLabel value="#{sessionController.loggedUser.institution.name}" style="fon"/><br></br>
-                        <p:outputLabel value="#{sessionController.loggedUser.institution.address}"/><br></br>
-                        <p:outputLabel value="Phone View"/>
-                        <br></br>
-                        <p:outputLabel value="Consultant : "/>
-                        <p:outputLabel value="#{channelReportController.serviceSession.staff.person.nameWithTitle}"/><br></br>
-                        <p:outputLabel value="Date : "/>
-                        <h:outputLabel value="#{channelReportController.serviceSession.sessionDate}" >
-                            <f:convertDateTime pattern="dd MM yyyy"/>
-                        </h:outputLabel><br></br>
-                        <p:outputLabel value="Session Name : "/>
-                        <h:outputLabel value="#{channelReportController.serviceSession.name}" />
-                    </f:facet>
+
+                <p:dataTable id="phoneView" value="#{channelReportController.billSessionsNurse}" var="bs">
+
                     <p:column headerText="No">#{bs.serialNo}</p:column>
-                    <p:column headerText="Booking Id">
-                        <p:outputLabel value="#{bs.bill.deptId}" rendered="#{bs.bill.paidBill eq null and sessionController.institutionPreference.applicationInstitution eq 'Cooperative'}"/>
-                        <p:outputLabel value="#{bs.bill.paidBill.deptId}" rendered="#{bs.bill.paidBill ne null and sessionController.institutionPreference.applicationInstitution eq 'Cooperative'}"/>
-                        <p:outputLabel value="#{bs.bill.insId}" rendered="#{bs.bill.paidBill eq null and sessionController.institutionPreference.applicationInstitution ne 'Cooperative'}"/>
-                        <p:outputLabel value="#{bs.bill.paidBill.insId}" rendered="#{bs.bill.paidBill ne null and sessionController.institutionPreference.applicationInstitution ne 'Cooperative'}"/>
-                    </p:column>
+                    <p:column headerText="Booking Id">#{bs.bill.bookingId}</p:column>
                     <p:column headerText="Patient Name">#{bs.bill.patient.person.nameWithTitle}</p:column>
                     <p:column headerText="Phone No">#{bs.bill.patient.person.phone}</p:column>
 

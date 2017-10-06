@@ -20,9 +20,9 @@ public class Ampp extends PharmaceuticalItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @ManyToOne
-     Amp amp;
+    Amp amp;
     @ManyToOne
-     Vmpp vmpp;
+    Vmpp vmpp;
 
     public Amp getAmp() {
         return amp;

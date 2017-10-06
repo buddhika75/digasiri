@@ -157,6 +157,42 @@ public class BookingController implements Serializable {
         }
     }
 
+    public String paidView() {
+        if (preSet()) {
+            getChannelReportController().fillPaidView();
+            return "channel_paid_view";
+        } else {
+            return "";
+        }
+    }
+    
+    public String paidAllView() {
+        if (preSet()) {
+            getChannelReportController().fillPaidAllView();
+            return "channel_paid_all_view";
+        } else {
+            return "";
+        }
+    }
+
+    public String presentView() {
+        if (preSet()) {
+            getChannelReportController().fillPresentView();
+            return "channel_present_view";
+        } else {
+            return "";
+        }
+    }
+    
+    public String presentAllView() {
+        if (preSet()) {
+            getChannelReportController().fillPresentAllView();
+            return "channel_present_all_view";
+        } else {
+            return "";
+        }
+    }
+
     public String session() {
         if (preSet()) {
             return "channel_session_view";
@@ -288,6 +324,23 @@ public class BookingController implements Serializable {
         UtilityController.addSuccessMessage("Serial Updated");
     }
 
+    public void markAsPresent() {
+        getSelectedBillSession().setAbsent(false);
+        getSelectedBillSession().setAbsentMarkedAt(new Date());
+        getSelectedBillSession().setAbsentUnmarkedUser(getSessionController().getLoggedUser());
+        getBillSessionFacade().edit(getSelectedBillSession());
+        UtilityController.addSuccessMessage("Marked as Present");
+    }
+
+    public void markAsAbsent() {
+        getSelectedBillSession().setAbsent(true);
+        getSelectedBillSession().setAbsentMarkedAt(new Date());
+        getSelectedBillSession().setAbsentMarkedUser(getSessionController().getLoggedUser());
+        getBillSessionFacade().edit(getSelectedBillSession());
+        UtilityController.addSuccessMessage("Marked as Absent");
+    }
+
+    
     public void makeNull() {
         speciality = null;
         staff = null;
@@ -855,7 +908,7 @@ public class BookingController implements Serializable {
             arrivalRecord.setCreater(sessionController.getLoggedUser());
             fpFacade.create(arrivalRecord);
         }
-        
+
         arrivalRecord.setApproved(true);
         arrivalRecord.setApprovedAt(new Date());
         arrivalRecord.setApprover(sessionController.getLoggedUser());
@@ -1215,6 +1268,4 @@ public class BookingController implements Serializable {
         return channelStaffPaymentBillController;
     }
 
-    
-    
 }
