@@ -19,7 +19,12 @@
 
                         <p:tabView >
                             <p:tab title="Admin" >
-                                <p:commandButton ajax="false" value="Change Bill Numbers" action="search_edit_bills" ></p:commandButton>
+                                <h:panelGrid columns="1" >
+                                    <p:commandButton ajax="false" value="Change Bill Numbers" action="search_edit_bills" ></p:commandButton>
+                                    <p:commandButton ajax="false" value="Change Fees" action="search_edit_for_fee_bills" ></p:commandButton>
+
+                                </h:panelGrid>
+
                             </p:tab>
                             <p:tab title="Developer" >
 
@@ -37,15 +42,15 @@
 
                                     <p:panelGrid columns="1"                         >
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.addBillFeesToProfessionalCancelBills()}" value="1. Add bill fees to professional fee cancel bills"  onclick="if (!confirm('Really want to do that?'))
-                                            return false"/>
+                                                    return false"/>
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.removeAllBillsAndBillItems()}" value="2. Remove All Bills with Bill Items"  onclick="if (!confirm('Really want to do that?'))
-                                            return false"/>
+                                                    return false"/>
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.restBillNumber()}" value="3. Reset Bill Number"  onclick="if (!confirm('Really want to do that?'))
-                                            return false"/>
+                                                    return false"/>
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.makeRateFromPurchaseRateToSaleInTransferBills()}" value="4. Make Rate From Purchase Rate To Sale In Transfer Bills" onclick="if (!confirm('Really want to do that?'))
-                                            return false"/>
+                                                    return false"/>
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.removeUnsedPharmaceuticalCategories()}" value="5. Remove Unused Pharmaceutical Categories" onclick="if (!confirm('Really want to do that?'))
-                                            return false"/>
+                                                    return false"/>
                                         <p:commandLink ajax="false" action="/dataAdmin/change_categories" value="6. Change Categories of Items" ></p:commandLink>
 
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.addWholesalePrices()}" value="7. Add Wholesale Prices" ></p:commandLink>
@@ -61,17 +66,17 @@
                                                        value="11. Add Institutions to Investigations without Institution" ></p:commandLink>
 
                                         <p:commandLink ajax="false" action="#{staffShiftController.updateStaffShiftWithoutRoster()}" value="12. Update Staff Shift Without Roster(For Analyse)" onclick="if (!confirm('Really want to do that?'))
-                                            return false"/>
+                                                    return false"/>
                                         <p:commandLink ajax="false" action="#{pharmacyCalculation.updatePharmacyPurchaseGrnCancelRefundBilledBills}" 
                                                        value="13. Update Pharmacy Purchase Grn Cancel RefundBilled Bills" />
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.addOPDBillFeesToProfessionalCancelBills()}" rendered="true"
                                                        value="14. Add bill fees to professional fee cancel bills OPD"  onclick="if (!confirm('Really want to do that?'))
-                                                           return false"/>
+                                                                   return false"/>
 
                                         <p:commandLink ajax="false" 
                                                        action="#{dataAdministrationController.makeAllAmpsWithNullDepartmentTypeToPharmacyType()}" rendered="true"
                                                        value="15. Make All Amps with null department type to Pharmacy Type"  onclick="if (!confirm('Really want to do that?'))
-                                                           return false"/>
+                                                                   return false"/>
                                         <p:commandLink ajax="false" 
                                                        action="/dataAdmin/update_staff_zonecode" rendered="true"
                                                        value="16. Update Staff Zone Code"  
@@ -79,10 +84,10 @@
 
                                         <p:commandLink ajax="false" action="#{dataAdministrationController.updateAllServiseAndInvestigationAsVatable()}" rendered="true"
                                                        value="17. Update All Service And Investigation To Vatabel And 15% percentage"  onclick="if (!confirm('Really want to do that?'))
-                                                           return false"/>
+                                                                   return false"/>
                                         <p:commandLink ajax="false" action="#{serviceSummery.findFeeTypeLessBillFees}" rendered="true"
                                                        value="18. Check BillFees Without Fee Type"  onclick="if (!confirm('Really want to do that?'))
-                                                           return false"/>
+                                                                   return false"/>
                                         <p:commandLink ajax="false" value="19. Investigatio/Services"  action="item_list_for_vat"/>
 
                                     </p:panelGrid>
@@ -91,7 +96,7 @@
                                         <p:commandLink ajax="false" action="#{agencyController.randomlySetAgencyBalances}" 
                                                        value="1. Randomly Reset Agent Balances to Rs. 50,000.00 and Rs. 30,000.00"  
                                                        onclick="if (!confirm('Really want to do that?'))
-                                                           return false"/>
+                                                                   return false"/>
                                         <h:panelGroup >
                                             <p:outputLabel value="#{billController.txtBillNoForVat}" ></p:outputLabel>
                                             Bill Type
@@ -105,7 +110,7 @@
                                             <p:commandLink ajax="false" action="#{billController.addVatToOldBills()}" 
                                                            value="2. Add VAT For Previous Bills"  
                                                            onclick="if (!confirm('Really want to do that?'))
-                                                               return false"/>
+                                                                       return false"/>
 
                                         </h:panelGroup>
 
@@ -114,7 +119,7 @@
 
                                 </p:panelGrid>
                             </p:tab>
-                            
+
                         </p:tabView>
 
 

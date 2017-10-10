@@ -48,7 +48,6 @@
 
                                 <h:panelGrid columns="3" >
                                     <p:commandButton ajax="false" value="List Bills" action="#{billSearch.listAllBills() }" ></p:commandButton>
-                                    <p:commandButton ajax="false" value="Save Bills" action="#{billSearch.saveAllBills()}" ></p:commandButton>
                                     <p:commandButton  value="Download as Excel" ajax="false" styleClass="noPrintButton" style="float:right;">
                                         <pe:exporter type="xlsx" target="tblBills" fileName="Report by Referring Doctor"
                                                      facetBackground="#008000" facetFontSize="15" 
@@ -77,9 +76,8 @@
                                 <f:facet name="header">
                                     <h:outputLabel value="Bill No 1"/>
                                 </f:facet>
-                                <p:inputText value="#{bill.insId}" >
-                                    <p:ajax event="blur" update="@this" ></p:ajax>
-                                </p:inputText>
+                                <h:outputLabel value="#{bill.insId}" >
+                                </h:outputLabel>
                             </p:column>
 
                             <p:column headerText="Bill No 2" style="text-align: left;"
@@ -88,9 +86,8 @@
                                 <f:facet name="header">
                                     <h:outputLabel value="Bill No 2"/>
                                 </f:facet>
-                                <p:inputText value="#{bill.deptId}" >
-                                    <p:ajax event="blur" update="@this" ></p:ajax>
-                                </p:inputText>
+                                <p:outputLabel value="#{bill.deptId}" >
+                                </p:outputLabel>
                             </p:column>
 
 
@@ -159,7 +156,7 @@
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
                                 </h:outputLabel>
                             </p:column>
-                            <p:column headerText="Discount" style="text-align:right;" sortBy="#{bill.vat}"
+                            <p:column headerText="VAT" style="text-align:right;" sortBy="#{bill.vat}"
                                       filterBy="#{bill.vat}">
                                 <f:facet name="header">
                                     <h:outputLabel value="VAT"/>
@@ -178,7 +175,11 @@
                                 </h:outputLabel>
                             </p:column>
 
-
+                            <p:column headerText="To Edit Fees" >
+                                <p:commandButton value="To Edit Fees" ajax="false" action="#{billSearch.toEditBillFees()}" >
+                                    <f:setPropertyActionListener target="#{billSearch.bill}" value="#{bill}" ></f:setPropertyActionListener>
+                                </p:commandButton>
+                            </p:column>
 
                         </p:dataTable>
 

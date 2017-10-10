@@ -23,7 +23,7 @@
 
             <h:panelGroup id="panelAddedBillPrint">
 
-
+                <h1>sdfsdfsd</h1>
                 <div class="posbill" style="text-align: left!important; page-break-after: always;">
                     <div style="text-align: center;">
                         <p:graphicImage style="width: 3cm!important;" rendered="#{sessionController.institutionPreference.logoName ne null}" library="image" name="#{sessionController.institutionPreference.logoName}" ></p:graphicImage>
@@ -177,27 +177,6 @@
 
                             </tr>
 
-                            <tr>
-                                <td>
-                                    <b>
-                                        <h:outputLabel value="Room No." ></h:outputLabel>
-                                    </b>
-                                </td>
-                                <td>
-                                    <p:spacer width="2" ></p:spacer>
-                                </td>
-                                <td>
-                                    <h:outputLabel value=":" ></h:outputLabel>
-                                </td>
-                                <td>
-
-                                    <h:outputLabel value="#{cc.attrs.bill.singleBillSession.serviceSession.roomNo}" style="font-weight: bold;">
-                                    </h:outputLabel>
-
-                                </td>
-
-                            </tr>
-
 
 
                             <ui:repeat value="#{cc.attrs.bill.billFees}" var="cbif" >
@@ -244,6 +223,52 @@
                                 </td>
 
                             </tr>
+
+                            <h:panelGroup rendered="#{cc.attrs.bill.vat ne null}" >
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <h:outputLabel value="VAT" ></h:outputLabel>
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <p:spacer width="2" ></p:spacer>
+                                    </td>
+                                    <td>
+                                        <h:outputLabel value=":" ></h:outputLabel>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <h:outputLabel value="#{cc.attrs.bill.vat}" >
+                                                <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                            </h:outputLabel>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <h:outputLabel value="Total + VAT" ></h:outputLabel>
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <p:spacer width="2" ></p:spacer>
+                                    </td>
+                                    <td>
+                                        <h:outputLabel value=":" ></h:outputLabel>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <h:outputLabel value="#{cc.attrs.bill.vat + cc.attrs.bill.total}" >
+                                                <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                            </h:outputLabel>
+                                        </b>
+                                    </td>
+                                </tr>
+
+
+                            </h:panelGroup>
+
 
                             <tr>
                                 <td>

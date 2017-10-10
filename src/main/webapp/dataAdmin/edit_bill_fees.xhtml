@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../resources/template/template.xhtml">
+
+            <ui:define name="title">
+                Edit Bill Fees
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton ajax="false" value="Save" action="#{billSearch.saveBillFeeEdit()}" ></p:commandButton>
+                    <p:commandButton ajax="false" value="Back" action="/dataAdmin/search_edit_for_fee_bills" ></p:commandButton>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Institution:" for="institution" />
+                        <p:selectOneMenu id="institution" value="#{billSearch.bill.institution}" >
+                            <f:selectItems value="#{institutionController.items}" var="ins" itemLabel="#{ins.name}" itemValue="#{ins}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Department:" for="department" />
+                        <p:selectOneMenu id="department" value="#{billSearch.bill.department}" >
+                            <f:selectItems value="#{departmentController.items}" var="dep" itemLabel="#{dep.name}" itemValue="#{dep}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="BillDate:" for="billDate" />
+                        <p:calendar id="billDate" value="#{billSearch.bill.billDate}" title="BillDate" pattern="dd MMM yyyy">
+                        </p:calendar>
+                        <p:outputLabel value="BillTime:" for="billTime" />
+                        <p:calendar id="billTime" value="#{billSearch.bill.billTime}" title="BillTime" pattern="dd MMM yyyy hh:mm:ss" >
+                        </p:calendar>
+
+                        <p:outputLabel value="PaymentMethod:" for="paymentMethod" />
+                        <p:selectOneMenu id="paymentMethod" value="#{billSearch.bill.paymentMethod}" >
+                            <f:selectItems value="#{enumController.paymentMethods}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="BillType:" for="billType" />
+                        <p:selectOneMenu id="billType" value="#{billSearch.bill.billType}" title="BillType" >
+                            <f:selectItems value="#{enumController.billTypes}" ></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="DeptId:" for="deptId" />
+                        <p:inputText id="deptId" value="#{billSearch.bill.deptId}" title="DeptId" />
+                        <p:outputLabel value="InsId:" for="insId" />
+                        <p:inputText id="insId" value="#{billSearch.bill.insId}" title="InsId" />
+                        
+                        <p:outputLabel id="lblPerson" value="Client"  />
+                        <p:outputLabel id="person" value="#{billSearch.bill.person.nameWithTitle}" />
+
+                        <p:outputLabel value="NetTotal:" for="netTotal" />
+                        <p:inputText id="netTotal" value="#{billSearch.bill.netTotal}" title="NetTotal" />
+
+                        <p:outputLabel value="Discount:" for="discount" />
+                        <p:inputText id="discount" value="#{billSearch.bill.discount}" title="Discount" />
+
+                        <p:outputLabel value="Total:" for="total" />
+                        <p:inputText id="total" value="#{billSearch.bill.total}" title="Total" />
+                        
+                        
+                        
+                        <p:outputLabel value="Vat:" for="vat" />
+                        <p:inputText id="vat" value="#{billSearch.bill.vat}" title="Vat" />
+                        
+                        
+                        <p:outputLabel value="BillTotal:" for="billTotal" />
+                        <p:inputText id="billTotal" value="#{billSearch.bill.billTotal}" title="BillTotal" />
+                        <p:outputLabel value="AdjustedTotal:" for="adjustedTotal" />
+                        <p:inputText id="adjustedTotal" value="#{billSearch.bill.adjustedTotal}" title="AdjustedTotal" />
+                        <p:outputLabel value="ClaimableTotal:" for="claimableTotal" />
+                        <p:inputText id="claimableTotal" value="#{billSearch.bill.claimableTotal}" title="ClaimableTotal" />
+                        
+                        <p:outputLabel value="CashPaid:" for="cashPaid" />
+                        <p:inputText id="cashPaid" value="#{billSearch.bill.cashPaid}" title="CashPaid" />
+                        <p:outputLabel value="CashBalance:" for="cashBalance" />
+                        <p:inputText id="cashBalance" value="#{billSearch.bill.cashBalance}" title="CashBalance" />
+                        
+                        <p:outputLabel value="DiscountPercent:" for="discountPercent" />
+                        <p:inputText id="discountPercent" value="#{billSearch.bill.discountPercent}" title="DiscountPercent" />
+                        <p:outputLabel value="GrnNetTotal:" for="grnNetTotal" />
+                        <p:inputText id="grnNetTotal" value="#{billSearch.bill.grnNetTotal}" title="GrnNetTotal" />
+                        <p:outputLabel value="PaidAmount:" for="paidAmount" />
+                        <p:inputText id="paidAmount" value="#{billSearch.bill.paidAmount}" title="PaidAmount" />
+                        
+                        <p:outputLabel value="SaleValue:" for="saleValue" />
+                        <p:inputText id="saleValue" value="#{billSearch.bill.saleValue}" title="SaleValue" />
+                        <p:outputLabel value="FreeValue:" for="freeValue" />
+                        <p:inputText id="freeValue" value="#{billSearch.bill.freeValue}" title="FreeValue" />
+                        <p:outputLabel value="GrantTotal:" for="grantTotal" />
+                        <p:inputText id="grantTotal" value="#{billSearch.bill.grantTotal}" title="GrantTotal" />
+                        <p:outputLabel value="HospitalFee:" for="hospitalFee" />
+                        <p:inputText id="hospitalFee" value="#{billSearch.bill.hospitalFee}" title="HospitalFee" />
+                        <p:outputLabel value="ProfessionalFee:" for="professionalFee" />
+                        <p:inputText id="professionalFee" value="#{billSearch.bill.professionalFee}" title="ProfessionalFee" />
+                        <p:outputLabel value="VatPlusNetTotal:" for="vatPlusNetTotal" />
+                        <p:inputText id="vatPlusNetTotal" value="#{billSearch.bill.vatPlusNetTotal}" title="VatPlusNetTotal" />
+                        <p:outputLabel value="VatCalulatedAmount:" for="vatCalulatedAmount" />
+                        <p:inputText id="vatCalulatedAmount" value="#{billSearch.bill.vatCalulatedAmount}" title="VatCalulatedAmount" />
+                        <p:outputLabel value="VatPlusStaffFee:" for="vatPlusStaffFee" />
+                        <p:inputText id="vatPlusStaffFee" value="#{billSearch.bill.vatPlusStaffFee}" title="VatPlusStaffFee" />
+                        <p:outputLabel value="VatPlusHosFee:" for="vatPlusHosFee" />
+                        <p:inputText id="vatPlusHosFee" value="#{billSearch.bill.vatPlusHosFee}" title="VatPlusHosFee" />
+                    </p:panelGrid>
+                    
+                </h:form>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

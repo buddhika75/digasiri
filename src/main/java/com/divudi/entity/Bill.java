@@ -304,6 +304,7 @@ public class Bill implements Serializable {
     private Date smsedAt;
     @OneToMany(mappedBy = "bill")
     private List<Sms> sentSmses;
+private boolean printed;
 
     @Transient
     double transTotalCCFee;
@@ -319,6 +320,17 @@ public class Bill implements Serializable {
     double vatPlusStaffFee;
     @Transient
     double vatPlusHosFee;
+
+    public boolean isPrinted() {
+        return printed;
+    }
+
+    public void setPrinted(boolean printed) {
+        this.printed = printed;
+    }
+    
+    
+    
 
     public double getTransTotalSaleValue() {
         return transTotalSaleValue;
