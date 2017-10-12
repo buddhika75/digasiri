@@ -456,7 +456,7 @@ public class BookingController implements Serializable {
         if (absentPercentage > 100) {
             absentPercentage = 100;
         }
-        countToMarkAbsent = (bss.size() / 100) * absentPercentage;
+        countToMarkAbsent = (bss.size() * absentPercentage)/100;
         System.out.println("countToMarkAbsent = " + countToMarkAbsent);
         int intCountToMarkAbsent = countToMarkAbsent.intValue();
         System.out.println("intCountToMarkAbsent = " + intCountToMarkAbsent);
