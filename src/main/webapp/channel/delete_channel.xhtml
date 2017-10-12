@@ -11,6 +11,7 @@
 
             <ui:define name="content">
                 <h:form >
+                    
                     <p:panel header="Mark Absent" >
                         <p:panelGrid columns="2" >
                             <p:outputLabel value="From" ></p:outputLabel>
@@ -21,6 +22,8 @@
                             <p:inputText value="#{bookingController.absentPercentage}" ></p:inputText>
                             <p:commandButton value="Delete Bulk" ajax="false" action="#{bookingController.deleteBulk() }" ></p:commandButton>
                         </p:panelGrid>
+                        <p:poll interval="10" update="msg" ></p:poll>
+                        <h2><p:outputLabel id="msg" value="Records Deleted : #{bookingController.di}" ></p:outputLabel></h2>
                     </p:panel>
                 </h:form>
             </ui:define>

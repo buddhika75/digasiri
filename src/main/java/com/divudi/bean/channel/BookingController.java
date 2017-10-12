@@ -428,7 +428,20 @@ public class BookingController implements Serializable {
         UtilityController.addSuccessMessage("Marked Bulk as Absent");
     }
     
+    Long di=0l;
+
+    public Long getDi() {
+        return di;
+    }
+
+    public void setDi(Long di) {
+        this.di = di;
+    }
+    
+    
+    
     public void deleteBulk() {
+        di=0l;
         List<BillSession> bss = new ArrayList<>();
         String sql = "Select bs From BillSession bs "
                 + " where bs.retired=false and "
@@ -492,6 +505,7 @@ public class BookingController implements Serializable {
         bss = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
         for (BillSession bs : bss) {
             deleteBsCascadeAll(bs);
+            di++;
         }
         
         UtilityController.addSuccessMessage("Marked Bulk as Absent");
