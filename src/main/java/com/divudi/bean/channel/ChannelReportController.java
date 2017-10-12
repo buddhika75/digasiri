@@ -91,6 +91,8 @@ public class ChannelReportController implements Serializable {
     private List<AvalabelChannelDoctorRow> acdrs;// created 2016.8.10
 
     double netTotal;
+    double vatTotal;
+    double hospitalFee;
     double netTotalDoc;
     double cancelTotal;
     double refundTotal;
@@ -260,11 +262,16 @@ public class ChannelReportController implements Serializable {
         return grantNetTotal;
     }
 
+    public String getVatTotalStr() {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
+        return decimalFormat.format(vatTotal);
+    }
+
     public String getGrantNetTotalStr() {
         DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
         return decimalFormat.format(grantNetTotal);
     }
-    
+
     public String getNetTotalStr() {
         DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
         return decimalFormat.format(netTotal);
@@ -2086,6 +2093,38 @@ public class ChannelReportController implements Serializable {
                 netTotal += bs.getBill().getStaffFee();
                 grantNetTotal += bs.getBill().getNetTotal();
             }
+        }
+    }
+
+    public void fillPresentAllViewForPeriod(Date from, Date to) {
+       String sql = "Select bs From BillSession bs "
+                + " where bs.retired=false and "
+                + " bs.absent!=true and "
+                + " bs.bill.cancelled=false and "
+                + " bs.bill.paidAmount > :paidAmount and "
+                + " bs.bill.refunded=false and "
+                + " bs.bill.billType in :tbs and "
+                + " bs.sessionDate between :ssFrom and :ssTo "
+                + " order by bs.serialNo";
+        HashMap hh = new HashMap();
+        hh.put("ssFrom", from);
+        hh.put("ssTo", to);
+        List<BillType> bts = new ArrayList<>();
+        bts.add(BillType.ChannelAgent);
+        bts.add(BillType.ChannelCash);
+        bts.add(BillType.ChannelOnCall);
+        bts.add(BillType.ChannelStaff);
+        hh.put("tbs", bts);
+        hh.put("paidAmount", 0.0);
+        presentViewSessions = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
+        netTotal = 0.0;
+        vatTotal = 0.0;
+        grantNetTotal = 0.0;
+        for (BillSession bs : presentViewSessions) {
+            netTotal += bs.getBill().getStaffFee();
+            grantNetTotal += bs.getBill().getNetTotal();
+            hospitalFee += (bs.getBill().getNetTotal() - bs.getBill().getStaffFee());
+            vatTotal += bs.getBill().getVat();
         }
     }
 
@@ -7188,7 +7227,21 @@ public class ChannelReportController implements Serializable {
     public void setPresentViewSessions(List<BillSession> presentViewSessions) {
         this.presentViewSessions = presentViewSessions;
     }
-    
-    
-    
+
+    public double getVatTotal() {
+        return vatTotal;
+    }
+
+    public void setVatTotal(double vatTotal) {
+        this.vatTotal = vatTotal;
+    }
+
+    public double getHospitalFee() {
+        return hospitalFee;
+    }
+
+    public void setHospitalFee(double hospitalFee) {
+        this.hospitalFee = hospitalFee;
+    }
+
 }
