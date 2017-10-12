@@ -472,19 +472,16 @@ public class BookingController implements Serializable {
         int temi = 0;
         for (int i = 0; i < intCountToMarkAbsent; i++) {
             BillSession bs;
-            temi = 0;
-            do {
-                temi++;
-                int n = ThreadLocalRandom.current().nextInt(0, intCountToMarkAbsent);
+            int n = ThreadLocalRandom.current().nextInt(0, intCountToMarkAbsent);
+            System.out.println("n = " + n);
+            if (n < bss.size()) {
                 bs = bss.get(n);
-                if (temi > 100) {
-                    break;
-                }
-            } while (!bs.isAbsent());
-            bs.setAbsent(true);
-            bs.setAbsentMarkedAt(new Date());
-            bs.setAbsentMarkedUser(null);
-            getBillSessionFacade().edit(bs);
+                System.out.println("bs marking absent " + bs);
+                bs.setAbsent(true);
+                bs.setAbsentMarkedAt(new Date());
+                bs.setAbsentMarkedUser(null);
+                getBillSessionFacade().edit(bs);
+            }
         }
 
         sql = "Select bs From BillSession bs "
@@ -502,10 +499,10 @@ public class BookingController implements Serializable {
         hh.put("ssTo", getToDate());
         hh.put("tbs", bts);
         hh.put("paidAmount", 0.0);
-        System.out.println("sql = " + sql);
-        System.out.println("hh = " + hh);
-        bss = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
+        bss = getBillSessionFacade().findBySQL(sql, hh);
+        System.out.println("bss.size() = " + bss.size());
         for (BillSession bs : bss) {
+            System.out.println("Deleting bs = " + bs);
             deleteBsCascadeAll(bs);
             di++;
         }
@@ -522,8 +519,9 @@ public class BookingController implements Serializable {
     @EJB
     PatientEncounterFacade patientEncounterFacade;
 
-    private void deleteBsCascadeAll(BillSession bs) {
+    private boolean deleteBsCascadeAll(BillSession bs) {
         System.out.println("bs = " + bs);
+        boolean ok = false;
         try {
             Bill db = bs.getBill();
             List<BillFee> dbfs = db.getBillFees();
@@ -531,12 +529,25 @@ public class BookingController implements Serializable {
             List<BillItem> dbis = db.getBillItems();
             List<BillItem> dbies = db.getBillExpenses();
             List<Payment> dps = db.getPayments();
+            BillItem dsbi = db.getSingleBillItem();
+            BillSession dsbs = db.getSingleBillSession();
 
             AgentHistory dah = db.getAgentHistory();
             if (dah != null) {
                 dah.setBill(null);
                 db.setAgentHistory(null);
                 agentHistoryFacade.edit(dah);
+            }
+
+            if (dsbi != null) {
+                dsbi.setBill(null);
+                getBillItemFacade().edit(dsbi);
+            }
+
+            if (dsbs != null) {
+                dsbs.setBill(null);
+                dsbs.setBillItem(null);
+                getBillSessionFacade().edit(dsbs);
             }
 
             if (db.getBackwardReferenceBill() != null) {
@@ -559,7 +570,6 @@ public class BookingController implements Serializable {
             for (BillItem dbie : dbis) {
                 dbie.setBill(null);
                 dbie.setBillFees(null);
-
                 dbie.setBillSession(null);
                 getBillItemFacade().edit(dbie);
             }
@@ -602,6 +612,8 @@ public class BookingController implements Serializable {
             db.setRefundBills(null);
             db.setReturnBhtIssueBills(null);
             db.setReturnPreBills(null);
+            db.setSingleBillItem(null);
+            db.setSingleBillSession(null);
             billFacade.edit(db);
 
             bs.setBill(null);
@@ -635,6 +647,7 @@ public class BookingController implements Serializable {
                 pe.setBillSession(null);
                 patientEncounterFacade.edit(pe);
             }
+
             if (dah != null) {
                 agentHistoryFacade.remove(dah);
             }
@@ -658,6 +671,13 @@ public class BookingController implements Serializable {
                 paymentFacade.remove(dp);
             }
 
+            if (dsbi != null) {
+                getBillItemFacade().remove(dsbi);
+            }
+            if (dsbs != null) {
+                getBillSessionFacade().remove(dsbs);
+            }
+
             for (BillItem dbi : dbis) {
                 getBillItemFacade().remove(dbi);
             }
@@ -670,10 +690,6 @@ public class BookingController implements Serializable {
                 billComponentFacade.remove(dbc);
             }
 
-            billFacade.remove(db);
-
-            billSessionFacade.remove(bs);
-
             if (pbs != null) {
                 billSessionFacade.remove(pbs);
             }
@@ -684,8 +700,17 @@ public class BookingController implements Serializable {
                 patientEncounterFacade.remove(pe);
             }
 
+            billFacade.remove(db);
+
+            billSessionFacade.remove(bs);
+
+            System.out.println("successfully deleted");
+            ok = true;
+            return ok;
         } catch (Exception e) {
             System.out.println("e = " + e);
+            ok = false;
+            return ok;
         }
     }
 
