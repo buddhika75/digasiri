@@ -439,6 +439,7 @@ public class BookingController implements Serializable {
     }
 
     public void deleteBulk() {
+        System.out.println("delete bulk");
         di = 0l;
         List<BillSession> bss = new ArrayList<>();
         String sql = "Select bs From BillSession bs "
@@ -459,23 +460,26 @@ public class BookingController implements Serializable {
         bts.add(BillType.ChannelStaff);
         hh.put("tbs", bts);
         hh.put("paidAmount", 0.0);
-        System.out.println("sql = " + sql);
-        System.out.println("hh = " + hh);
         bss = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
-        System.out.println("bss.size = " + bss.size());
+        System.out.println("Absent Size = " + bss.size());
         Double countToMarkAbsent;
         if (absentPercentage > 100) {
             absentPercentage = 100;
         }
         countToMarkAbsent = (bss.size() * absentPercentage) / 100;
-        System.out.println("countToMarkAbsent = " + countToMarkAbsent);
         int intCountToMarkAbsent = countToMarkAbsent.intValue();
         System.out.println("intCountToMarkAbsent = " + intCountToMarkAbsent);
+        int temi = 0;
         for (int i = 0; i < intCountToMarkAbsent; i++) {
             BillSession bs;
+            temi = 0;
             do {
+                temi++;
                 int n = ThreadLocalRandom.current().nextInt(0, intCountToMarkAbsent);
                 bs = bss.get(n);
+                if (temi > 100) {
+                    break;
+                }
             } while (!bs.isAbsent());
             bs.setAbsent(true);
             bs.setAbsentMarkedAt(new Date());
