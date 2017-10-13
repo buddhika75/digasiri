@@ -29,21 +29,24 @@
                             <p:dataExporter target="tbl" type="xls" fileName="Present Patients"></p:dataExporter>
                         </p:commandButton>
                         <p:dataTable id="tbl" value="#{channelReportController.presentViewSessions}" var="bs" 
-                                     sortBy="#{bs.bill.billClass}" rowIndexVar="n">
-                            <p:columnGroup type="header">
-                                <p:row>
-                                    <p:column colspan="7" headerText="Appointments" ></p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column headerText="No" />
-                                    <p:column headerText="Date" />
-                                    <p:column headerText="Bill No" />
-                                    <p:column headerText="Consultant" ></p:column>
-                                    <p:column headerText="Doctor Fee" />
-                                    <p:column headerText="Hospital Fee" />
-                                    <p:column headerText="VAT" />
-                                </p:row>
-                            </p:columnGroup>
+                                     sortBy="#{bs.bill.billClass}" rowIndexVar="n"
+                                     paginator="true" rows="10"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,25,50">
+                            <!--                            <p:columnGroup type="header">
+                                                            <p:row>
+                                                                <p:column colspan="7" headerText="Appointments" ></p:column>
+                                                            </p:row>
+                                                            <p:row>
+                                                                <p:column headerText="No" />
+                                                                <p:column headerText="Date" />
+                                                                <p:column headerText="Bill No" />
+                                                                <p:column headerText="Consultant" ></p:column>
+                                                                <p:column headerText="Doctor Fee" />
+                                                                <p:column headerText="Hospital Fee" />
+                                                                <p:column headerText="VAT" />
+                                                            </p:row>
+                                                        </p:columnGroup>-->
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" footerText="Totals" />
@@ -56,16 +59,16 @@
                             <p:column headerText="No" width="20" style="width: 20px;">
                                 <p:outputLabel value="#{n+1}" ></p:outputLabel>
                             </p:column>  
-                            <p:column headerText="Date" width="20" style="width: 20px;">
+                            <p:column headerText="Date" width="120"  sortBy="#{bs.sessionDate}">
                                 <p:outputLabel value="#{bs.sessionDate}" >
                                     <f:convertDateTime pattern="dd MMM yyyy" ></f:convertDateTime>
                                 </p:outputLabel>
                             </p:column>  
 
-                            <p:column headerText="Serial" width="20">
+                            <p:column headerText="Serial" width="160" sortBy="#{bs.bill.deptId}" filterBy="#{bs.bill.deptId}">
                                 <p:outputLabel value="#{bs.bill.deptId}" ></p:outputLabel>
                             </p:column>    
-                            <p:column headerText="Consultant" footerText="Totals">
+                            <p:column headerText="Consultant" footerText="Totals" filterBy="#{bs.serviceSession.staff.person.name}" sortBy="#{bs.serviceSession.staff.person.name}">
                                 <p:outputLabel value="#{bs.serviceSession.staff.person.nameWithTitle}" ></p:outputLabel>
                             </p:column>
                             <p:column headerText="Doctor Fee" styleClass="numberCol" footerText="#{bs.bill.staffFee}">
