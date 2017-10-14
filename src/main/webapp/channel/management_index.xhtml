@@ -30,13 +30,15 @@
                                              action="/channel/maintanance/doctorSpeciality/List" ></p:commandButton>
                         </p:panelGrid>
                     </p:panel>
-                    
+
                     <p:panel header="Channelling" >
                         <p:panelGrid columns="1" >
+                            <p:commandButton value="Mark Absent" action="/channel/mark_absent" ajax="false" ></p:commandButton>
+                            <p:commandButton value="View Present" ajax="false" action="/channel/channel_present_all_period_view" ></p:commandButton>
                             <p:commandButton value="Editing Appoinment Count" action="/channel/channel_booking_editing_appoinment_count" ajax="false" ></p:commandButton>
                         </p:panelGrid>
                     </p:panel>
-                    
+
                     <p:panel header="Consultants" >
                         <p:panelGrid columns="1" >
                             <p:commandButton  styleClass="linkButton" ajax="false" value="Add Channelling Consultants to Institutions" action="/channel/person_institution"/>

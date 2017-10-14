@@ -131,6 +131,8 @@ public class BillSearch implements Serializable {
     private SearchKeyword searchKeyword;
     Institution creditCompany;
     PatientInvestigation patientInvestigation;
+    private String strEmailBefore;
+    private String strEmailAfter;
 
     public BillSearch() {
     }
@@ -160,6 +162,66 @@ public class BillSearch implements Serializable {
         DecimalFormat newFormat = new DecimalFormat("#.##");
         return Double.valueOf(newFormat.format(d));
 
+    }
+
+    public String toEditBillFees() {
+        if (bill == null) {
+            JsfUtil.addErrorMessage("Bill?");
+            return "";
+        }
+        strEmailBefore = billToString(bill) + "\n\n" + editDetailsToString();
+        return "/dataAdmin/edit_bill_fees";
+    }
+
+    private String editDetailsToString() {
+        String s;
+        s = "Editing Details\n";
+        s += "Edited By: " + getSessionController().getLoggedUser().getWebUserPerson().getName() + "\n";
+        s += "Edited At: " + new Date() + "\n";
+        return s;
+    }
+
+    private String billToString(Bill b) {
+        String s;
+        s = "Bill Details\n";
+        s += "Bill No: " + b.getInsId() + "\n";
+        s += "Bill ID: " + b.getDeptId() + "\n";
+        s += "Bill Date: " + b.getBillDate() + "\n";
+        s += "Bill Time: " + b.getBillTime() + "\n";
+        if (b.getPerson() != null) {
+            s += "Client: " + b.getPerson().getNameWithTitle() + "\n";
+        }
+        if (b.getInstitution() != null) {
+            s += "Institution: " + b.getInstitution().getName() + "\n";
+        }
+        if (b.getDepartment() != null) {
+            s += "Department: " + b.getDepartment().getName() + "\n";
+        }
+        s += "Bill Tye: " + b.getBillType() + "\n";
+        s += "Payment Method: " + b.getPaymentMethod() + "\n";
+        s += "Total: " + b.getTotal() + "\n";
+        s += "Discount: " + b.getDiscount() + "\n";
+        s += "Net Total: " + b.getNetTotal() + "\n";
+        s += "VAT: " + b.getVat() + "\n";
+        return s;
+    }
+
+    public String saveBillFeeEdit() {
+        getBillFacade().edit(bill);
+        strEmailAfter = billToString(bill);
+        JsfUtil.addSuccessMessage("Udated");
+        String strEmail = "Details of Bll Before Editing\n"
+                + strEmailBefore + "\n"
+                + "\n"
+                + "\n"
+                + "Details of Bill after After Editing\n"
+                + strEmailAfter;
+
+        commonController.sendEmail1("Bill Fee Edit", strEmail);
+        bill = null;
+        strEmailBefore = "";
+        strEmailAfter = "";
+        return "/dataAdmin/search_edit_for_fee_bills";
     }
 
     public void updateValue() {

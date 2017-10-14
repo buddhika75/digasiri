@@ -616,7 +616,7 @@ public class PatientInvestigationController implements Serializable {
             iTextRenderer.layout();
 
             final FileOutputStream fileOutputStream
-                    = new FileOutputStream(new File("D:\\LabReport.pdf"));
+                    = new FileOutputStream(new File("LabReport.pdf"));
 
             iTextRenderer.createPDF(fileOutputStream);
             fileOutputStream.close();
@@ -627,6 +627,51 @@ public class PatientInvestigationController implements Serializable {
         }
     }
 //    ...............sendEmail...............................................
+
+    public void sendEmail1(String toEmail, String messageHeading, String messageBody, String fromUserName, String fromPassword) {
+        final String username = fromUserName;
+        final String password = fromPassword;
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromUserName));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toEmail));
+            message.setSubject(messageHeading);
+            message.setText(messageBody);
+            BodyPart msbp1 = new MimeBodyPart();
+            msbp1.setText("Final Lab report of patient");
+            
+//            MimeBodyPart msbp2 = new MimeBodyPart();
+//            DataSource source = new FileDataSource("LabReport.pdf");
+//            msbp2.setDataHandler(new DataHandler(source));
+//            msbp2.setFileName("/Labreport.pdf");
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(msbp1);
+//            multipart.addBodyPart(msbp2);
+
+            message.setContent(multipart);
+
+            Transport.send(message);
+
+            System.out.println("Send Successfully");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public void sendEmail() throws IOException, DocumentException, com.lowagie.text.DocumentException, Exception {
 
@@ -644,10 +689,10 @@ public class PatientInvestigationController implements Serializable {
 //        Authenticator auth = new SMTPAuthenticator();
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
 
         try {
             Message message = new MimeMessage(session);
