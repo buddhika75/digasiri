@@ -227,6 +227,7 @@ public class BookingController implements Serializable {
 
     public String session() {
         if (preSet()) {
+            getChannelReportController().fillSessions();
             return "channel_session_view";
         } else {
             return "";
@@ -235,6 +236,7 @@ public class BookingController implements Serializable {
 
     public String phone() {
         if (preSet()) {
+            getChannelReportController().fillNurseViewPb();
             return "channel_phone_view";
         } else {
             return "";
@@ -243,6 +245,7 @@ public class BookingController implements Serializable {
 
     public String user() {
         if (preSet()) {
+            getChannelReportController().fillNurseView();
             return "channel_user_view";
         } else {
             return "";

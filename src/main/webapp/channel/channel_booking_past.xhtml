@@ -224,7 +224,7 @@
                     <h:panelGrid columns="3" styleClass="alignTop">  
                         <p:panel header="Selected Session">
                             <h:panelGrid columns="1">
-                                <p:commandButton value="Nurse View " action="#{bookingPastController.nurse}"  onclick="onSubmitButton();" style="width: 150px;" >                                       
+                                <p:commandButton ajax="false" value="Nurse View " action="#{bookingPastController.nurse}"   style="width: 150px;" >                                       
                                 </p:commandButton>
                                 <p:commandButton value="Doctor View " action="#{bookingPastController.doctor}" ajax="false" onclick="onSubmitButton();" style="width: 150px;" >                                        
                                 </p:commandButton>

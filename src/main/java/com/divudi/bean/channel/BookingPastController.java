@@ -155,6 +155,7 @@ public class BookingPastController implements Serializable {
 
     public String nurse() {
         if (preSet()) {
+            getChannelReportController().fillNurseViewPb();
             return "channel_nurse_view";
         } else {
             return "";
@@ -163,6 +164,7 @@ public class BookingPastController implements Serializable {
 
     public String doctor() {
         if (preSet()) {
+            getChannelReportController().fillDoctorView();
             return "channel_doctor_view";
         } else {
             return "";
@@ -171,6 +173,7 @@ public class BookingPastController implements Serializable {
 
     public String session() {
         if (preSet()) {
+            
             return "channel_session_view";
         } else {
             return "";
@@ -179,6 +182,7 @@ public class BookingPastController implements Serializable {
 
     public String phone() {
         if (preSet()) {
+            getChannelReportController().fillNurseViewPb();
             return "channel_phone_view";
         } else {
             return "";
@@ -201,7 +205,7 @@ public class BookingPastController implements Serializable {
             return "";
         }
     }
-    
+
     public String presentView() {
         if (preSet()) {
             getChannelReportController().fillPresentView();
@@ -210,7 +214,7 @@ public class BookingPastController implements Serializable {
             return "";
         }
     }
-    
+
     public String paidAllView() {
         if (preSet()) {
             getChannelReportController().fillPaidAllView();
@@ -219,7 +223,7 @@ public class BookingPastController implements Serializable {
             return "";
         }
     }
-    
+
     public String presentAllView() {
         if (preSet()) {
             getChannelReportController().fillPresentAllView();
@@ -228,7 +232,7 @@ public class BookingPastController implements Serializable {
             return "";
         }
     }
-    
+
     public void markAsPresent() {
         getSelectedBillSession().setAbsent(false);
         getSelectedBillSession().setAbsentMarkedAt(new Date());
@@ -244,7 +248,7 @@ public class BookingPastController implements Serializable {
         getBillSessionFacade().edit(getSelectedBillSession());
         UtilityController.addSuccessMessage("Marked as Absent");
     }
-    
+
     public Title[] getTitle() {
         return Title.values();
     }
@@ -397,7 +401,6 @@ public class BookingPastController implements Serializable {
 //        hh.put("ss", getSelectedServiceSession());
 //        billSessions = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
 //    }
-    
     public void fillBillSessions() {
         selectedBillSession = null;
 //        selectedServiceSession = ((ServiceSession) event.getObject());
@@ -428,7 +431,7 @@ public class BookingPastController implements Serializable {
 //        date = null;
 //        date = ((Date) event.getObject());
         selectedBillSession = null;
-        billSessions=new ArrayList();
+        billSessions = new ArrayList();
         serviceSessions = new ArrayList<>();
 
         Date currenDate = new Date();
@@ -445,8 +448,8 @@ public class BookingPastController implements Serializable {
 //            int wd = c.get(Calendar.DAY_OF_WEEK);
 //            sql = "Select s From ServiceSession s where s.retired=false and s.staff.id=" + getStaff().getId() + " and s.sessionWeekday=" + wd;
 //            serviceSessions = getServiceSessionFacade().findBySQL(sql);
-            serviceSessions=fetchCreatedServiceSession(staff, date);
-            int a=0;
+            serviceSessions = fetchCreatedServiceSession(staff, date);
+            int a = 0;
             for (ServiceSession s : serviceSessions) {
                 s.setTransDisplayCountWithoutCancelRefund(channelBean.getBillSessionsCountWithOutCancelRefund(s, s.getSessionDate()));
                 s.setTransCreditBillCount(channelBean.getBillSessionsCountCrditBill(s, s.getSessionDate()));
@@ -542,7 +545,7 @@ public class BookingPastController implements Serializable {
         Double[] dbl = Arrays.copyOf(obj, obj.length, Double[].class);
         return dbl;
     }
-    
+
     public List<ServiceSession> fetchCreatedServiceSession(Staff s, Date d) {
         String sql;
         Map m = new HashMap();
@@ -559,13 +562,13 @@ public class BookingPastController implements Serializable {
         System.out.println("sql = " + sql);
         return getServiceSessionFacade().findBySQL(sql, m, TemporalType.TIMESTAMP);
     }
-    
+
     public void listnerStaffListForRowSelect() {
         getSelectedConsultants();
         setStaff(null);
-        billSessions=null;
+        billSessions = null;
     }
-    
+
     public List<Staff> getSelectedConsultants() {
         System.out.println("selectText.length() = " + selectTextConsultant.length());
         String sql;
@@ -660,13 +663,13 @@ public class BookingPastController implements Serializable {
         return consultants;
     }
 
-    public Staff getStaff() {        
+    public Staff getStaff() {
         return staff;
     }
 
     public void setStaff(Staff staff) {
         this.staff = staff;
-        makeBillSessionNull();        
+        makeBillSessionNull();
     }
 
     public StaffFacade getStaffFacade() {
@@ -906,7 +909,7 @@ public class BookingPastController implements Serializable {
         return date;
     }
 
-    public void setDate(Date date) {        
+    public void setDate(Date date) {
         this.date = date;
         makeBillSessionNull();
         serviceSessions = new ArrayList<>();

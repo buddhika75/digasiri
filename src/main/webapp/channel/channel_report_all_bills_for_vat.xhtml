@@ -69,7 +69,14 @@
                             <p:outputLabel value="(#{b.billedBill.insId})" rendered="#{b.billedBill ne null}" />                                    
                         </p:column>
 
-                        <p:column style="text-align: left;" >
+                        <p:column style="text-align: left;" width="200" >
+                            <f:facet name="header" >
+                                <p:outputLabel value="Consultant" />
+                            </f:facet>
+                            <p:outputLabel value="#{b.singleBillSession.serviceSession.staff.person.name}" />                                    
+                        </p:column>
+                        
+                        <p:column style="text-align: left;" width="200">
                             <f:facet name="header" >
                                 <p:outputLabel value="Patient Name" />
                             </f:facet>
