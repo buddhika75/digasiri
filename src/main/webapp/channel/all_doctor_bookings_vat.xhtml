@@ -24,7 +24,7 @@
                             <p:calendar value="#{bookingController.toDate}" pattern="dd MMMM yyyy"></p:calendar>
                         </h:panelGrid>
                         <h:panelGrid columns="3" >
-                            <p:commandButton value="Process" action="#{bookingController.fillAllDoctorBookings()}" ajax="false"  style="width: 150px;" >                                        
+                            <p:commandButton value="Process" action="#{bookingController.fillAllDoctorBookingsVat()}" ajax="false"  style="width: 150px;" >                                        
                             </p:commandButton>
                             <p:commandButton ajax="false" value="Excel" >
                                 <p:dataExporter target="tbl" type="xls" fileName="bookings" ></p:dataExporter>
