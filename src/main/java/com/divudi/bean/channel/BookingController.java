@@ -196,7 +196,8 @@ public class BookingController implements Serializable {
                 + " where bs.retired=false and "
                 + " bs.bill.paidAmount > :paidAmount and "
                 + " bs.bill.billType in :tbs and "
-                + " bs.sessionDate between :fromDate and :toDate ";
+                + " bs.sessionDate between :fromDate and :toDate "
+                + " group by bs.serviceSession.staff";
 
         List<Object[]> allBills = billFacade.findObjectsArrayBySQL(sql, m, TemporalType.TIMESTAMP);
 
@@ -207,7 +208,8 @@ public class BookingController implements Serializable {
                 + " bs.bill.paidAmount > :paidAmount and "
                 + " bs.bill.refunded=false and "
                 + " bs.bill.billType in :tbs and "
-                + " bs.sessionDate between :fromDate and :toDate ";
+                + " bs.sessionDate between :fromDate and :toDate "
+                + " group by bs.serviceSession.staff";
         List<Object[]> allCancelBills = billFacade.findObjectsArrayBySQL(sql, m, TemporalType.TIMESTAMP);
 
         sql = "select bs.serviceSession.staff, count(bs), sum(bs.bill.staffFee), sum(bs.bill.hospitalFee), sum(bs.bill.netTotal), sum(bs.bill.vat) ";
@@ -217,7 +219,8 @@ public class BookingController implements Serializable {
                 + " bs.bill.paidAmount > :paidAmount and "
                 + " bs.bill.refunded=true and "
                 + " bs.bill.billType in :tbs and "
-                + " bs.sessionDate between :fromDate and :toDate ";
+                + " bs.sessionDate between :fromDate and :toDate "
+                + " group by bs.serviceSession.staff";
         List<Object[]> allRefundBills = billFacade.findObjectsArrayBySQL(sql, m, TemporalType.TIMESTAMP);
 
         if (false) {
@@ -241,7 +244,18 @@ public class BookingController implements Serializable {
                 if (count == 0) {
                     continue;
                 }
-
+                if ((Double) ob[2] == null) {
+                    ob[2] = 0.0;
+                }
+                if ((Double) ob[3] == null) {
+                    ob[3] = 0.0;
+                }
+                if ((Double) ob[4] == null) {
+                    ob[4] = 0.0;
+                }
+                if ((Double) ob[5] == null) {
+                    ob[5] = 0.0;
+                }
                 Double staffFee = (Double) ob[2];
                 Double hosFee = (Double) ob[3];
                 Double totFee = (Double) ob[4];
@@ -290,6 +304,19 @@ public class BookingController implements Serializable {
                     continue;
                 }
 
+                if ((Double) ob[2] == null) {
+                    ob[2] = 0.0;
+                }
+                if ((Double) ob[3] == null) {
+                    ob[3] = 0.0;
+                }
+                if ((Double) ob[4] == null) {
+                    ob[4] = 0.0;
+                }
+                if ((Double) ob[5] == null) {
+                    ob[5] = 0.0;
+                }
+
                 Double staffFee = (Double) ob[2];
                 Double hosFee = (Double) ob[3];
                 Double totFee = (Double) ob[4];
@@ -335,7 +362,18 @@ public class BookingController implements Serializable {
                 if (count == 0) {
                     continue;
                 }
-
+                if ((Double) ob[2] == null) {
+                    ob[2] = 0.0;
+                }
+                if ((Double) ob[3] == null) {
+                    ob[3] = 0.0;
+                }
+                if ((Double) ob[4] == null) {
+                    ob[4] = 0.0;
+                }
+                if ((Double) ob[5] == null) {
+                    ob[5] = 0.0;
+                }
                 Double staffFee = (Double) ob[2];
                 Double hosFee = (Double) ob[3];
                 Double totFee = (Double) ob[4];
@@ -357,6 +395,65 @@ public class BookingController implements Serializable {
         vat = 0.0;
 
         for (ChannelSummeryRow row : channelSummeryRows) {
+
+            if (row.getCountBilled() == null) {
+                row.setCountBilled(0l);
+            }
+            if (row.getCountCancelled() == null) {
+                row.setCountCancelled(0l);
+            }
+            if (row.getCountRefunded() == null) {
+                row.setCountRefunded(0l);
+            }
+            if (row.getStaffFeeBilled() == null) {
+                row.setStaffFeeBilled(0.0);
+            }
+            if (row.getStaffFeeCancelled() == null) {
+                row.setStaffFeeCancelled(0.0);
+            }
+            if (row.getStaffFeeRefunded() == null) {
+                row.setStaffFeeRefunded(0.0);
+            }
+            if (row.getHospitalFeeBilled() == null) {
+                row.setHospitalFeeBilled(0.0);
+            }
+            if (row.getHospitalFeeCancelled() == null) {
+                row.setHospitalFeeCancelled(0.0);
+            }
+            if (row.getTotalFeeBilled() == null) {
+                row.setTotalFeeBilled(0.0);
+            }
+            if (row.getTotalFeeCancelled() == null) {
+                row.setTotalFeeCancelled(0.0);
+            }
+            if (row.getTotalFeeRefunded() == null) {
+                row.setTotalFeeRefunded(0.0);
+            }
+            if (row.getHospitalFeeRefunded() == null) {
+                row.setHospitalFeeRefunded(0.0);
+            }
+            if (row.getVatBilled() == null) {
+                row.setVatBilled(0.0);
+            }
+            if (row.getVatCancelled() == null) {
+                row.setVatCancelled(0.0);
+            }
+            if (row.getVatRefunded() == null) {
+                row.setVatRefunded(0.0);
+            }
+            if (row.getHospitalFee() == null) {
+                row.setHospitalFee(0.0);
+            }
+            if (row.getStaffFee() == null) {
+                row.setStaffFee(0.0);
+            }
+            if (row.getTotalFee() == null) {
+                row.setTotalFee(0.0);
+            }
+            if (row.getVat() == null) {
+                row.setVat(0.0);
+            }
+
             row.setCount(row.getCountBilled() - row.getCountCancelled() - row.getCountRefunded());
             row.setStaffFee(row.getStaffFeeBilled() - row.getStaffFeeCancelled() - row.getStaffFeeRefunded());
             row.setHospitalFee(row.getHospitalFeeBilled() - row.getHospitalFeeCancelled());
