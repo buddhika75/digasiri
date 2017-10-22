@@ -2034,6 +2034,8 @@ public class ChannelReportController implements Serializable {
         }
     }
 
+    
+
     public void fillPresentView() {
         doctorViewSessions = new ArrayList<>();
         if (serviceSession != null) {
@@ -2097,7 +2099,7 @@ public class ChannelReportController implements Serializable {
     }
 
     public void fillPresentAllViewForPeriod(Date from, Date to) {
-       String sql = "Select bs From BillSession bs "
+        String sql = "Select bs From BillSession bs "
                 + " where bs.retired=false and "
                 + " bs.absent!=true and "
                 + " bs.bill.cancelled=false and "

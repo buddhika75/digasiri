@@ -594,6 +594,8 @@ public class StaffController implements Serializable {
         }
         return suggestions;
     }
+    
+    
 
     public List<Staff> completeStaffCodeChannel(String query) {
         List<Staff> suggestions;

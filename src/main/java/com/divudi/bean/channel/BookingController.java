@@ -8,6 +8,7 @@ import com.divudi.bean.common.DoctorSpecialityController;
 import com.divudi.bean.common.SessionController;
 import com.divudi.bean.common.SmsController;
 import com.divudi.bean.common.UtilityController;
+import com.divudi.bean.report.ChannelSummeryRow;
 import com.divudi.data.ApplicationInstitution;
 import com.divudi.data.BillType;
 import com.divudi.data.FeeType;
@@ -53,6 +54,7 @@ import com.divudi.facade.ServiceSessionFacade;
 import com.divudi.facade.StaffFacade;
 import com.divudi.facade.util.JsfUtil;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -108,9 +110,9 @@ public class BookingController implements Serializable {
     @EJB
     FingerPrintRecordFacade fpFacade;
     @EJB
-    FinalVariables finalVariables;
+    private FinalVariables finalVariables;
     @EJB
-    CommonFunctions commonFunctions;
+    private CommonFunctions commonFunctions;
     /**
      * Controllers
      */
@@ -131,7 +133,7 @@ public class BookingController implements Serializable {
     @Inject
     ChannelStaffPaymentBillController channelStaffPaymentBillController;
     @Inject
-    SmsController smsController;
+    private SmsController smsController;
 
     /**
      * Properties
@@ -162,9 +164,286 @@ public class BookingController implements Serializable {
     Date fromDate;
     Date toDate;
 
+    private double staffFaee;
+    private double hospitalFee;
+    private double scanFee;
+    private double vat;
+    private double totalFee;
+
     private ScheduleModel eventModel;
 
     private ChannelScheduleEvent event = new ChannelScheduleEvent();
+    private List<ChannelSummeryRow> channelSummeryRows;
+
+    public String fillAllDoctorBookingSummery() {
+
+        channelSummeryRows = new ArrayList<>();
+
+        String sql;
+        Map m = new HashMap();
+        m.put("fromDate", fromDate);
+        m.put("toDate", fromDate);
+        m.put("paidAmount", 0.0);
+        List<BillType> bts = new ArrayList<>();
+        bts.add(BillType.ChannelAgent);
+        bts.add(BillType.ChannelCash);
+        bts.add(BillType.ChannelOnCall);
+        bts.add(BillType.ChannelStaff);
+        m.put("tbs", bts);
+
+        sql = "select bs.serviceSession.staff, count(bs), sum(bs.bill.staffFee), sum(bs.bill.hospitalFee), sum(bs.bill.netTotal), sum(bs.bill.vat) ";
+        sql += "from BillSession bs "
+                + " where bs.retired=false and "
+                + " bs.bill.paidAmount > :paidAmount and "
+                + " bs.bill.billType in :tbs and "
+                + " bs.sessionDate between :fromDate and :toDate ";
+
+        List<Object[]> allBills = billFacade.findObjectsArrayBySQL(sql, m, TemporalType.TIMESTAMP);
+
+        sql = "select bs.serviceSession.staff, count(bs), sum(bs.bill.staffFee), sum(bs.bill.hospitalFee), sum(bs.bill.netTotal), sum(bs.bill.vat) ";
+        sql += "from BillSession bs "
+                + " where bs.retired=false and "
+                + " bs.bill.cancelled=true and "
+                + " bs.bill.paidAmount > :paidAmount and "
+                + " bs.bill.refunded=false and "
+                + " bs.bill.billType in :tbs and "
+                + " bs.sessionDate between :fromDate and :toDate ";
+        List<Object[]> allCancelBills = billFacade.findObjectsArrayBySQL(sql, m, TemporalType.TIMESTAMP);
+
+        sql = "select bs.serviceSession.staff, count(bs), sum(bs.bill.staffFee), sum(bs.bill.hospitalFee), sum(bs.bill.netTotal), sum(bs.bill.vat) ";
+        sql += "from BillSession bs "
+                + " where bs.retired=false and "
+                + " bs.bill.cancelled=false and "
+                + " bs.bill.paidAmount > :paidAmount and "
+                + " bs.bill.refunded=true and "
+                + " bs.bill.billType in :tbs and "
+                + " bs.sessionDate between :fromDate and :toDate ";
+        List<Object[]> allRefundBills = billFacade.findObjectsArrayBySQL(sql, m, TemporalType.TIMESTAMP);
+
+        if (false) {
+            BillSession s = new BillSession();
+            s.getServiceSession().getStaff();
+//            bs.bill.staffFee, bs.bill.hospitalFee, bs.bill.netTotal, bs.bill.vat,
+        }
+
+        if (!allBills.isEmpty()) {
+            for (Object[] ob : allBills) {
+                ChannelSummeryRow row = new ChannelSummeryRow();
+
+                Staff doc = null;
+                if (ob[0] instanceof Staff) {
+                    doc = (Staff) ob[0];
+                } else {
+                    continue;
+                }
+
+                long count = (long) ob[1];
+                if (count == 0) {
+                    continue;
+                }
+
+                Double staffFee = (Double) ob[2];
+                Double hosFee = (Double) ob[3];
+                Double totFee = (Double) ob[4];
+                Double vatFee = (Double) ob[5];
+
+                row.setStaff(doc);
+                row.setCountBilled(count);
+                row.setStaffFeeBilled(staffFee);
+                row.setHospitalFeeBilled(hosFee);
+                row.setTotalFeeBilled(totFee);
+                row.setVatBilled(vatFee);
+                channelSummeryRows.add(row);
+
+            }
+
+        }
+
+        if (!allCancelBills.isEmpty()) {
+            for (Object[] ob : allCancelBills) {
+
+                Staff doc = null;
+                if (ob[0] instanceof Staff) {
+                    doc = (Staff) ob[0];
+                } else {
+                    continue;
+                }
+
+                ChannelSummeryRow row;
+                boolean found = false;
+                for (ChannelSummeryRow csr : channelSummeryRows) {
+                    if (csr.getStaff().equals(doc)) {
+                        found = true;
+                        row = csr;
+                    }
+                }
+
+                if (!found) {
+                    row = new ChannelSummeryRow();
+                    channelSummeryRows.add(row);
+                } else {
+                    continue;
+                }
+
+                long count = (long) ob[1];
+                if (count == 0) {
+                    continue;
+                }
+
+                Double staffFee = (Double) ob[2];
+                Double hosFee = (Double) ob[3];
+                Double totFee = (Double) ob[4];
+                Double vatFee = (Double) ob[5];
+
+                row.setCountCancelled(count);
+                row.setStaffFeeCancelled(staffFee);
+                row.setHospitalFeeCancelled(hosFee);
+                row.setTotalFeeCancelled(totFee);
+                row.setVatCancelled(vatFee);
+
+            }
+
+        }
+
+        if (!allRefundBills.isEmpty()) {
+            for (Object[] ob : allRefundBills) {
+
+                Staff doc = null;
+                if (ob[0] instanceof Staff) {
+                    doc = (Staff) ob[0];
+                } else {
+                    continue;
+                }
+
+                ChannelSummeryRow row;
+                boolean found = false;
+                for (ChannelSummeryRow csr : channelSummeryRows) {
+                    if (csr.getStaff().equals(doc)) {
+                        found = true;
+                        row = csr;
+                    }
+                }
+
+                if (!found) {
+                    row = new ChannelSummeryRow();
+                    channelSummeryRows.add(row);
+                } else {
+                    continue;
+                }
+
+                long count = (long) ob[1];
+                if (count == 0) {
+                    continue;
+                }
+
+                Double staffFee = (Double) ob[2];
+                Double hosFee = (Double) ob[3];
+                Double totFee = (Double) ob[4];
+                Double vatFee = (Double) ob[5];
+
+                row.setCountRefunded(count);
+                row.setStaffFeeRefunded(staffFee);
+                row.setHospitalFeeRefunded(hosFee);
+                row.setTotalFeeRefunded(totFee);
+                row.setVatRefunded(vatFee);
+
+            }
+
+        }
+
+        hospitalFee = 0.0;
+        staffFaee = 0.0;
+        totalFee = 0.0;
+        vat = 0.0;
+
+        for (ChannelSummeryRow row : channelSummeryRows) {
+            row.setCount(row.getCountBilled() - row.getCountCancelled() - row.getCountRefunded());
+            row.setStaffFee(row.getStaffFeeBilled() - row.getStaffFeeCancelled() - row.getStaffFeeRefunded());
+            row.setHospitalFee(row.getHospitalFeeBilled() - row.getHospitalFeeCancelled());
+            row.setTotalFee(row.getTotalFeeBilled() - row.getTotalFeeCancelled() - (row.getTotalFeeRefunded() - row.getHospitalFeeRefunded()));
+            row.setVat(row.getVatBilled() - row.getVatCancelled() - row.getVatRefunded());
+            hospitalFee += row.getHospitalFee();
+            staffFaee += row.getStaffFee();
+            totalFee += row.getTotalFee();
+            vat += row.getVat();
+        }
+
+        return "/channel/all_doctor_booking_summery";
+
+    }
+
+    public String fillSingleDoctorBookings() {
+        String sql = "Select bs From BillSession bs "
+                + " where bs.retired=false and "
+                + " bs.absent!=true and "
+                + " bs.bill.cancelled=false and "
+                + " bs.bill.paidAmount > :paidAmount and "
+                + " bs.bill.refunded=false and "
+                + " bs.bill.billType in :tbs and "
+                + " bs.serviceSession.staff=:staff and bs.sessionDate between :fromDate and :toDate "
+                + " order by bs.serialNo";
+        HashMap hh = new HashMap();
+        hh.put("staff", staff);
+        hh.put("fromDate", fromDate);
+        hh.put("toDate", fromDate);
+        List<BillType> bts = new ArrayList<>();
+        bts.add(BillType.ChannelAgent);
+        bts.add(BillType.ChannelCash);
+        bts.add(BillType.ChannelOnCall);
+        bts.add(BillType.ChannelStaff);
+        hh.put("tbs", bts);
+        hh.put("paidAmount", 0.0);
+        billSessions = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
+        totalFee = 0.0;
+        hospitalFee = 0.0;
+        scanFee = 0.0;
+        vat = 0.0;
+        staffFaee = 0.0;
+        for (BillSession cbs : billSessions) {
+            staffFaee += cbs.getBill().getStaffFee();
+            vat += cbs.getBill().getVat();
+            hospitalFee += cbs.getBill().getHospitalFee();
+            totalFee += cbs.getBill().getNetTotal();
+        }
+
+        return "/channel/single_doctor_bookings";
+    }
+
+    public String fillAllDoctorBookings() {
+        String sql = "Select bs From BillSession bs "
+                + " where bs.retired=false and "
+                + " bs.absent!=true and "
+                + " bs.bill.cancelled=false and "
+                + " bs.bill.paidAmount > :paidAmount and "
+                + " bs.bill.refunded=false and "
+                + " bs.bill.billType in :tbs and "
+                + " bs.sessionDate between :fromDate and :toDate "
+                + " order by bs.serialNo";
+        HashMap hh = new HashMap();
+        hh.put("fromDate", fromDate);
+        hh.put("toDate", fromDate);
+        List<BillType> bts = new ArrayList<>();
+        bts.add(BillType.ChannelAgent);
+        bts.add(BillType.ChannelCash);
+        bts.add(BillType.ChannelOnCall);
+        bts.add(BillType.ChannelStaff);
+        hh.put("tbs", bts);
+        hh.put("paidAmount", 0.0);
+        billSessions = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
+        totalFee = 0.0;
+        hospitalFee = 0.0;
+        scanFee = 0.0;
+        vat = 0.0;
+        staffFaee = 0.0;
+        for (BillSession cbs : billSessions) {
+            staffFaee += cbs.getBill().getStaffFee();
+            vat += cbs.getBill().getVat();
+            hospitalFee += cbs.getBill().getHospitalFee();
+            totalFee += cbs.getBill().getNetTotal();
+        }
+
+        return "/channel/all_doctor_bookings";
+    }
 
     public String nurse() {
         if (preSet()) {
@@ -514,13 +793,13 @@ public class BookingController implements Serializable {
     }
 
     @EJB
-    AgentHistoryFacade agentHistoryFacade;
+    private AgentHistoryFacade agentHistoryFacade;
     @EJB
-    PaymentFacade paymentFacade;
+    private PaymentFacade paymentFacade;
     @EJB
-    BillComponentFacade billComponentFacade;
+    private BillComponentFacade billComponentFacade;
     @EJB
-    PatientEncounterFacade patientEncounterFacade;
+    private PatientEncounterFacade patientEncounterFacade;
 
     private boolean deleteBsCascadeAll(BillSession bs) {
         System.out.println("bs = " + bs);
@@ -2300,6 +2579,128 @@ public class BookingController implements Serializable {
 
     public void setToDate(Date toDate) {
         this.toDate = toDate;
+    }
+
+    public double getStaffFaee() {
+        return staffFaee;
+    }
+
+    public void setStaffFaee(double staffFaee) {
+        this.staffFaee = staffFaee;
+    }
+
+    public double getHospitalFee() {
+        return hospitalFee;
+    }
+
+    public void setHospitalFee(double hospitalFee) {
+        this.hospitalFee = hospitalFee;
+    }
+
+    public double getScanFee() {
+        return scanFee;
+    }
+
+    public void setScanFee(double scanFee) {
+        this.scanFee = scanFee;
+    }
+
+    public double getVat() {
+        return vat;
+    }
+
+    public void setVat(double vat) {
+        this.vat = vat;
+    }
+
+    public double getTotalFee() {
+        return totalFee;
+    }
+
+    public void setTotalFee(double totalFee) {
+        this.totalFee = totalFee;
+    }
+
+    public String getFromDateStr() {
+        if (getFromDate() == null) {
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        String dateStr = sdf.format(getFromDate());
+        return dateStr;
+    }
+
+    public String getToDateStr() {
+        if (getFromDate() == null) {
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        String dateStr = sdf.format(getToDate());
+        return dateStr;
+    }
+
+    public FinalVariables getFinalVariables() {
+        return finalVariables;
+    }
+
+    public void setFinalVariables(FinalVariables finalVariables) {
+        this.finalVariables = finalVariables;
+    }
+
+    public CommonFunctions getCommonFunctions() {
+        return commonFunctions;
+    }
+
+    public void setCommonFunctions(CommonFunctions commonFunctions) {
+        this.commonFunctions = commonFunctions;
+    }
+
+    public SmsController getSmsController() {
+        return smsController;
+    }
+
+    public void setSmsController(SmsController smsController) {
+        this.smsController = smsController;
+    }
+
+    public List<ChannelSummeryRow> getChannelSummeryRows() {
+        return channelSummeryRows;
+    }
+
+    public void setChannelSummeryRows(List<ChannelSummeryRow> channelSummeryRows) {
+        this.channelSummeryRows = channelSummeryRows;
+    }
+
+    public AgentHistoryFacade getAgentHistoryFacade() {
+        return agentHistoryFacade;
+    }
+
+    public void setAgentHistoryFacade(AgentHistoryFacade agentHistoryFacade) {
+        this.agentHistoryFacade = agentHistoryFacade;
+    }
+
+    public PaymentFacade getPaymentFacade() {
+        return paymentFacade;
+    }
+
+    public void setPaymentFacade(PaymentFacade paymentFacade) {
+        this.paymentFacade = paymentFacade;
+    }
+
+    public BillComponentFacade getBillComponentFacade() {
+        return billComponentFacade;
+    }
+
+    public void setBillComponentFacade(BillComponentFacade billComponentFacade) {
+        this.billComponentFacade = billComponentFacade;
+    }
+
+    public PatientEncounterFacade getPatientEncounterFacade() {
+        return patientEncounterFacade;
+    }
+
+    public void setPatientEncounterFacade(PatientEncounterFacade patientEncounterFacade) {
+        this.patientEncounterFacade = patientEncounterFacade;
     }
 
 }

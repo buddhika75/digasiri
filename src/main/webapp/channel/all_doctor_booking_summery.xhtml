@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../resources/template/template.xhtml">
+
+            <ui:define name="title">
+                All Doctor Bookings
+            </ui:define>
+
+            <ui:define name="content">
+                <p:panel header="All Valid Doctor Bookings" >
+                    <h:form>
+                        <h:panelGrid columns="2" >
+                            <p:outputLabel value="From" ></p:outputLabel>
+                            <p:calendar value="#{bookingController.fromDate}" pattern="dd MMMM yyyy"></p:calendar>
+                            <p:outputLabel value="To" ></p:outputLabel>
+                            <p:calendar value="#{bookingController.toDate}" pattern="dd MMMM yyyy"></p:calendar>
+                        </h:panelGrid>
+                        <h:panelGrid columns="3" >
+                            <p:commandButton value="Process" action="#{bookingController.fillAllDoctorBookingSummery}" ajax="false"  style="width: 150px;" >                                        
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Print" >
+                                <p:printer target="tbl" ></p:printer>
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Excel" >
+                                <p:dataExporter target="tbl" type="xls" fileName="bookings" ></p:dataExporter>
+                            </p:commandButton>
+                        </h:panelGrid>
+
+
+                        <p:dataTable id="tbl" value="#{bookingController.channelSummeryRows}" var="bs" 
+                                     rowIndexVar="n"
+                                     rows="20"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,20,50"
+                                     >
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column colspan="22" headerText="Summery of All Doctors from  #{bookingController.fromDateStr} to #{bookingController.fromDateStr}."  ></p:column>
+                                </p:row>
+                                <p:row >
+                                    <p:column headerText="No" rowspan="3" />
+                                    <p:column headerText="Consultant" rowspan="3" ></p:column>
+                                    <p:column headerText="Counts" rowspan="2" colspan="4"/>
+                                    <p:column headerText="Values" colspan="16" />
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Hospital Fee"  colspan="4"/>
+                                    <p:column headerText="Staff Fee"  colspan="4"/>
+                                    <p:column headerText="Total Fee"  colspan="4" />
+                                    <p:column headerText="VAT" colspan="4"/>
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Booked" />
+                                    <p:column headerText="Cancelled" />
+                                    <p:column headerText="Refunded" />
+                                    <p:column headerText="Net" />
+
+                                    <p:column headerText="Booked" />
+                                    <p:column headerText="Cancelled" />
+                                    <p:column headerText="Refunded" />
+                                    <p:column headerText="Net" />
+
+                                    <p:column headerText="Booked" />
+                                    <p:column headerText="Cancelled" />
+                                    <p:column headerText="Refunded" />
+                                    <p:column headerText="Net" />
+
+                                    <p:column headerText="Booked" />
+                                    <p:column headerText="Cancelled" />
+                                    <p:column headerText="Refunded" />
+                                    <p:column headerText="Net" />
+
+                                    <p:column headerText="Booked" />
+                                    <p:column headerText="Cancelled" />
+                                    <p:column headerText="Refunded" />
+                                    <p:column headerText="Net" />
+                                </p:row>
+                            </p:columnGroup>
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="6" footerText="Totals" />
+                                    <p:column colspan="4" footerText="#{bookingController.hospitalFee}" ></p:column>
+                                    <p:column colspan="4" footerText="#{bookingController.staffFaee}" ></p:column>
+                                    <p:column colspan="4" footerText="#{bookingController.totalFee}" ></p:column>
+                                    <p:column colspan="4" footerText="#{bookingController.vat}" ></p:column>
+                                </p:row>
+                            </p:columnGroup>
+
+
+                            <p:column >
+                                <p:outputLabel value="#{bs.staff.person.nameWithTitle}" ></p:outputLabel>
+                            </p:column>
+                            <p:column  >
+                                <p:outputLabel value="#{bs.countBilled}" ></p:outputLabel>
+                            </p:column>
+                            <p:column  >
+                                <p:outputLabel value="#{bs.countCancelled}" ></p:outputLabel>
+                            </p:column>
+                            <p:column  >
+                                <p:outputLabel value="#{bs.countRefunded}" ></p:outputLabel>
+                            </p:column>
+                            <p:column  >
+                                <p:outputLabel value="#{bs.count}" ></p:outputLabel>
+                            </p:column>
+
+                            <p:column >
+                                <h:outputLabel value="#{bs.hospitalFeeBilled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.hospitalFeeCancelled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.hospitalFeeRefunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.hospitalFee}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+
+
+
+                            <p:column >
+                                <h:outputLabel value="#{bs.staffFeeBilled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.staffFeeCancelled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.staffFeeRefunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.staffFee}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+
+
+                            <p:column >
+                                <h:outputLabel value="#{bs.totalFeeBilled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.totalFeeCancelled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.totalFeeRefunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="#{bs.totalFee}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+
+
+                            <p:column >
+                                <h:outputLabel value="#{bs.vatBilled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+                            <p:column >
+                                <h:outputLabel value="#{bs.vatCancelled}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+                            <p:column >
+                                <h:outputLabel value="#{bs.vatRefunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+                            <p:column >
+                                <h:outputLabel value="#{bs.vat}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                            </p:column>
+
+
+                        </p:dataTable>
+
+                    </h:form>
+
+                </p:panel>
+            </ui:define>
+
+
+
+        </ui:composition>
+
+    </body>
+</html>

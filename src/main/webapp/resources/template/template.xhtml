@@ -9,8 +9,8 @@
         <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
         <!--<script src="resources/js/snowstorm.js" type="text/javascript"></script>-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <ui:insert name="title"   >
-            <title>
+        <title>
+            <ui:insert name="title"   >
                 <h:panelGroup rendered="#{sessionController.logged}" >
                     <h:outputText value="#{sessionController.loggedUser.institution.name}" ></h:outputText>
                     <h:outputText value=" - " ></h:outputText>
@@ -21,8 +21,9 @@
                 <h:panelGroup rendered="#{!sessionController.logged}" >
                     <h:outputText value="Hospital Information Management System" ></h:outputText>
                 </h:panelGroup>
-            </title>
-        </ui:insert>
+
+            </ui:insert>
+        </title>
         <h:outputStylesheet library="css" name="maincss.css" />
         <h:outputStylesheet library="css" name="css1.css" />
         <h:outputStylesheet library="css" name="summery.css" />
@@ -216,7 +217,7 @@
                                                      value="Return - Items and Payments" rendered="#{webUserController.hasPrivilege('PharmacySaleReturn')}"></p:menuitem>                                                                                    
                                         <p:menuitem ajax="false" action="//pharmacy/pharmacy_search_return_bill_pre" actionListener="#{searchController.makeListNull}"  value="Search Return Bill (Item)" rendered="#{webUserController.hasPrivilege('PharmacySale')}" ></p:menuitem>
                                         <p:menuitem  ajax="false" action="/pharmacy/pharmacy_search_pre_bill_not_paid" actionListener="#{searchController.makeListNull}"   value="Add To Stock" rendered="#{webUserController.hasPrivilege('PharmacySale')}" ></p:menuitem>
-                                        
+
                                     </p:submenu>
 
                                     <p:submenu label="Wholesale" rendered="#{webUserController.hasPrivilege('PharmacySaleWh')}"> 
@@ -842,7 +843,7 @@
                 <p:panel rendered ="#{sessionController.logged and sessionController.department eq null}" 
                          styleClass="verticalAndHorizontalCentering">
                     <h:form id="formDept" >
-                        
+
                         <p:panel header="Select Department" >
                             <h:panelGrid columns="3" >
                                 <h:outputText value="Department" ></h:outputText>
