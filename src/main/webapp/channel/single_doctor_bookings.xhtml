@@ -29,9 +29,6 @@
                         <h:panelGrid columns="3" >
                             <p:commandButton value="Process" action="#{bookingController.fillSingleDoctorBookings()}" ajax="false"  style="width: 150px;" >                                        
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Print" >
-                                <p:printer target="tbl" ></p:printer>
-                            </p:commandButton>
                             <p:commandButton ajax="false" value="Excel" >
                                 <p:dataExporter target="tbl" type="xls" fileName="bookings" ></p:dataExporter>
                             </p:commandButton>
@@ -78,24 +75,40 @@
                             <p:column headerText="Patient Name" >
                                 <p:outputLabel value="#{bs.bill.patient.person.nameWithTitle}" ></p:outputLabel>
                             </p:column>
-                            <p:column headerText="Doctor Fee" styleClass="numberCol" footerText="#{bs.bill.staffFee}">
-                                <h:outputLabel value="#{bs.bill.staffFee}">
+                            <p:column headerText="Doctor Fee" styleClass="numberCol" footerText="#{bookingController.staffFaee}">
+                                <h:outputLabel value="#{bs.bill.staffFee}" rendered="#{!bs.bill.cancelled and !bs.bill.refunded}">
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
                                 </h:outputLabel>
-                            </p:column>
-                            <p:column headerText="Hospital Fee" styleClass="numberCol" footerText="#{bs.bill.staffFee}">
-                                <h:outputLabel value="#{bs.bill.hospitalFee}">
-                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
+                                <h:outputLabel value="Refunded" rendered="#{bs.bill.refunded}">
                                 </h:outputLabel>
                             </p:column>
-                            <p:column headerText="Total Fee" styleClass="numberCol" footerText="#{bs.bill.netTotal}">
-                                <h:outputLabel value="#{bs.bill.netTotal}">
+                            <p:column headerText="Hospital Fee" styleClass="numberCol" footerText="#{bookingController.hospitalFee}">
+                                <h:outputLabel value="#{bs.bill.hospitalFee}" rendered="#{!bs.bill.cancelled}">
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
                                 </h:outputLabel>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
                             </p:column>
-                            <p:column headerText="VAT" styleClass="numberCol" footerText="#{bs.bill.netTotal}">
-                                <h:outputLabel value="#{bs.bill.vat}">
+                            <p:column headerText="Total Fee" styleClass="numberCol" footerText="#{bookingController.totalFee}">
+                                <h:outputLabel value="#{bs.bill.netTotal}" rendered="#{!bs.bill.cancelled and !bs.bill.refunded}">
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
+                                <h:outputLabel value="#{bs.bill.netTotal - bs.bill.staffFee}" rendered="#{bs.bill.refunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+
+                            </p:column>
+                            <p:column headerText="VAT" styleClass="numberCol" footerText="#{bookingController.vat}" >
+                                <h:outputLabel value="#{bs.bill.vat}" rendered="#{!bs.bill.cancelled and !bs.bill.refunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
+                                <h:outputLabel value="Refunded" rendered="#{bs.bill.refunded}">
                                 </h:outputLabel>
                             </p:column>
                         </p:dataTable>

@@ -203,10 +203,8 @@ public class BookingController implements Serializable {
 
         sql = "select bs.serviceSession.staff, count(bs), sum(bs.bill.staffFee), sum(bs.bill.hospitalFee), sum(bs.bill.netTotal), sum(bs.bill.vat) ";
         sql += "from BillSession bs "
-                + " where bs.retired=false and "
-                + " bs.bill.cancelled=true and "
+                + " where bs.bill.cancelled=true and "
                 + " bs.bill.paidAmount > :paidAmount and "
-                + " bs.bill.refunded=false and "
                 + " bs.bill.billType in :tbs and "
                 + " bs.sessionDate between :fromDate and :toDate "
                 + " group by bs.serviceSession.staff";
@@ -215,7 +213,6 @@ public class BookingController implements Serializable {
         sql = "select bs.serviceSession.staff, count(bs), sum(bs.bill.staffFee), sum(bs.bill.hospitalFee), sum(bs.bill.netTotal), sum(bs.bill.vat) ";
         sql += "from BillSession bs "
                 + " where bs.retired=false and "
-                + " bs.bill.cancelled=false and "
                 + " bs.bill.paidAmount > :paidAmount and "
                 + " bs.bill.refunded=true and "
                 + " bs.bill.billType in :tbs and "
@@ -223,19 +220,21 @@ public class BookingController implements Serializable {
                 + " group by bs.serviceSession.staff";
         List<Object[]> allRefundBills = billFacade.findObjectsArrayBySQL(sql, m, TemporalType.TIMESTAMP);
 
-        if (false) {
-            BillSession s = new BillSession();
-            s.getServiceSession().getStaff();
-//            bs.bill.staffFee, bs.bill.hospitalFee, bs.bill.netTotal, bs.bill.vat,
-        }
+        hospitalFee = 0.0;
+        staffFaee = 0.0;
+        totalFee = 0.0;
+        vat = 0.0;
 
         if (!allBills.isEmpty()) {
+            System.out.println("all bills not empty");
             for (Object[] ob : allBills) {
+                System.out.println("ob = " + ob);
                 ChannelSummeryRow row = new ChannelSummeryRow();
 
                 Staff doc = null;
                 if (ob[0] instanceof Staff) {
                     doc = (Staff) ob[0];
+                    System.out.println("doc = " + doc);
                 } else {
                     continue;
                 }
@@ -262,11 +261,19 @@ public class BookingController implements Serializable {
                 Double vatFee = (Double) ob[5];
 
                 row.setStaff(doc);
+
                 row.setCountBilled(count);
+
                 row.setStaffFeeBilled(staffFee);
                 row.setHospitalFeeBilled(hosFee);
                 row.setTotalFeeBilled(totFee);
                 row.setVatBilled(vatFee);
+
+                row.setStaffFee(staffFee);
+                row.setHospitalFee(hosFee);
+                row.setTotalFee(totFee);
+                row.setVat(vatFee);
+
                 channelSummeryRows.add(row);
 
             }
@@ -274,16 +281,18 @@ public class BookingController implements Serializable {
         }
 
         if (!allCancelBills.isEmpty()) {
+            System.out.println("cancel bills not empty");
             for (Object[] ob : allCancelBills) {
-
+                System.out.println("ob = " + ob);
                 Staff doc = null;
                 if (ob[0] instanceof Staff) {
                     doc = (Staff) ob[0];
+                    System.out.println("doc = " + doc);
                 } else {
                     continue;
                 }
 
-                ChannelSummeryRow row;
+                ChannelSummeryRow row= new ChannelSummeryRow();
                 boolean found = false;
                 for (ChannelSummeryRow csr : channelSummeryRows) {
                     if (csr.getStaff().equals(doc)) {
@@ -291,13 +300,11 @@ public class BookingController implements Serializable {
                         row = csr;
                     }
                 }
-
+                System.out.println("found = " + found);
                 if (!found) {
                     row = new ChannelSummeryRow();
                     channelSummeryRows.add(row);
-                } else {
-                    continue;
-                }
+                } 
 
                 long count = (long) ob[1];
                 if (count == 0) {
@@ -323,11 +330,16 @@ public class BookingController implements Serializable {
                 Double vatFee = (Double) ob[5];
 
                 row.setCountCancelled(count);
+
                 row.setStaffFeeCancelled(staffFee);
                 row.setHospitalFeeCancelled(hosFee);
                 row.setTotalFeeCancelled(totFee);
                 row.setVatCancelled(vatFee);
 
+                row.setStaffFee(row.getStaffFee() - staffFee);
+                row.setHospitalFee(row.getHospitalFee() - hosFee);
+                row.setTotalFee(row.getTotalFee() - totFee);
+                row.setVat(row.getVat() - vatFee);
             }
 
         }
@@ -342,7 +354,7 @@ public class BookingController implements Serializable {
                     continue;
                 }
 
-                ChannelSummeryRow row;
+                ChannelSummeryRow row = new ChannelSummeryRow();
                 boolean found = false;
                 for (ChannelSummeryRow csr : channelSummeryRows) {
                     if (csr.getStaff().equals(doc)) {
@@ -354,9 +366,7 @@ public class BookingController implements Serializable {
                 if (!found) {
                     row = new ChannelSummeryRow();
                     channelSummeryRows.add(row);
-                } else {
-                    continue;
-                }
+                } 
 
                 long count = (long) ob[1];
                 if (count == 0) {
@@ -385,14 +395,13 @@ public class BookingController implements Serializable {
                 row.setTotalFeeRefunded(totFee);
                 row.setVatRefunded(vatFee);
 
+                row.setStaffFee(row.getStaffFee() - staffFee);
+                row.setTotalFee(row.getTotalFee() - staffFee);
+                row.setVat(row.getVat() - vatFee);
+
             }
 
         }
-
-        hospitalFee = 0.0;
-        staffFaee = 0.0;
-        totalFee = 0.0;
-        vat = 0.0;
 
         for (ChannelSummeryRow row : channelSummeryRows) {
 
@@ -454,11 +463,6 @@ public class BookingController implements Serializable {
                 row.setVat(0.0);
             }
 
-            row.setCount(row.getCountBilled() - row.getCountCancelled() - row.getCountRefunded());
-            row.setStaffFee(row.getStaffFeeBilled() - row.getStaffFeeCancelled() - row.getStaffFeeRefunded());
-            row.setHospitalFee(row.getHospitalFeeBilled() - row.getHospitalFeeCancelled());
-            row.setTotalFee(row.getTotalFeeBilled() - row.getTotalFeeCancelled() - (row.getTotalFeeRefunded() - row.getHospitalFeeRefunded()));
-            row.setVat(row.getVatBilled() - row.getVatCancelled() - row.getVatRefunded());
             hospitalFee += row.getHospitalFee();
             staffFaee += row.getStaffFee();
             totalFee += row.getTotalFee();
@@ -472,10 +476,7 @@ public class BookingController implements Serializable {
     public String fillSingleDoctorBookings() {
         String sql = "Select bs From BillSession bs "
                 + " where bs.retired=false and "
-                + " bs.absent!=true and "
-                + " bs.bill.cancelled=false and "
                 + " bs.bill.paidAmount > :paidAmount and "
-                + " bs.bill.refunded=false and "
                 + " bs.bill.billType in :tbs and "
                 + " bs.serviceSession.staff=:staff and bs.sessionDate between :fromDate and :toDate "
                 + " order by bs.serialNo";
@@ -497,10 +498,17 @@ public class BookingController implements Serializable {
         vat = 0.0;
         staffFaee = 0.0;
         for (BillSession cbs : billSessions) {
-            staffFaee += cbs.getBill().getStaffFee();
-            vat += cbs.getBill().getVat();
-            hospitalFee += cbs.getBill().getHospitalFee();
-            totalFee += cbs.getBill().getNetTotal();
+            if (cbs.getBill().isCancelled()) {
+
+            } else if (cbs.getBill().isRefunded()) {
+                hospitalFee += cbs.getBill().getHospitalFee();
+                totalFee += cbs.getBill().getHospitalFee();
+            } else {
+                staffFaee += cbs.getBill().getStaffFee();
+                vat += cbs.getBill().getVat();
+                hospitalFee += cbs.getBill().getHospitalFee();
+                totalFee += cbs.getBill().getNetTotal();
+            }
         }
 
         return "/channel/single_doctor_bookings";
@@ -509,13 +517,10 @@ public class BookingController implements Serializable {
     public String fillAllDoctorBookings() {
         String sql = "Select bs From BillSession bs "
                 + " where bs.retired=false and "
-                + " bs.absent!=true and "
-                + " bs.bill.cancelled=false and "
                 + " bs.bill.paidAmount > :paidAmount and "
-                + " bs.bill.refunded=false and "
                 + " bs.bill.billType in :tbs and "
                 + " bs.sessionDate between :fromDate and :toDate "
-                + " order by bs.serialNo";
+                + " order by bs.serviceSession.staff.person.name";
         HashMap hh = new HashMap();
         hh.put("fromDate", fromDate);
         hh.put("toDate", fromDate);
@@ -533,10 +538,17 @@ public class BookingController implements Serializable {
         vat = 0.0;
         staffFaee = 0.0;
         for (BillSession cbs : billSessions) {
-            staffFaee += cbs.getBill().getStaffFee();
-            vat += cbs.getBill().getVat();
-            hospitalFee += cbs.getBill().getHospitalFee();
-            totalFee += cbs.getBill().getNetTotal();
+            if (cbs.getBill().isCancelled()) {
+
+            } else if (cbs.getBill().isRefunded()) {
+                hospitalFee += cbs.getBill().getHospitalFee();
+                totalFee += cbs.getBill().getHospitalFee();
+            } else {
+                staffFaee += cbs.getBill().getStaffFee();
+                vat += cbs.getBill().getVat();
+                hospitalFee += cbs.getBill().getHospitalFee();
+                totalFee += cbs.getBill().getNetTotal();
+            }
         }
 
         return "/channel/all_doctor_bookings";

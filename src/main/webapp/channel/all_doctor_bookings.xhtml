@@ -11,26 +11,20 @@
         <ui:composition template="./../resources/template/template.xhtml">
 
             <ui:define name="title">
-                All Valid Single Doctor Bookings
+                All Doctor Bookings
             </ui:define>
 
             <ui:define name="content">
-                <p:panel header="All Valid Single Doctor Bookings" >
+                <p:panel header="All Valid Doctor Bookings" >
                     <h:form>
                         <h:panelGrid columns="2" >
                             <p:outputLabel value="From" ></p:outputLabel>
                             <p:calendar value="#{bookingController.fromDate}" pattern="dd MMMM yyyy"></p:calendar>
                             <p:outputLabel value="To" ></p:outputLabel>
                             <p:calendar value="#{bookingController.toDate}" pattern="dd MMMM yyyy"></p:calendar>
-                            <p:outputLabel value="Consultant" ></p:outputLabel>
-                            <p:autoComplete value="#{bookingController.staff}" completeMethod="#{staffController.completeStaff}"
-                                            var="c" itemLabel="#{c.person.name}" itemValue="#{c}"></p:autoComplete>
                         </h:panelGrid>
                         <h:panelGrid columns="3" >
-                            <p:commandButton value="Process" action="#{bookingController.fillSingleDoctorBookings()}" ajax="false"  style="width: 150px;" >                                        
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Print" >
-                                <p:printer target="tbl" ></p:printer>
+                            <p:commandButton value="Process" action="#{bookingController.fillAllDoctorBookings()}" ajax="false"  style="width: 150px;" >                                        
                             </p:commandButton>
                             <p:commandButton ajax="false" value="Excel" >
                                 <p:dataExporter target="tbl" type="xls" fileName="bookings" ></p:dataExporter>
@@ -47,11 +41,12 @@
                                      >
                             <p:columnGroup type="header">
                                 <p:row>
-                                    <p:column colspan="7" headerText="All Valid Appointments of #{bookingController.staff.person.nameWithTitle} from  #{bookingController.fromDateStr} to #{bookingController.fromDateStr}."  ></p:column>
+                                    <p:column colspan="8" headerText="All Valid Appointments All Consultants from  #{bookingController.fromDateStr} to #{bookingController.fromDateStr}."  ></p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column headerText="No" />
                                     <p:column headerText="Bill No" />
+                                    <p:column headerText="Consultant" />
                                     <p:column headerText="Name" />
                                     <p:column headerText="Doctor Fee" />
                                     <p:column headerText="Hospital Fee" />
@@ -61,7 +56,7 @@
                             </p:columnGroup>
                             <p:columnGroup type="footer">
                                 <p:row>
-                                    <p:column colspan="3" footerText="Totals" />
+                                    <p:column colspan="4" footerText="Totals" />
                                     <p:column footerText="#{bookingController.staffFaee}" ></p:column>
                                     <p:column footerText="#{bookingController.hospitalFee}" ></p:column>
                                     <p:column footerText="#{bookingController.totalFee}" ></p:column>
@@ -74,28 +69,47 @@
                             </p:column>               
                             <p:column headerText="Serial" width="20">
                                 <p:outputLabel value="#{bs.bill.deptId}" ></p:outputLabel>
-                            </p:column>    
+                            </p:column>  
+                            <p:column headerText="Consultant" >
+                                <p:outputLabel value="#{bs.bill.staff.person.nameWithTitle}" ></p:outputLabel>
+                            </p:column>
                             <p:column headerText="Patient Name" >
                                 <p:outputLabel value="#{bs.bill.patient.person.nameWithTitle}" ></p:outputLabel>
                             </p:column>
-                            <p:column headerText="Doctor Fee" styleClass="numberCol" footerText="#{bs.bill.staffFee}">
-                                <h:outputLabel value="#{bs.bill.staffFee}">
+                            <p:column headerText="Doctor Fee" styleClass="numberCol" footerText="#{bookingController.staffFaee}">
+                                <h:outputLabel value="#{bs.bill.staffFee}" rendered="#{!bs.bill.cancelled and !bs.bill.refunded}">
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
                                 </h:outputLabel>
-                            </p:column>
-                            <p:column headerText="Hospital Fee" styleClass="numberCol" footerText="#{bs.bill.staffFee}">
-                                <h:outputLabel value="#{bs.bill.hospitalFee}">
-                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
+                                <h:outputLabel value="Refunded" rendered="#{bs.bill.refunded}">
                                 </h:outputLabel>
                             </p:column>
-                            <p:column headerText="Total Fee" styleClass="numberCol" footerText="#{bs.bill.netTotal}">
-                                <h:outputLabel value="#{bs.bill.netTotal}">
+                            <p:column headerText="Hospital Fee" styleClass="numberCol" footerText="#{bookingController.hospitalFee}">
+                                <h:outputLabel value="#{bs.bill.hospitalFee}" rendered="#{!bs.bill.cancelled}">
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
                                 </h:outputLabel>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
                             </p:column>
-                            <p:column headerText="VAT" styleClass="numberCol" footerText="#{bs.bill.netTotal}">
-                                <h:outputLabel value="#{bs.bill.vat}">
+                            <p:column headerText="Total Fee" styleClass="numberCol" footerText="#{bookingController.totalFee}">
+                                <h:outputLabel value="#{bs.bill.netTotal}" rendered="#{!bs.bill.cancelled and !bs.bill.refunded}">
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
+                                <h:outputLabel value="#{bs.bill.netTotal - bs.bill.staffFee}" rendered="#{bs.bill.refunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+
+                            </p:column>
+                            <p:column headerText="VAT" styleClass="numberCol" footerText="#{bookingController.vat}" >
+                                <h:outputLabel value="#{bs.bill.vat}" rendered="#{!bs.bill.cancelled and !bs.bill.refunded}">
+                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                </h:outputLabel>
+                                <h:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled}">
+                                </h:outputLabel>
+                                <h:outputLabel value="Refunded" rendered="#{bs.bill.refunded}">
                                 </h:outputLabel>
                             </p:column>
                         </p:dataTable>

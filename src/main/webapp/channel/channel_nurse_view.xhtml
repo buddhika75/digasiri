@@ -16,7 +16,9 @@
             <p:commandButton ajax="false" action="#{channelReportController.markAsAbsent()}" value="Mark Selected as Absent"  ></p:commandButton>
             <p:commandButton ajax="false" action="/channel/channel_booking" value="Bookings" ></p:commandButton>
             <p:commandButton ajax="false" action="/channel/channel_booking_past" value="Past Bookings" rendered="#{webUserController.hasPrivilege('ChannellingPastBooking')}"></p:commandButton>
-
+            <p:commandButton ajax="false" value="Excel" >
+                <p:dataExporter target="tbl" type="xls" fileName="Nurse View" ></p:dataExporter>
+            </p:commandButton>
             <p:panel id="nurseView">
                 <f:facet name="header">
                     <h:panelGrid columns="2">
@@ -31,13 +33,15 @@
                     </h:panelGrid>
                 </f:facet>
 
-                <p:dataTable value="#{channelReportController.nurseViewSessions}" selection="#{channelReportController.selectedBillSessions}" var="bs" rowKey="#{bs.id}">
+                <p:dataTable id="tbl" value="#{channelReportController.nurseViewSessions}" selection="#{channelReportController.selectedBillSessions}" var="bs" rowKey="#{bs.id}">
 
                     <p:column headerText="No">
-                        #{bs.serialNo}&nbsp;&nbsp;<p:inputText style="width: 20px;"/>
+                        <p:outputLabel style="width: 20px;" value="#{bs.serialNo}"/>
                     </p:column>
 
-                    <p:column headerText="Patient Name">#{bs.bill.patient.person.nameWithTitle}</p:column>
+                    <p:column headerText="Patient Name">
+                        <p:outputLabel value="#{bs.bill.patient.person.nameWithTitle}" ></p:outputLabel>
+                    </p:column>
 
                     <p:column headerText="Remark">
                         <p:outputLabel rendered="#{bs.bill.paidAmount eq 0}" value="To Paid" style="color: red;"/>
