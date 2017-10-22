@@ -44,16 +44,16 @@
                                      >
                             <p:columnGroup type="header">
                                 <p:row>
-                                    <p:column colspan="22" headerText="Summery of All Doctors from  #{bookingController.fromDateStr} to #{bookingController.fromDateStr}."  ></p:column>
+                                    <p:column colspan="20" headerText="Summery of All Doctors from  #{bookingController.fromDateStr} to #{bookingController.fromDateStr}."  ></p:column>
                                 </p:row>
                                 <p:row >
                                     <p:column headerText="No" rowspan="3" />
                                     <p:column headerText="Consultant" rowspan="3" ></p:column>
-                                    <p:column headerText="Counts" rowspan="2" colspan="4"/>
+                                    <p:column headerText="Counts" rowspan="2" colspan="3"/>
                                     <p:column headerText="Values" colspan="16" />
                                 </p:row>
                                 <p:row>
-                                    <p:column headerText="Hospital Fee"  colspan="4"/>
+                                    <p:column headerText="Hospital Fee"  colspan="3"/>
                                     <p:column headerText="Staff Fee"  colspan="4"/>
                                     <p:column headerText="Total Fee"  colspan="4" />
                                     <p:column headerText="VAT" colspan="4"/>
@@ -62,11 +62,9 @@
                                     <p:column headerText="Booked" />
                                     <p:column headerText="Cancelled" />
                                     <p:column headerText="Refunded" />
-                                    <p:column headerText="Net" />
 
                                     <p:column headerText="Booked" />
                                     <p:column headerText="Cancelled" />
-                                    <p:column headerText="Refunded" />
                                     <p:column headerText="Net" />
 
                                     <p:column headerText="Booked" />
@@ -87,8 +85,8 @@
                             </p:columnGroup>
                             <p:columnGroup type="footer">
                                 <p:row>
-                                    <p:column colspan="6" footerText="Totals" />
-                                    <p:column colspan="4" footerText="#{bookingController.hospitalFee}" ></p:column>
+                                    <p:column colspan="5" footerText="Totals" />
+                                    <p:column colspan="3" footerText="#{bookingController.hospitalFee}" ></p:column>
                                     <p:column colspan="4" footerText="#{bookingController.staffFaee}" ></p:column>
                                     <p:column colspan="4" footerText="#{bookingController.totalFee}" ></p:column>
                                     <p:column colspan="4" footerText="#{bookingController.vat}" ></p:column>
@@ -96,7 +94,7 @@
                             </p:columnGroup>
 
                             <p:column width="20">
-                                 <p:outputLabel value="#{n+1}" ></p:outputLabel>
+                                <p:outputLabel value="#{n+1}" ></p:outputLabel>
                             </p:column>
                             <p:column width="200" style="min-width: 200px!important;" >
                                 <p:outputLabel value="#{bs.staff.person.nameWithTitle}" ></p:outputLabel>
@@ -110,9 +108,7 @@
                             <p:column  >
                                 <p:outputLabel value="#{bs.countRefunded}" ></p:outputLabel>
                             </p:column>
-                            <p:column  >
-                                <p:outputLabel value="#{bs.count}" ></p:outputLabel>
-                            </p:column>
+
 
                             <p:column >
                                 <h:outputLabel value="#{bs.hospitalFeeBilled}">
@@ -121,11 +117,6 @@
                             </p:column>
                             <p:column >
                                 <h:outputLabel value="#{bs.hospitalFeeCancelled}">
-                                    <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
-                                </h:outputLabel>
-                            </p:column>
-                            <p:column >
-                                <h:outputLabel value="#{bs.hospitalFeeRefunded}">
                                     <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
                                 </h:outputLabel>
                             </p:column>

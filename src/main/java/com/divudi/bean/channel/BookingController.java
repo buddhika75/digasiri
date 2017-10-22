@@ -391,9 +391,9 @@ public class BookingController implements Serializable {
 
                 row.setCountRefunded(count);
                 row.setStaffFeeRefunded(staffFee);
-                row.setHospitalFeeRefunded(hosFee);
-                row.setTotalFeeRefunded(totFee);
-                row.setVatRefunded(vatFee);
+                row.setHospitalFeeRefunded(0.0);
+                row.setTotalFeeRefunded(staffFee);
+                row.setVatRefunded(0.0);
 
                 row.setStaffFee(row.getStaffFee() - staffFee);
                 row.setTotalFee(row.getTotalFee() - staffFee);
