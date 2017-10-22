@@ -513,6 +513,11 @@ public class BookingController implements Serializable {
 
         return "/channel/single_doctor_bookings";
     }
+    
+    public String fillAllDoctorBookingsVat() {
+        fillAllDoctorBookings();
+        return "/channel/all_doctor_bookings_vat";
+    }
 
     public String fillAllDoctorBookings() {
         String sql = "Select bs From BillSession bs "
