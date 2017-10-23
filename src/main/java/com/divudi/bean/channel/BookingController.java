@@ -833,29 +833,27 @@ public class BookingController implements Serializable {
     public void setDi(Long di) {
         this.di = di;
     }
-
-    public void deleteBulk() {
-        System.out.println("delete bulk");
+    
+    public void deleteSelected() {
+        System.out.println("delete selected");
         di = 0l;
         List<BillSession> bss = new ArrayList<>();
         String sql = "Select bs From BillSession bs "
-                + " where bs.retired=false and "
-                + " bs.bill.cancelled=false and "
-                + " bs.bill.paidAmount > :paidAmount and "
-                + " bs.bill.refunded=false and "
+                + " where "
                 + " bs.bill.billType in :tbs and "
+                + " bs.serviceSession.staff=:staff and "
                 + " bs.sessionDate between :ssFrom and :ssTo ";
         sql += " order by bs.serialNo";
         HashMap hh = new HashMap();
         hh.put("ssFrom", getFromDate());
         hh.put("ssTo", getToDate());
+        hh.put("staff", getStaff());
         List<BillType> bts = new ArrayList<>();
         bts.add(BillType.ChannelAgent);
         bts.add(BillType.ChannelCash);
         bts.add(BillType.ChannelOnCall);
         bts.add(BillType.ChannelStaff);
         hh.put("tbs", bts);
-        hh.put("paidAmount", 0.0);
         bss = getBillSessionFacade().findBySQL(sql, hh, TemporalType.DATE);
         System.out.println("Absent Size = " + bss.size());
         Double countToMarkAbsent;
@@ -881,10 +879,7 @@ public class BookingController implements Serializable {
         }
 
         sql = "Select bs From BillSession bs "
-                + " where bs.retired=false and "
-                + " bs.bill.cancelled=false and "
-                + " bs.bill.paidAmount > :paidAmount and "
-                + " bs.bill.refunded=false and "
+                + " where "
                 + " bs.bill.billType in :tbs and "
                 + " bs.sessionDate between :ssFrom and :ssTo and "
                 + " bs.absentMarkedUser is null and "
@@ -894,7 +889,6 @@ public class BookingController implements Serializable {
         hh.put("ssFrom", getFromDate());
         hh.put("ssTo", getToDate());
         hh.put("tbs", bts);
-        hh.put("paidAmount", 0.0);
         bss = getBillSessionFacade().findBySQL(sql, hh);
         System.out.println("bss.size() = " + bss.size());
         for (BillSession bs : bss) {
@@ -903,7 +897,36 @@ public class BookingController implements Serializable {
             di++;
         }
 
-        UtilityController.addSuccessMessage("Marked Bulk as Absent");
+        UtilityController.addSuccessMessage("Managed Selected");
+    }
+
+    public void deleteBulk() {
+        System.out.println("delete bulk");
+        di = 0l;
+        List<BillSession> bss = new ArrayList<>();
+        Map hh= new HashMap();
+        List<BillType> bts = new ArrayList<>();
+        bts.add(BillType.ChannelAgent);
+        bts.add(BillType.ChannelCash);
+        bts.add(BillType.ChannelOnCall);
+        bts.add(BillType.ChannelStaff);
+        String sql =  "Select bs From BillSession bs "
+                + " where "
+                + " bs.bill.billType in :tbs and "
+                + " bs.sessionDate between :ssFrom and :ssTo ";
+        hh = new HashMap();
+        hh.put("ssFrom", getFromDate());
+        hh.put("ssTo", getToDate());
+        hh.put("tbs", bts);
+        bss = getBillSessionFacade().findBySQL(sql, hh);
+        System.out.println("bss.size() = " + bss.size());
+        for (BillSession bs : bss) {
+            System.out.println("Deleting bs = " + bs);
+            deleteBsCascadeAll(bs);
+            di++;
+        }
+
+        UtilityController.addSuccessMessage("Managed All");
     }
 
     @EJB
