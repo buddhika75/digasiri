@@ -20,9 +20,10 @@
                         <p:tabView >
                             <p:tab title="Admin" >
                                 <h:panelGrid columns="1" >
-                                    <p:commandButton ajax="false" value="Change Bill Numbers" action="search_edit_bills" ></p:commandButton>
-                                    <p:commandButton ajax="false" value="Change Fees" action="search_edit_for_fee_bills" ></p:commandButton>
-                                    <p:commandButton value="Delete Channels" action="/channel/delete_channel" ajax="false" ></p:commandButton>
+                                    <p:commandButton ajax="false" value="Manage Bill Numbers" action="search_edit_bills" ></p:commandButton>
+                                    <p:commandButton ajax="false" value="Manage Fees" action="search_edit_for_fee_bills" ></p:commandButton>
+                                    <p:commandButton value="Manage All Channels" action="/channel/delete_channel" ajax="false" ></p:commandButton>
+                                    <p:commandButton value="Manage Selected Channels" action="/channel/delete_channel_selected" ajax="false" ></p:commandButton>
                                 </h:panelGrid>
 
                             </p:tab>
