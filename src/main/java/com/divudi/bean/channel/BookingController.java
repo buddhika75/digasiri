@@ -483,7 +483,7 @@ public class BookingController implements Serializable {
         HashMap hh = new HashMap();
         hh.put("staff", staff);
         hh.put("fromDate", fromDate);
-        hh.put("toDate", fromDate);
+        hh.put("toDate", toDate);
         List<BillType> bts = new ArrayList<>();
         bts.add(BillType.ChannelAgent);
         bts.add(BillType.ChannelCash);
@@ -528,7 +528,7 @@ public class BookingController implements Serializable {
                 + " order by bs.serviceSession.staff.person.name";
         HashMap hh = new HashMap();
         hh.put("fromDate", fromDate);
-        hh.put("toDate", fromDate);
+        hh.put("toDate", toDate);
         List<BillType> bts = new ArrayList<>();
         bts.add(BillType.ChannelAgent);
         bts.add(BillType.ChannelCash);
