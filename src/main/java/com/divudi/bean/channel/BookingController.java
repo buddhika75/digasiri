@@ -182,7 +182,7 @@ public class BookingController implements Serializable {
         String sql;
         Map m = new HashMap();
         m.put("fromDate", fromDate);
-        m.put("toDate", fromDate);
+        m.put("toDate", toDate);
         m.put("paidAmount", 0.0);
         List<BillType> bts = new ArrayList<>();
         bts.add(BillType.ChannelAgent);
