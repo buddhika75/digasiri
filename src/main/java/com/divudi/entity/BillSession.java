@@ -68,6 +68,7 @@ public class BillSession implements Serializable {
     //  Boolean present = true;
     //Absent
     boolean absent = false;
+    boolean claimed = false;
     @ManyToOne
     WebUser absentMarkedUser;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -125,6 +126,16 @@ public class BillSession implements Serializable {
 //        this.qty = qty;
 //    }
 //    
+
+    public boolean isClaimed() {
+        return claimed;
+    }
+
+    public void setClaimed(boolean claimed) {
+        this.claimed = claimed;
+    }
+    
+    
     public int getSerialNo() {
         return serialNo;
     }

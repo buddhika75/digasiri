@@ -292,7 +292,7 @@ public class BookingController implements Serializable {
                     continue;
                 }
 
-                ChannelSummeryRow row= new ChannelSummeryRow();
+                ChannelSummeryRow row = new ChannelSummeryRow();
                 boolean found = false;
                 for (ChannelSummeryRow csr : channelSummeryRows) {
                     if (csr.getStaff().equals(doc)) {
@@ -304,7 +304,7 @@ public class BookingController implements Serializable {
                 if (!found) {
                     row = new ChannelSummeryRow();
                     channelSummeryRows.add(row);
-                } 
+                }
 
                 long count = (long) ob[1];
                 if (count == 0) {
@@ -366,7 +366,7 @@ public class BookingController implements Serializable {
                 if (!found) {
                     row = new ChannelSummeryRow();
                     channelSummeryRows.add(row);
-                } 
+                }
 
                 long count = (long) ob[1];
                 if (count == 0) {
@@ -513,7 +513,7 @@ public class BookingController implements Serializable {
 
         return "/channel/single_doctor_bookings";
     }
-    
+
     public String fillAllDoctorBookingsVat() {
         fillAllDoctorBookings();
         return "/channel/all_doctor_bookings_vat";
@@ -833,7 +833,7 @@ public class BookingController implements Serializable {
     public void setDi(Long di) {
         this.di = di;
     }
-    
+
     public void deleteSelected() {
         System.out.println("delete selected");
         di = 0l;
@@ -892,9 +892,13 @@ public class BookingController implements Serializable {
         bss = getBillSessionFacade().findBySQL(sql, hh);
         System.out.println("bss.size() = " + bss.size());
         for (BillSession bs : bss) {
-            System.out.println("Deleting bs = " + bs);
-            deleteBsCascadeAll(bs);
-            di++;
+            if (!bs.isClaimed()) {
+                System.out.println("Deleting bs = " + bs);
+                deleteBsCascadeAll(bs);
+                di++;
+            }else{
+                System.out.println("Not Deletingas claimed. bs = " + bs);
+            }
         }
 
         UtilityController.addSuccessMessage("Managed Selected");
@@ -904,13 +908,13 @@ public class BookingController implements Serializable {
         System.out.println("delete bulk");
         di = 0l;
         List<BillSession> bss = new ArrayList<>();
-        Map hh= new HashMap();
+        Map hh = new HashMap();
         List<BillType> bts = new ArrayList<>();
         bts.add(BillType.ChannelAgent);
         bts.add(BillType.ChannelCash);
         bts.add(BillType.ChannelOnCall);
         bts.add(BillType.ChannelStaff);
-        String sql =  "Select bs From BillSession bs "
+        String sql = "Select bs From BillSession bs "
                 + " where "
                 + " bs.bill.billType in :tbs and "
                 + " bs.sessionDate between :ssFrom and :ssTo ";
@@ -1147,6 +1151,16 @@ public class BookingController implements Serializable {
         getSelectedBillSession().setAbsentMarkedUser(getSessionController().getLoggedUser());
         getBillSessionFacade().edit(getSelectedBillSession());
         UtilityController.addSuccessMessage("Marked as Absent");
+    }
+
+    public void markAsClaimed() {
+        getSelectedBillSession().setClaimed(true);
+        UtilityController.addSuccessMessage("Marked as Claimed");
+    }
+
+    public void markAsNotClaimed() {
+        getSelectedBillSession().setClaimed(false);
+        UtilityController.addSuccessMessage("Marked as Not Claimed");
     }
 
     public void makeNull() {
