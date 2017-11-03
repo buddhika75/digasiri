@@ -30,10 +30,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
-/**
- *
- * @author Buddhika
- */
 @Entity
 public class ReportItem implements Serializable {
 
@@ -108,11 +104,11 @@ public class ReportItem implements Serializable {
     @ManyToOne
     private Category referringCategory;
 
-    double riTop;
-    double riHeight;
-    double riLeft;
-    double riWidth;
-    double riFontSize;
+    double riTop;//
+    double riHeight;//
+    double riLeft;//
+    double riWidth;//
+    double riFontSize;//
     
     @Lob
     String htmltext;
@@ -765,7 +761,7 @@ public class ReportItem implements Serializable {
     }
 
     public double getRiWidth() {
-        if(riWidth==0){
+        if(riWidth==0){//
             riWidth=30;
         }
         return riWidth;
@@ -776,14 +772,14 @@ public class ReportItem implements Serializable {
     }
 
     public double getRiFontSize() {
-        if(riFontSize==0){
+        if(riFontSize==0){//
             riFontSize=12;
         }
         return riFontSize;
     }
 
     public void setRiFontSize(double riFontSize) {
-        this.riFontSize = riFontSize;
+        this.riFontSize = riFontSize;//
     }
 
 }
