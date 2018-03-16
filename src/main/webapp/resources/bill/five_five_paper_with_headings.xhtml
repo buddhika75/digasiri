@@ -9,7 +9,7 @@
 
     <!-- INTERFACE -->
     <cc:interface>
-        <cc:attribute name="bill" />
+        <cc:attribute name="bill" class="com.divudi.entity.Bill" />
         <cc:attribute name="duplicate" />
     </cc:interface>
 
@@ -85,7 +85,7 @@
                         <td>:</td>
                         <td></td>
                         <td>
-                            <h:outputLabel class="billDetailsFiveFive" value="#{cc.attrs.bill.deptId}"  >
+                            <h:outputLabel class="billDetailsFiveFive" value="#{cc.attrs.bill.insId}"  >
                             </h:outputLabel>
                         </td>
                         <td></td>
@@ -102,7 +102,7 @@
 
                     </tr>                    
 
-                 
+
 
                     <tr>
                         <td style="text-align: left;" >
@@ -158,12 +158,24 @@
                             </h:outputLabel>
                         </td>
 
+                    </tr>
+
+
+                    <tr>
+                        <td style="text-align: left;" >
+                            <h:outputLabel class="billDetailsFiveFive" value="NUMBER" rendered="#{cc.attrs.bill.singleBillSession.serialNo ne null}"></h:outputLabel>
+                        </td>
+                        <td></td>
+                        <td><h:outputLabel value=":" rendered="#{cc.attrs.bill.singleBillSession.serialNo ne null}"/></td>
+                        <td></td>
+                        <td colspan="5">                            
+                            <h:outputLabel class="billDetailsFiveFive" value="#{cc.attrs.bill.singleBillSession.serialNo}"  rendered="#{cc.attrs.bill.singleBillSession.serialNo ne null}">
+                            </h:outputLabel>
+                        </td>
 
                     </tr>
 
 
-
-                
                 </table>
 
 
@@ -191,7 +203,7 @@
 
                     <tr>
                         <td colspan="2" style="text-align: center;" class="billline">
-                             <h:outputLabel value="---------------------------------------------------------------------------------------"   />                                                     
+                            <h:outputLabel value="---------------------------------------------------------------------------------------"   />                                                     
                         </td>
                     </tr>
 
@@ -309,7 +321,7 @@
                         </td>
                     </tr>
 
-                     <tr>
+                    <tr>
                         <td  class="totalsBlock" style="text-align: left;">
                             <h:outputLabel  rendered="#{cc.attrs.bill.discount ne 0.0}"    value="VAT" />
                         </td>
@@ -319,14 +331,14 @@
                             </h:outputLabel>
                         </td>
                     </tr>
-                    
+
 
                 </table>
 
             </div>
 
             <div style="text-decoration: overline; margin-top: 20px;">
-                <h:outputLabel value="Cashier : #{cc.attrs.bill.creater.code}"/>
+                <h:outputLabel value="Cashier : #{cc.attrs.bill.creater.webUserPerson.name}"/>
             </div>
 
             <div class="footer" style="text-align: center;">

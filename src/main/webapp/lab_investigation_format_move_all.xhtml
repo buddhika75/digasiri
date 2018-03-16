@@ -19,37 +19,10 @@
                             <p:commandButton ajax="false" action="/lab_administration" value="Back" style="float: right;" ></p:commandButton>
                         </f:facet>
                         <h:panelGrid columns="1" >
-                            <h:panelGroup >
-                                <p:selectBooleanCheckbox itemLabel="Master Items Only" value="#{investigationController.listMasterItemsOnly}">
-                                    <p:ajax event="change" process="@this" update="acPt" />
-                                </p:selectBooleanCheckbox>
-                                <p:commandLink ajax="false" action="/lab_investigation" value="Ix Details" style="float: right;" 
-                                               actionListener="#{investigationItemController.toInvestigationMaster}"></p:commandLink>
-                            </h:panelGroup>
+                           
 
 
-                            <p:autoComplete widgetVar="aPt" id="acPt" forceSelection="true"
-                                            value="#{investigationItemController.currentInvestigation}" 
-                                            completeMethod="#{investigationController.completeInvestWithIiCount}" 
-                                            var="apt" 
-                                            itemValue="#{apt.investigation}" size="30"  style="width: 400px;">
-                                <p:column>
-                                    #{apt.investigation.name}
-                                </p:column>
-                                <p:column>
-                                    #{apt.investigation.fullName}
-                                </p:column>
-                                <p:column>
-                                    #{apt.investigation.department.name}
-                                </p:column>
-                                <p:column>
-                                    #{apt.investigation.institution.name}
-                                </p:column>
-                                <p:column >
-                                    <h:outputText value="#{apt.iiCount}" ></h:outputText>
-                                </p:column>
-                                <p:ajax event="itemSelect" process="acPt" update=":#{p:component('pPreview')}"/>
-                            </p:autoComplete> 
+                            <h:outputText value="#{investigationItemController.currentInvestigation.name}" ></h:outputText> 
                             
                         </h:panelGrid>
                     </p:panel>
@@ -62,12 +35,16 @@
                         <h:outputLabel/>
                         
                         <p:commandButton value="Left" action="#{investigationItemController.moveLeftAllReportItems}" ajax="false"/>
-                        <h:outputLabel/>
+                        <h:inputText value="#{investigationItemController.movePercentage}" ></h:inputText>
                         <p:commandButton value="Right" action="#{investigationItemController.moveRightAllReportItems}" ajax="false"/>
                         
                         <h:outputLabel/>
                         <p:commandButton value="Down" action="#{investigationItemController.moveDownAllReportItems}" ajax="false"/>
                         <h:outputLabel/>
+                    
+                        <p:commandButton value="Fix Width" action="#{investigationItemController.fixWidth()}" ajax="false"/>
+                        <p:commandButton value="Fix Height" action="#{investigationItemController.fixHeight()}" ajax="false"/>
+                    
                     </p:panelGrid>
                     
                     <p:panelGrid columns="2" style="noborder">

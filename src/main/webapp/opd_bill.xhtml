@@ -247,11 +247,11 @@
 
                                     <p:panel id='pIxAdd' header="Items / Services" style="min-height: 350px;"  >
                                         <p:focus  context="acIx"/>
-                                        <p:autoComplete widgetVar="aIx" id="acIx" forceSelection="true"
+                                        <p:autoComplete widgetVar="aIx" id="acIx" forceSelection="true" maxResults="10"
                                                         value="#{billController.currentBillItem.item}" 
                                                         completeMethod="#{itemController.completeOpdItemsByNamesAndCode}"
                                                         var="ix" itemLabel="#{ix.name}" itemValue="#{ix}"
-                                                        size="30"  style="width: 400px;" >
+                                                        size="600"  style="width: 400px;" >
                                             <p:column style="max-width: 200px;" headerText="Name">
                                                 <p:outputLabel value="#{ix.name}" ></p:outputLabel>
                                                 <h:panelGroup rendered="#{ix.name ne ix.fullName}" >
@@ -345,7 +345,7 @@
                                     <p:tabView >
                                         <p:tab title="Refering Doctor">
                                             <p:autoComplete forceSelection="true" id="cmbDoc" value="#{billController.referredBy}" 
-                                                            completeMethod="#{doctorController.completeDoctor}" var="ix" 
+                                                            completeMethod="#{doctorController.completeDoctor}" var="ix" maxResults="10"
                                                             itemLabel="#{ix.person.name}" itemValue="#{ix}" size="30"  style="width: 400px;">
                                                 <p:column headerText="Name" >
                                                     <h:outputLabel value="#{ix.person.nameWithTitle}" ></h:outputLabel>

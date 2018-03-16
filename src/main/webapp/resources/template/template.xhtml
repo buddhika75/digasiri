@@ -6,9 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
-        <!--<script src="resources/js/snowstorm.js" type="text/javascript"></script>-->
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>
             <ui:insert name="title"   >
                 <h:panelGroup rendered="#{sessionController.logged}" >
@@ -708,7 +706,7 @@
 
                                 <p:submenu styleClass="rightBordrOnly" label="User"  >
                                     <p:menuitem  ajax="false"  action="/user_change_password" value="Change Password"   ></p:menuitem>
-                                    <p:menuitem  ajax="false"  action="/user_preferances" value="Change Preferances" rendered="#{webUserController.hasPrivilege('ChangePreferece')}" ></p:menuitem>
+                                    <p:menuitem  ajax="false"  action="/user_preferances" value="Change Preferances"  ></p:menuitem>
                                 </p:submenu>
 
                                 <p:submenu styleClass="rightBordrOnly" label="Admin"  rendered="#{webUserController.hasPrivilege('Admin')}" icon="ui-icon-gear">

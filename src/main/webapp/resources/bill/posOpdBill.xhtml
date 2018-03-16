@@ -18,9 +18,6 @@
 
         <h:outputStylesheet library="css" name="pharmacypos.css" ></h:outputStylesheet>
         <div class="posbillBreak">
-
-            <h:graphicImage library="image" name="#{sessionController.institutionPreference.logoName}" style="width: 7cm; margin: auto; " ></h:graphicImage>
-
             <div class="institutionName" style="text-align: center!important;
                  font-weight: bold!important;
                  font-size: 15px!important;
@@ -114,7 +111,7 @@
                         <td>:</td>
                         <td style="width: 30%;" >
                             <!--<h:outputLabel value=": &npsp;" ></h:outputLabel>-->
-                            <h:outputLabel value="#{cc.attrs.bill.deptId}"  >
+                            <h:outputLabel value="#{cc.attrs.bill.insId}"  >
                             </h:outputLabel>
                         </td>
                         <td style="width: 10%" >

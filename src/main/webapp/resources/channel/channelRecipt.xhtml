@@ -21,13 +21,6 @@
 
             <h:panelGroup id="panelAddedBillPrint">
                 <div class="fiveinchbill" >
-
-<!--                    <p:panel rendered="#{sessionController.institutionPreference.opdPosBillWithoutLogo eq false}">
-                        <div class="institutionName">
-                            <h:graphicImage library="image" name="#{sessionController.institutionPreference.logoName}"  style="width: 7cm; margin: auto; "></h:graphicImage>                        
-                        </div>
-                    </p:panel>-->
-
                     <div class="institutionContact" >
                         <div>
                             <h:outputLabel value="#{cc.attrs.bill.department.printingName}" rendered="#{cc.attrs.bill.department.printingName ne null}"></h:outputLabel>
@@ -36,16 +29,7 @@
                             <h:outputLabel value="#{cc.attrs.bill.department.address}" rendered="#{cc.attrs.bill.department.address ne null}"></h:outputLabel>
                         </div>
                         <div>
-                            <h:outputLabel value="Tel:-#{cc.attrs.bill.department.telephone1}" rendered="#{cc.attrs.bill.department.telephone1 ne null}"></h:outputLabel>
-                        </div>
-                        <div>
-                            <h:outputLabel value="Tel:-#{cc.attrs.bill.department.telephone2}" rendered="#{cc.attrs.bill.department.telephone2 ne null}"></h:outputLabel>
-                        </div>
-                        <div>
-                            <h:outputLabel value="Fax:-#{cc.attrs.bill.department.fax}" rendered="#{cc.attrs.bill.department.fax ne null}"></h:outputLabel>
-                        </div>
-                        <div>
-                            <h:outputLabel value="VAT Reg-No: 934424603-7000"></h:outputLabel>
+                            <h:outputLabel value="Tel:-#{cc.attrs.bill.department.telephone1} , #{cc.attrs.bill.department.telephone2}, #{cc.attrs.bill.department.fax}" rendered="#{cc.attrs.bill.department.fax ne null}"></h:outputLabel>
                         </div>
                     </div>
 
@@ -62,7 +46,7 @@
 
 
                     <div>
-                        <div style="position: absolute!important; top: 40%!important;left:  15%!important;">
+                        <div >
                             <table width="350" >
                                 <tr>
                                     <td>
@@ -205,25 +189,6 @@
                                 </tr>
 
 
-
-                                <tr>
-                                    <td>
-                                        <h:outputLabel value="VAT(15%)" rendered="#{cc.attrs.bill.vat ne 0.0}"></h:outputLabel>
-                                    </td>
-                                    <td>
-                                        <p:spacer width="10" rendered="#{cc.attrs.bill.vat ne 0.0}"></p:spacer>
-                                    </td>
-                                    <td>
-                                        <h:outputLabel value=":" rendered="#{cc.attrs.bill.vat ne 0.0}"></h:outputLabel>
-                                    </td>
-                                    <td>
-                                        <h:outputLabel value="#{cc.attrs.bill.vat}" rendered="#{cc.attrs.bill.vat ne 0.0}">
-                                            <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
-                                        </h:outputLabel>
-                                    </td>
-
-                                </tr>
-
                                 <tr>
                                     <td>
                                         <b>
@@ -282,43 +247,11 @@
 
                                 </tr>
 
-                                <tr>
-                                    <td>
-                                        <h:outputLabel value="Docter No" ></h:outputLabel>
-                                    </td>
-                                    <td>
-                                        <p:spacer width="10" ></p:spacer>
-                                    </td>
-                                    <td>
-                                        <h:outputLabel value=":" ></h:outputLabel>
-                                    </td>
-                                    <td>
-                                        <h:outputLabel value="........................................">
 
-                                        </h:outputLabel>
-                                    </td>
-                                </tr>
 
                                 <tr>
                                     <td>
-                                        <h:outputLabel value="Issued By" ></h:outputLabel>
-                                    </td>
-                                    <td>
-                                        <p:spacer width="10" ></p:spacer>
-                                    </td>
-                                    <td>
-                                        <h:outputLabel value=":" ></h:outputLabel>
-                                    </td>
-                                    <td>
-                                        <h:outputLabel value="........................................">
-
-                                        </h:outputLabel>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <h:outputLabel value="" ></h:outputLabel>
+                                        <h:outputLabel value="User" ></h:outputLabel>
                                     </td>
                                     <td>
                                         <p:spacer width="10" ></p:spacer>
@@ -331,15 +264,35 @@
                                         <h:outputLabel value="(#{cc.attrs.bill.paidBill.createdAt})" ></h:outputLabel>
                                     </td>
                                 </tr>
+
+                                
+                                
                                 <tr>
                                     <td>
-                                        <h:outputLabel value="Printed By" rendered="#{cc.attrs.bill.creater ne sessionController.loggedUser}"></h:outputLabel>
+                                        <h:outputLabel value="Billed At" ></h:outputLabel>
                                     </td>
                                     <td>
-                                        <p:spacer width="10" rendered="#{cc.attrs.bill.creater ne sessionController.loggedUser}"></p:spacer>
+                                        <p:spacer width="10" ></p:spacer>
                                     </td>
                                     <td>
-                                        <h:outputLabel value=":" rendered="#{cc.attrs.bill.creater ne sessionController.loggedUser}"></h:outputLabel>
+                                        <h:outputLabel value=":" ></h:outputLabel>
+                                    </td>
+                                    <td>
+                                        <h:outputLabel value="#{cc.attrs.bill.paidBill.createdAt}" >
+                                            <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
+                                        </h:outputLabel>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel value="User" ></h:outputLabel>
+                                    </td>
+                                    <td>
+                                        <p:spacer width="10" 
+                                                  ></p:spacer>
+                                    </td>
+                                    <td>
+                                        <h:outputLabel value=":" ></h:outputLabel>
                                     </td>
                                     <td>
                                         <h:outputLabel value="#{sessionController.loggedUser.code}" rendered="#{cc.attrs.bill.creater ne sessionController.loggedUser}"></h:outputLabel>

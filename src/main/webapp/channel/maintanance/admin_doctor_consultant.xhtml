@@ -27,7 +27,7 @@
                                     
                                     <h:selectOneListbox size="1" value="#{consultantController.speciality}" >
                                         <f:selectItem itemLabel="Please select a speciality"/>
-                                        <f:selectItems value="#{doctorSpecialityController.items}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat}" />
+                                        <f:selectItems value="#{specialityController.items}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat}" />
                                     <f:ajax execute="@this" render="lstSelect" event="change" />
                                     </h:selectOneListbox>
                                     <p:inputText autocomplete="off" value="#{consultantController.selectText}" >

@@ -185,7 +185,7 @@
                             </h:panelGrid>
                         </p:panel>
 
-                        <p:panel header="CSS" >
+                        <p:panel header="CSS" style="width: 300px;overflow: hidden;" >
                             <p>
                                 #{investigationItemController.current.cssStyle}
                             </p>
@@ -341,7 +341,7 @@
 
         <h:form >
             <p:panel header="Correct Format from Old Databases" >
-                <p:commandButton ajax="false" action="#{reportItemController.intFromCss()}" value="Error Correction of Ctt to Int" ></p:commandButton>
+                <p:commandButton ajax="false" action="#{investigationItemController.convertCssValuesToRiValues()}" value="Error Correction of Ctt to Int" ></p:commandButton>
             </p:panel>
         </h:form>
 

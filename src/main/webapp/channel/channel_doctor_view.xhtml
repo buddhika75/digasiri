@@ -15,8 +15,8 @@
             <p:commandButton ajax="false" action="/channel/channel_booking" value="Bookings" ></p:commandButton>
             <p:commandButton ajax="false" action="/channel/channel_booking_past" value="Past Bookings" rendered="#{webUserController.hasPrivilege('ChannellingPastBooking')}"></p:commandButton>
 
-            <p:panel id="doctorView">
-                <f:facet name="header">
+            <h:panelGroup id="doctorView">
+                
                     <h:panelGrid columns="2">
                         <p:outputLabel value="Consultant"/>
                         <p:outputLabel value="#{channelReportController.serviceSession.staff.person.nameWithTitle}"/>
@@ -27,9 +27,9 @@
                         <p:outputLabel value="Session Name"/>
                         <h:outputLabel value="#{channelReportController.serviceSession.name}" />
                     </h:panelGrid>
-                </f:facet>
+               
 
-                <p:dataTable value="#{channelReportController.doctorViewSessions}" var="bs" sortBy="#{bs.bill.billClass}">
+                <p:dataTable styleClass="borderless" value="#{channelReportController.doctorViewSessions}" var="bs" sortBy="#{bs.bill.billClass}">
 
                     <p:column headerText="No">#{bs.serialNo}</p:column>               
                     <p:column headerText="Patient Name">#{bs.bill.patient.person.nameWithTitle}</p:column>
@@ -39,10 +39,6 @@
                         <p:outputLabel rendered="#{bs.bill.balance ne 0.0}" value="Credit" style="color: red;"/>
                         <p:outputLabel rendered="#{bs.bill.balance eq 0.0}" value="Paid" style="color: green;"/>
                     </p:column> 
-
-                    <p:column headerText="Bill Type">
-                        <p:outputLabel value="#{bs.bill.billType}"/>
-                    </p:column>
 
                     <p:column headerText="Doctor Fee" styleClass="numberCol">
                         <h:outputLabel value="#{bs.bill.staffFee}">
@@ -55,20 +51,9 @@
                         </f:facet>
                     </p:column>
 
-                    <p:column headerText="Total Amount" styleClass="numberCol" >
-                        <h:outputLabel value="#{bs.bill.netTotal}">
-                            <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
-                        </h:outputLabel>
-                        <f:facet name="footer" >
-                            <h:outputLabel value="#{channelReportController.grantNetTotal}">
-                                <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
-                            </h:outputLabel>
-                        </f:facet>
-                    </p:column>
-
                 </p:dataTable>
 
-            </p:panel>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 

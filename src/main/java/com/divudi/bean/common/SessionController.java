@@ -444,7 +444,7 @@ public class SessionController implements Serializable, HttpSessionListener {
         myRole.setName("admin");
         rFacade.create(myRole);
 
-        user.setName(getSecurityController().encrypt(userName));
+        user.setName(userName);
         user.setWebUserPassword(getSecurityController().hash(passord));
         user.setWebUserPerson(person);
         user.setActivated(true);
@@ -470,7 +470,7 @@ public class SessionController implements Serializable, HttpSessionListener {
         person.setName(newPersonName);
 
         pFacade.create(person);
-        user.setName(getSecurityController().encrypt(newUserName));
+        user.setName(newUserName);
         user.setWebUserPassword(getSecurityController().hash(newPassword));
         user.setWebUserPerson(person);
         user.setTelNo(telNo);
@@ -521,7 +521,7 @@ public class SessionController implements Serializable, HttpSessionListener {
         Boolean available = true;
         List<WebUser> allUsers = getFacede().findAll();
         for (WebUser w : allUsers) {
-            if (userName.toLowerCase().equals(getSecurityController().decrypt(w.getName()).toLowerCase())) {
+            if (userName.toLowerCase().equals(w.getName().toLowerCase())) {
                 available = false;
             }
         }
@@ -553,7 +553,7 @@ public class SessionController implements Serializable, HttpSessionListener {
         temSQL = "SELECT u FROM WebUser u WHERE u.retired = false";
         List<WebUser> allUsers = getFacede().findBySQL(temSQL);
         for (WebUser u : allUsers) {
-            if (getSecurityController().decrypt(u.getName()).equalsIgnoreCase(userName)) {
+            if (u.getName().equalsIgnoreCase(userName)) {
                 if (getSecurityController().matchPassword(passord, u.getWebUserPassword())) {
                     if (!canLogToDept(u, department)) {
                         UtilityController.addErrorMessage("No privilage to Login This Department");
@@ -653,7 +653,7 @@ public class SessionController implements Serializable, HttpSessionListener {
             System.out.println("getSecurityController() = " + getSecurityController());
             Boolean usernameFound=false;
             try{
-                usernameFound=getSecurityController().decrypt(u.getName()).equalsIgnoreCase(userName);
+                usernameFound=u.getName().equalsIgnoreCase(userName);
                 System.out.println("usernameFound = " + usernameFound);
             }catch(Exception e){
                 usernameFound=false;
@@ -987,7 +987,7 @@ public class SessionController implements Serializable, HttpSessionListener {
     }
 
     public String getDisplayName() {
-        return getSecurityController().decrypt(getLoggedUser().getName());
+        return getLoggedUser().getName();
     }
 
     /**

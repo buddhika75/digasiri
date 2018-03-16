@@ -566,7 +566,7 @@
 
 
                                             <h:panelGroup id="panelAddedBillPrintRe" styleClass="noBorder" >
-
+                                                
                                                 <div>
                                                     <h:panelGroup rendered="#{sessionController.institutionPreference.channelBillPaperType eq 'Paper24_2x9_3'}">
                                                         <ch:channelRecipt_24_2x9_3 bill="#{channelBillController.billSession.billItem.bill}" dup="true"/>                                        
@@ -575,10 +575,7 @@
 
                                                 <div >
                                                     <h:panelGroup rendered="#{sessionController.institutionPreference.channelBillPaperType eq 'FiveFivePaper'}">
-                                                        <h:panelGroup rendered="#{!sessionController.institutionPreference.pharmacyBillPrabodha}" > 
-                                                            <ch:channelRecipt bill="#{channelBillController.billSession.billItem.bill}" dup="true"/>
-                <!--                                            <ch:channelRecipt bill="#{channelBillController.billSession.billItem.bill}" dup="true"/>-->
-                                                        </h:panelGroup>
+                                                        <ch:channelRecipt bill="#{channelBillController.billSession.billItem.bill}" dup="true"/>
                                                     </h:panelGroup>
                                                 </div>
                                                 <div >
@@ -1025,7 +1022,7 @@
 
                                             <p:commandButton ajax="false" value="Mark as Claimed" action="#{bookingController.markAsClaimed()}"
                                                              disabled="#{bookingController.selectedBillSession.claimed eq true}" />
-                                             <p:commandButton ajax="false" value="Mark as Not Claimed" action="#{bookingController.markAsNotClaimed()}"
+                                            <p:commandButton ajax="false" value="Mark as Not Claimed" action="#{bookingController.markAsNotClaimed()}"
                                                              disabled="#{bookingController.selectedBillSession.claimed ne true}" />
 
                                         </p:panelGrid>

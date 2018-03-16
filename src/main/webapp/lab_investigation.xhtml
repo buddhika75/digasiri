@@ -89,7 +89,7 @@
                                     <h:outputText id="lblVatPercentage" value="VAT Percentage" ></h:outputText>
                                     <p:inputText styleClass="longText pdInputText" autocomplete="off"   
                                                  value="#{investigationController.current.vatPercentage}"  ></p:inputText>
-                                    
+
                                     <h:outputText value="VATable" ></h:outputText>
                                     <p:selectBooleanCheckbox  value="#{investigationController.current.vatable}" >
                                     </p:selectBooleanCheckbox>
@@ -97,8 +97,8 @@
                                     <h:outputText value="VAT Percentage" ></h:outputText>
                                     <p:inputText  autocomplete="off" 
                                                   value="#{investigationController.current.vatPercentage}"  ></p:inputText>
-                                    
-                                    
+
+
                                     <p:outputLabel value="Report Format"/>
                                     <p:selectOneMenu value="#{investigationController.current.reportType}" >                               
                                         <f:selectItem itemLabel="General" itemValue="General"/>
@@ -218,6 +218,7 @@
                             <p:commandLink ajax="false" action="#{investigationController.toEditReportFormat()}" value="Manage Report Format"></p:commandLink><br/>
                             <p:commandLink ajax="false" action="#{investigationController.toEditReportCalculations()}" value="Manage Calculations"></p:commandLink><br/>
                             <p:commandLink disabled="#{!webUserController.hasPrivilege('AdminPrices')}" ajax="false" action="#{investigationController.toEditFees()}" value="Manage Fees"></p:commandLink><br/>
+                            <p:commandLink ajax="false" action="#{investigationController.toEditReportFormatMoveAll()}" value="Manage Report Format - Move All"></p:commandLink><br/>
                         </p:panel>
 
 

@@ -976,13 +976,13 @@ public class CollectingCentreBillController implements Serializable {
 
         }
 
-        if (referralId == null || referralId.trim().equals("")) {
-            JsfUtil.addErrorMessage("Please enter a referrance number");
-            return true;
-        } else if (institutionReferranceNumberExist()) {
-            JsfUtil.addErrorMessage("Referral number alredy entered");
-            return true;
-        }
+//        if (referralId == null || referralId.trim().equals("")) {
+//            JsfUtil.addErrorMessage("Please enter a referrance number");
+//            return true;
+//        } else if (institutionReferranceNumberExist()) {
+//            JsfUtil.addErrorMessage("Referral number alredy entered");
+//            return true;
+//        }
 
         if (getLstBillEntries().isEmpty()) {
             UtilityController.addErrorMessage("Add tests");
@@ -1001,26 +1001,26 @@ public class CollectingCentreBillController implements Serializable {
 //            UtilityController.addErrorMessage("This bill excees the Collecting Centre Limit");
 //            return true;
 //        }
-        if (collectingCentre.getBallance() - feeTotalExceptCcfs < 0 - collectingCentre.getAllowedCredit()) {
-            UtilityController.addErrorMessage("Collecting Centre Ballance is Not Enough");
-            return true;
-        }
-
-        if (agentReferenceBookController.checkAgentReferenceNumber(getReferralId())) {
-            UtilityController.addErrorMessage("Invaild Reference Number.");
-            return true;
-        }
-
-        if (agentReferenceBookController.checkAgentReferenceNumberAlredyExsist(getReferralId(), collectingCentre, BillType.CollectingCentreBill, PaymentMethod.Agent)) {
-            UtilityController.addErrorMessage("This Reference Number is alredy Given.");
-            setReferralId("");
-            return true;
-        }
-
-        if (agentReferenceBookController.checkAgentReferenceNumber(collectingCentre, getReferralId())) {
-            UtilityController.addErrorMessage("This Reference Number is Blocked Or This channel Book is Not Issued.");
-            return true;
-        }
+//        if (collectingCentre.getBallance() - feeTotalExceptCcfs < 0 - collectingCentre.getAllowedCredit()) {
+//            UtilityController.addErrorMessage("Collecting Centre Ballance is Not Enough");
+//            return true;
+//        }
+//
+//        if (agentReferenceBookController.checkAgentReferenceNumber(getReferralId())) {
+//            UtilityController.addErrorMessage("Invaild Reference Number.");
+//            return true;
+//        }
+//
+//        if (agentReferenceBookController.checkAgentReferenceNumberAlredyExsist(getReferralId(), collectingCentre, BillType.CollectingCentreBill, PaymentMethod.Agent)) {
+//            UtilityController.addErrorMessage("This Reference Number is alredy Given.");
+//            setReferralId("");
+//            return true;
+//        }
+//
+//        if (agentReferenceBookController.checkAgentReferenceNumber(collectingCentre, getReferralId())) {
+//            UtilityController.addErrorMessage("This Reference Number is Blocked Or This channel Book is Not Issued.");
+//            return true;
+//        }
 
         return false;
     }

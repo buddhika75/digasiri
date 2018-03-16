@@ -19,67 +19,62 @@
             <p:commandButton ajax="false" value="Excel" >
                 <p:dataExporter target="tbl" type="xls" fileName="Nurse View" ></p:dataExporter>
             </p:commandButton>
-            <p:panel id="nurseView">
-                <f:facet name="header">
-                    <h:panelGrid columns="2">
-                        <p:outputLabel value="Consultant"/>
-                        <p:outputLabel value="#{channelReportController.serviceSession.staff.person.nameWithTitle}"/>
-                        <p:outputLabel value="Date"/>
-                        <h:outputLabel value="#{channelReportController.serviceSession.sessionDate}" >
-                            <f:convertDateTime pattern="dd-MM-yyyy"/>
-                        </h:outputLabel>
-                        <p:outputLabel value="Session Name"/>
-                        <h:outputLabel value="#{channelReportController.serviceSession.name}" />
-                    </h:panelGrid>
-                </f:facet>
+            <h:panelGroup id="nurseView">
 
-                <p:dataTable id="tbl" value="#{channelReportController.nurseViewSessions}" selection="#{channelReportController.selectedBillSessions}" var="bs" rowKey="#{bs.id}">
-
-                    <p:column headerText="No">
-                        <p:outputLabel style="width: 20px;" value="#{bs.serialNo}"/>
-                    </p:column>
-
-                    <p:column headerText="Patient Name">
-                        <p:outputLabel value="#{bs.bill.patient.person.nameWithTitle}" ></p:outputLabel>
-                    </p:column>
-
-                    <p:column headerText="Remark">
-                        <p:outputLabel rendered="#{bs.bill.paidAmount eq 0}" value="To Paid" style="color: red;"/>
-                        <p:outputLabel rendered="#{bs.bill.paidAmount ne 0}" value="Paid" style="color: green;"/>
-                    </p:column>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Consultant"/>
+                    <p:outputLabel value="#{channelReportController.serviceSession.staff.person.nameWithTitle}"/>
+                    <p:outputLabel value="Date"/>
+                    <h:outputLabel value="#{channelReportController.serviceSession.sessionDate}" >
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputLabel>
+                    <p:outputLabel value="Session Name"/>
+                    <h:outputLabel value="#{channelReportController.serviceSession.name}" />
+                </h:panelGrid>
 
 
-                    <p:column headerText="C / R" style="text-align: center;">
-                        <p:outputLabel value="Cancelled" rendered="#{bs.bill.cancelled eq true}" style="color: red;"/>
-                        <p:outputLabel value="Refunded" rendered="#{bs.bill.refunded eq true}" style="color: red;"/>
-                        <p:outputLabel value="-" rendered="#{bs.bill.refunded eq false and bs.bill.cancelled eq false}"/>
+                <table style="width: 90%;margin: auto;" > 
+                    <tr>
+                        <td>
+                            No
+                        </td>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            Remarks
+                        </td>
+                    </tr>
+                    <ui:repeat  id="tbl" value="#{channelReportController.nurseViewSessions}"  var="bs" >
+                        <tr>
+                            <td width="10%">
+                               #{bs.serialNo}
+                            </td>
+                            <td width="60%">
+                                #{bs.bill.patient.person.nameWithTitle}
+                            </td>
 
-                    </p:column>
-                    <p:column headerText="Agent/Emp" style="text-align: center;">
-                        <p:outputLabel value="#{bs.bill.creditCompany.name}" rendered="#{bs.bill.creditCompany ne null}"/>  
-                        <p:outputLabel value="(#{bs.bill.creditCompany.institutionCode})" rendered="#{bs.bill.creditCompany ne null}"/>
+                            <td width="30%">
+                                <h:panelGroup rendered="#{bs.bill.paidAmount eq 0}" >
+                                    To Paid
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{bs.bill.paidAmount ne 0}" >
+                                    Paid
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{bs.bill.cancelled eq true}">
+                                    Cancelled
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{bs.bill.refunded eq true}">
+                                    Refunded
+                                </h:panelGroup>
+                                
+                            </td>
 
-                        <p:outputLabel value="#{bs.bill.toStaff.person.name}" rendered="#{bs.bill.toStaff ne null}"/>  
-                        <p:outputLabel value="(#{bs.bill.toStaff.code})" rendered="#{bs.bill.toStaff ne null}"/>
+                        </tr>
+                    </ui:repeat>
+                </table>
 
-                        <p:outputLabel value="-" rendered="#{bs.bill.toStaff eq null and bs.bill.creditCompany eq null}"/>
-
-
-
-                    </p:column>                
-                    <p:column headerText="Agent Ref No" style="text-align: center;">                        
-                        <p:outputLabel value="#{bs.billItem.agentRefNo}" rendered="#{bs.billItem.agentRefNo ne null}"/>
-                        <p:outputLabel value="-" rendered="#{bs.billItem.agentRefNo eq ''}"/>
-                    </p:column>
-                    <p:column selectionMode="multiple" headerText="Mark Absent" style="text-align: center;"></p:column>
-                    <p:column headerText="P/A">
-                        <p:outputLabel value="Absent"  rendered="#{bs.absent}" style="color: red;"/>
-                        <p:outputLabel value="Present"  rendered="#{!bs.absent}" style="color: green;"/>
-                    </p:column> 
-
-                </p:dataTable>
-
-            </p:panel>
+            </h:panelGroup>
         </h:form>
 
     </ui:define>

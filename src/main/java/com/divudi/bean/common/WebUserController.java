@@ -273,23 +273,13 @@ public class WebUserController implements Serializable {
     public List<WebUser> getItems() {
         if (items == null) {
             items = getFacade().findBySQL("Select d From WebUser d where d.retired = false order by d.webUserPerson.name");
-            dycryptName();
+//            dycryptName();
         }
 
         return items;
     }
 
-    private void dycryptName() {
-        List<WebUser> temp = items;
-
-        for (int i = 0; i < temp.size(); i++) {
-            WebUser w = temp.get(i);
-            w.setName(getSecurityController().decrypt(w.getName()).toLowerCase());
-            temp.set(i, w);
-        }
-
-        items = temp;
-    }
+    
 
     public void setItems(List<WebUser> items) {
         this.items = items;
@@ -330,8 +320,8 @@ public class WebUserController implements Serializable {
         createOnlyUser = false;
         createOnlyUserForExsistingUser = false;
         staff = null;
-        department=null;
-        institution=null;
+        department = null;
+        institution = null;
 
     }
 
@@ -354,10 +344,9 @@ public class WebUserController implements Serializable {
         for (WebUser w : allUsers) {
 
             if (userName != null && w != null && w.getName() != null) {
-                if (userName.toLowerCase().equals(getSecurityController().decrypt(w.getName()).toLowerCase())) {
-                    ////System.out.println("Ift");
+                if (userName.toLowerCase().equals(w.getName().toLowerCase())) {
                     available = true;
-                    return available;// ok. that is may be the issue. we will try with it ok
+                    return available;
                 }
             }
         }
@@ -365,9 +354,6 @@ public class WebUserController implements Serializable {
     }
 
     public void saveNewUser() {
-        // We Deal with a new Web ser only here
-        //
-
         if (current == null) {
             UtilityController.addErrorMessage("Nothing to save");
             return;
@@ -427,7 +413,7 @@ public class WebUserController implements Serializable {
         //Save Web User
         getCurrent().setCreatedAt(new Date());
         getCurrent().setCreater(sessionController.loggedUser);
-        getCurrent().setName(getSecurityController().encrypt(getCurrent().getName()));
+        getCurrent().setName(getCurrent().getName());
         getCurrent().setWebUserPassword(getSecurityController().hash(getCurrent().getWebUserPassword()));
         getFacade().create(getCurrent());
         ////System.out.println("Web User Saved");
@@ -537,7 +523,7 @@ public class WebUserController implements Serializable {
         } else {
             items = getFacade().findBySQL("select c from WebUser c where c.retired=false and upper(c.webUserPerson.name) like '%" + getSelectText().toUpperCase() + "%' order by c.webUserPerson.name");
         }
-        dycryptName();
+//        dycryptName();
     }
 
     public List<WebUser> getSelectedItems() {

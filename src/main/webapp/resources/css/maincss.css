@@ -1050,3 +1050,10 @@ table.standardTable td {
    color: greenyellow;
    background-color: red;
 }
+
+.ui-datatable.borderless thead th,
+.ui-datatable.borderless tbody,
+.ui-datatable.borderless tbody tr,
+.ui-datatable.borderless tbody td {
+    border-style: none;
+}
