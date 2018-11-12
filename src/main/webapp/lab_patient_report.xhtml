@@ -69,7 +69,7 @@
                                                      rendered="#{patientReportController.currentPatientReport.approved or userPreferenceController.userPreference.canPrintWithoutPermission }"
                                                      onclick="window.print();" 
                                                      actionListener="#{patientReportController.printPatientReport()}"/>
-                                   
+
                                     <p:spacer width="30" ></p:spacer>
                                     <p:commandButton  styleClass="nonPrintBlock"  value="Patient Report Search" action="#{patientReportController.patientReportSearch}" ajax="false" >
                                     </p:commandButton>
@@ -201,14 +201,16 @@
                                         </table>
                                     </p:panel>
 
+                                   
                                     <p:panel header="Microbiology"    rendered="#{patientReportController.currentPatientReport.transInvestigation.reportType eq 'Microbiology'}" >
                                         <f:view contentType="text/html">
+                                        
                                             <table >
                                                 <ui:repeat id="tblMicVals" 
                                                            value="#{patientReportController.currentPatientReport.patientReportItemValues }"  
                                                            var="pvm"   
                                                            >
-                                                    <h:panelGroup rendered="#{pvm.investigationItem.ixItemType eq 'Value'}" >
+                                                    <h:panelGroup rendered="#{pvm.investigationItem.ixItemType eq 'Value' or pvm.investigationItem.ixItemType eq 'Antibiotic' }" >
                                                         <tr>
                                                             <td >
                                                                 <h:outputLabel value="#{pvm.investigationItem.name}" ></h:outputLabel>
@@ -216,17 +218,17 @@
                                                             <td >
 
                                                                 <h:panelGroup rendered="#{pvm.investigationItem.ixItemValueType eq 'Memo'}" >
-                                                                    <p:inputTextarea id="txtMicMemoVal" queryDelay="0"   minQueryLength="1"  style="min-width: 200px; "  
-                                                                                     completeMethod="#{investigationItemValueController.completeValues}" 
+                                                                    <p:inputTextarea rendered="true" id="txtMicMemoVal" queryDelay="0"   minQueryLength="1"  style="min-width: 200px; "  
+                                                                                     completeMethod="#{investigationItemValueController.completeValues}" disabled="#{patientReportController.currentPatientReport.approved}"
                                                                                      value="#{pvm.lobValue}" >
                                                                         <p:ajax process="@this" event="blur" listener="#{patientReportController.savePatientReportItemValues()}"></p:ajax>
                                                                     </p:inputTextarea>
                                                                 </h:panelGroup>
                                                                 <h:panelGroup rendered="#{pvm.investigationItem.ixItemValueType eq 'Varchar'}">
-                                                                    <p:selectOneMenu id="cmbMicStrVal" value="#{pvm.strValue}" editable="true"  style="min-width: 300px!important;" >
+                                                                    <p:selectOneMenu id="cmbMicStrVal" value="#{pvm.strValue}" editable="true"  style="min-width: 300px!important;" disabled="#{patientReportController.currentPatientReport.approved}">
                                                                         <f:selectItem itemLabel="SENSITIVE" itemValue="SENSITIVE" ></f:selectItem>
-                                                                        <f:selectItem itemLabel="Resistant" itemValue="Resistant" ></f:selectItem>
-                                                                        <f:selectItem itemLabel="Intermediate" itemValue="Intermediate" ></f:selectItem>
+                                                                        <f:selectItem itemLabel="RESISTANT" itemValue="Resistant" ></f:selectItem>
+                                                                        <f:selectItem itemLabel="INTERMEDIATE" itemValue="Intermediate" ></f:selectItem>
                                                                         <f:ajax event="change"  execute="@this" 
                                                                                 listener="#{patientReportController.savePatientReportItemValues()}" ></f:ajax>
                                                                     </p:selectOneMenu>
@@ -264,7 +266,7 @@
                         <div class="nonPrintBlock" >
                             <p:commandButton styleClass="nonPrintBlock"  ajax="false" value="Print" onclick="window.print();" actionListener="#{patientReportController.printPatientReport()}" 
                                              rendered="#{patientReportController.currentPatientReport.approved or userPreferenceController.userPreference.canPrintWithoutPermission }" />
-                        
+
                             <p:commandButton styleClass="nonPrintBlock"  ajax="false" value="PDF" actionListener="#{patientReportController.pdfPatientReport()}" 
                                              rendered="#{patientReportController.currentPatientReport.approved or userPreferenceController.userPreference.canPrintWithoutPermission }" />
                         </div>
@@ -345,13 +347,13 @@
 
 
 
-                                        <table id="micro" style="position: absolute; top: 35%; left:10%; font-size: 14px!important;" >
+                                        <table id="micro" style="position: absolute; top: 40%; left:10%; font-size: 14px!important;" >
 
                                             <tr>
                                                 <td>
                                                     <h:outputLabel value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                    #{patientReportController.currentPatientReport.patientInvestigation.investigation.printName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" 
-                                                                   style="font-weight: bold;font-size: 20px!important; margin: 5px;padding: 5px; border: solid black 1px;"/>
+                                                                   style="font-weight: bold;font-size: 20px!important; margin: 5px;padding: 5px; "/>
                                                 </td>
                                             </tr>
                                             <tr><td>
