@@ -367,5 +367,33 @@ public enum Privileges {
     SearchAll,
     ChangePreferece,
     SendBulkSMS,
+    
+    
+    
+    
+    
+    
+    
+    InwardBillSettleWithoutCheck,
+    LabReportEdit,
+    LabReportPrint,
+    AdminReportSearch,
+    LabReportSearchByDepartment,
+    PharmacyStockAdjustmentSingleItem,
+    ChannelBookingRestric,
+    
+    MemberShipAdd,
+    MemberShipEdit,
+    MembershipReports,
+    MembershipDiscountManagement,
+    MembershipAdministration,
+    MemberShipMemberDeActive,
+    MemberShipMemberReActive,
+    
+    HrGenerateSalarySpecial,
+    HrEditRetiedDate,
+    HrRemoveResignDate,
+    
+
 
 }

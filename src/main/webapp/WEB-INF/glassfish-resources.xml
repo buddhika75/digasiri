@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:mysql://localhost:3306/digasiri?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/dsDi" object-type="user" pool-name="mysql_digasiri_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/dsDD" object-type="user" pool-name="mysql_digasiri_rootPool"/>
 </resources>

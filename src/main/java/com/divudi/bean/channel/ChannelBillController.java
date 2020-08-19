@@ -8,6 +8,7 @@ import com.divudi.bean.common.BillBeanController;
 import com.divudi.bean.common.DoctorSpecialityController;
 import com.divudi.bean.common.PriceMatrixController;
 import com.divudi.bean.common.SessionController;
+import com.divudi.bean.common.SmsController;
 import com.divudi.bean.common.UtilityController;
 import com.divudi.bean.memberShip.PaymentSchemeController;
 import com.divudi.data.ApplicationInstitution;
@@ -36,7 +37,9 @@ import com.divudi.entity.PaymentScheme;
 import com.divudi.entity.Person;
 import com.divudi.entity.RefundBill;
 import com.divudi.entity.ServiceSession;
+import com.divudi.entity.Sms;
 import com.divudi.entity.Staff;
+import com.divudi.entity.UserPreference;
 import com.divudi.entity.channel.AgentReferenceBook;
 import com.divudi.entity.memberShip.PaymentSchemeDiscount;
 import com.divudi.facade.AgentHistoryFacade;
@@ -52,6 +55,7 @@ import com.divudi.facade.PersonFacade;
 import com.divudi.facade.ServiceSessionFacade;
 import com.divudi.facade.util.JsfUtil;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -127,7 +131,7 @@ public class ChannelBillController implements Serializable {
     @EJB
     AgentHistoryFacade agentHistoryFacade;
     @EJB
-    AgentReferenceBookFacade agentReferenceBookFacade;
+    private AgentReferenceBookFacade agentReferenceBookFacade;
     @EJB
     FinalVariables finalVariables;
     //////////////////////////////////
@@ -139,13 +143,15 @@ public class ChannelBillController implements Serializable {
     @Inject
     private BookingController bookingController;
     @Inject
-    PriceMatrixController priceMatrixController;
+    private PriceMatrixController priceMatrixController;
     @Inject
-    DoctorSpecialityController doctorSpecialityController;
+    private DoctorSpecialityController doctorSpecialityController;
     @Inject
-    ChannelSearchController channelSearchController;
+    private ChannelSearchController channelSearchController;
     @Inject
     private PaymentSchemeController paymentSchemeController;
+    @Inject 
+            private SmsController smsController;
     //////////////////////////////
     @EJB
     private BillNumberGenerator billNumberBean;
@@ -1699,8 +1705,45 @@ public class ChannelBillController implements Serializable {
         }
         settleSucessFully = true;
         sessionController.setBill(printingBill);
-
+        sendSmsOnBooking(printingBill);
         UtilityController.addSuccessMessage("Channel Booking Added.");
+    }
+
+    public void sendSmsOnBooking(Bill smsBill) {
+        UserPreference pf;
+
+        if (!smsBill.getPatient().getPerson().getPhone().trim().equals("")) {
+            Sms e = new Sms();
+            e.setCreatedAt(new Date());
+            e.setCreater(sessionController.getLoggedUser());
+            e.setBill(smsBill);
+
+            String datePattern = "dd-MMMM-yyyy";
+            SimpleDateFormat simpleDateFormatDate = new SimpleDateFormat(datePattern);
+            String channelDate = simpleDateFormatDate.format(smsBill.getSingleBillSession().getSessionDate());
+
+            String pattern = "hh:mm a";
+            SimpleDateFormat simpleDateFormatTime = new SimpleDateFormat(pattern);
+            String channelTime = simpleDateFormatTime.format(smsBill.getSingleBillSession().getServiceSession().getStartingTime());
+
+            String message = "Your Booking for "
+                    + smsBill.getSingleBillSession().getStaff().getPerson().getNameWithTitle()
+                    + " confirmed on "
+                    + channelDate
+                    + " from "
+                    + channelTime
+                    + ". Number " + smsBill.getSingleBillSession().getSerialNo() + ". Call " + getSessionController().getLoggedUser().getDepartment().getTelephone1();
+
+            String number = smsBill.getPatient().getPerson().getPhone();
+            String username = "esmsusr_97u";
+            String password = "Mobitel@123";
+            String sendingAlias = "0702450627";
+            
+            smsController.sendSms(number, message, username, password, sendingAlias);
+            
+           
+
+        }
     }
 
     public void removeAgencyNullBill(ServiceSession ss) {
@@ -2849,4 +2892,26 @@ public class ChannelBillController implements Serializable {
         this.paymentSchemeController = paymentSchemeController;
     }
 
+    public AgentReferenceBookFacade getAgentReferenceBookFacade() {
+        return agentReferenceBookFacade;
+    }
+
+    public PriceMatrixController getPriceMatrixController() {
+        return priceMatrixController;
+    }
+
+    public DoctorSpecialityController getDoctorSpecialityController() {
+        return doctorSpecialityController;
+    }
+
+    public ChannelSearchController getChannelSearchController() {
+        return channelSearchController;
+    }
+
+    public SmsController getSmsController() {
+        return smsController;
+    }
+
+    
+    
 }
