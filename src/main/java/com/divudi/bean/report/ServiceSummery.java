@@ -949,6 +949,7 @@ public class ServiceSummery implements Serializable {
         hosFeeTotal = 0;
         outSideFeeTotoal = 0;
         reagentFeeTotal = 0;
+        value=0.0;
         for (BillItem i : getBillItem(bts, service, department, paymentMethod, false)) {
             BillItemWithFee bi = new BillItemWithFee();
             bi.setBillItem(i);
@@ -958,7 +959,7 @@ public class ServiceSummery implements Serializable {
             bi.setOutSideFee(calFee(i, FeeType.OtherInstitution));
             bi.setTotal(calFee(i));
             //System.out.println("bi = " + bi);
-
+            value +=bi.getTotal();
             proFeeTotal += bi.getProFee();
             hosFeeTotal += bi.getHospitalFee();
             outSideFeeTotoal += bi.getOutSideFee();
