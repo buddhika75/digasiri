@@ -197,24 +197,24 @@ public class PaymentSchemeController implements Serializable {
 
     public void saveSelectedAllowedPaymentMethod() {
         
-        System.out.println("getCurrentAllowedPaymentMethod().getPaymentMethod() = " + getCurrentAllowedPaymentMethod().getPaymentMethod());
+        // System.out.println("getCurrentAllowedPaymentMethod().getPaymentMethod() = " + getCurrentAllowedPaymentMethod().getPaymentMethod());
         if (getCurrentAllowedPaymentMethod().getPaymentMethod()==null) {
             JsfUtil.addErrorMessage("Please Select Payment Methord");
             return;
         }
 
-        System.out.println("getCurrent() = " + getCurrent());
+        // System.out.println("getCurrent() = " + getCurrent());
         if (getCurrent() != null) {
             if (getCurrent().getId() != null) {
                 getCurrentAllowedPaymentMethod().setPaymentScheme(getCurrent());
-                System.out.println("getCurrent().getName() = " + getCurrent().getName());
+                // System.out.println("getCurrent().getName() = " + getCurrent().getName());
             }
         }
-        System.out.println("getMembershipScheme() = " + getMembershipScheme());
+        // System.out.println("getMembershipScheme() = " + getMembershipScheme());
         if (getMembershipScheme() != null) {
             if (getMembershipScheme().getId() != null) {
                 getCurrentAllowedPaymentMethod().setMembershipScheme(getMembershipScheme());
-                System.out.println("getMembershipScheme().getName() = " + getMembershipScheme().getName());
+                // System.out.println("getMembershipScheme().getName() = " + getMembershipScheme().getName());
             }
         }
         

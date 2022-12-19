@@ -64,13 +64,13 @@ public class StockHistoryController implements Serializable {
 
 //        List<StockHistory> historys=facade.findBySQL(jpql, m,TemporalType.TIMESTAMP);
 //        for (StockHistory history : historys) {
-//            System.out.println("history.getStockAt() = " + history.getStockAt());
-//            System.out.println("history.getStockAt() = " + history.getCreatedAt());
+//            // System.out.println("history.getStockAt() = " + history.getStockAt());
+//            // System.out.println("history.getStockAt() = " + history.getCreatedAt());
 //        }
-        //System.out.println("m = " + m);
+        //// System.out.println("m = " + m);
         pharmacyStockHistoryDays = facade.findDateListBySQL(jpql, m, TemporalType.TIMESTAMP);
         for (Date d : pharmacyStockHistoryDays) {
-            System.out.println("d = " + d);
+            // System.out.println("d = " + d);
         }
         
         commonController.printReportDetails(fromDate, toDate, startTime, "Pharmacy/Reports/Stock Reports/Stock history(Display Available Days)(/faces/pharmacy/pharmacy_department_stock_history.xhtml)");
@@ -100,9 +100,9 @@ public class StockHistoryController implements Serializable {
 
         jpql += " order by s.item.name";
 
-        System.out.println("m = " + m);
-        System.out.println("jpql = " + jpql);
-        System.out.println("pharmacyStockHistories.size() = " + pharmacyStockHistories.size());
+        // System.out.println("m = " + m);
+        // System.out.println("jpql = " + jpql);
+        // System.out.println("pharmacyStockHistories.size() = " + pharmacyStockHistories.size());
         pharmacyStockHistories = facade.findBySQL(jpql, m, TemporalType.TIMESTAMP);
         totalStockPurchaseValue = 0.0;
         totalStockSaleValue = 0.0;
@@ -138,12 +138,12 @@ public class StockHistoryController implements Serializable {
         }
 
         jpql += " order by s.item.name";
-        System.out.println("m = " + m);
-        System.out.println("jpql = " + jpql);
+        // System.out.println("m = " + m);
+        // System.out.println("jpql = " + jpql);
         pharmacyStockHistories = facade.findBySQL(jpql, m, TemporalType.TIMESTAMP);
         totalStockPurchaseValue = 0.0;
         totalStockSaleValue = 0.0;
-        System.out.println("pharmacyStockHistories.size() = " + pharmacyStockHistories.size());
+        // System.out.println("pharmacyStockHistories.size() = " + pharmacyStockHistories.size());
         for (StockHistory psh : pharmacyStockHistories) {
             totalStockPurchaseValue += psh.getStockPurchaseValue();
             totalStockSaleValue += psh.getStockSaleValue();

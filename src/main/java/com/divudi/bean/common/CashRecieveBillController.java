@@ -196,13 +196,13 @@ public class CashRecieveBillController implements Serializable {
     private double getReferenceBallance(BillItem billItem) {
         double refBallance = 0;
         double neTotal = Math.abs(billItem.getReferenceBill().getNetTotal() + billItem.getReferenceBill().getVat());
-        System.out.println("neTotal = " + neTotal);
+        // System.out.println("neTotal = " + neTotal);
         double refAmount = Math.abs(getCreditBean().getRefundAmount(billItem.getReferenceBill()));
         System.err.println("refAmount = " + refAmount);
         double paidAmt = Math.abs(getCreditBean().getPaidAmount(billItem.getReferenceBill(), BillType.CashRecieveBill));
-        System.out.println("paidAmt = " + paidAmt);
+        // System.out.println("paidAmt = " + paidAmt);
         refBallance = neTotal - (paidAmt + refAmount);
-        System.out.println("refBallance = " + refBallance);
+        // System.out.println("refBallance = " + refBallance);
         return refBallance;
     }
 
@@ -321,10 +321,10 @@ public class CashRecieveBillController implements Serializable {
     public void calTotalWithResetingIndex() {
         double n = 0.0;
         int index = 0;
-        System.out.println("billItems.size() = " + billItems.size());
-        System.out.println("selectedBillItems.size() = " + selectedBillItems.size());
+        // System.out.println("billItems.size() = " + billItems.size());
+        // System.out.println("selectedBillItems.size() = " + selectedBillItems.size());
         for (BillItem b : billItems) {
-            System.out.println("b.getSearialNo() = " + b.getSearialNo());
+            // System.out.println("b.getSearialNo() = " + b.getSearialNo());
             b.setSearialNo(index++);
             n += b.getNetValue();
         }
@@ -336,10 +336,10 @@ public class CashRecieveBillController implements Serializable {
             System.err.println("b.getSearialNo() = " + b.getSearialNo());
             n += b.getNetValue();
         }
-        System.out.println("billItems.size() = " + billItems.size());
-        System.out.println("selectedBillItems.size() = " + selectedBillItems.size());
+        // System.out.println("billItems.size() = " + billItems.size());
+        // System.out.println("selectedBillItems.size() = " + selectedBillItems.size());
         getCurrent().setNetTotal(n);
-        // ////System.out.println("AAA : " + n);
+        // ////// System.out.println("AAA : " + n);
     }
 
     public void addToBill() {
@@ -408,15 +408,15 @@ public class CashRecieveBillController implements Serializable {
 
     public void calTotal() {
         double n = 0.0;
-//        System.out.println("getBillItems().size() = " + getBillItems().size());
-//        System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
+//        // System.out.println("getBillItems().size() = " + getBillItems().size());
+//        // System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
         for (BillItem b : selectedBillItems) {
-//            System.out.println("b.getNetValue() = " + b.getNetValue());
-//            System.out.println("b.getSearialNo() = " + b.getSearialNo());
+//            // System.out.println("b.getNetValue() = " + b.getNetValue());
+//            // System.out.println("b.getSearialNo() = " + b.getSearialNo());
             n += b.getNetValue();
         }
         getCurrent().setNetTotal(n);
-        ////System.out.println("AAA : " + n);
+        ////// System.out.println("AAA : " + n);
     }
 
 //    public double getDue() {
@@ -687,26 +687,26 @@ public class CashRecieveBillController implements Serializable {
     public void removeAll() {
         List<BillItem> tmp = new ArrayList<>();
         for (BillItem b : selectedBillItems) {
-            System.out.println("getBillItems().size() = " + getBillItems().size());
-            System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
-            System.out.println("R.A - b.getSearialNo() = " + b.getSearialNo());
-            System.out.println("b.getNetValue() = " + b.getNetValue());
+            // System.out.println("getBillItems().size() = " + getBillItems().size());
+            // System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
+            // System.out.println("R.A - b.getSearialNo() = " + b.getSearialNo());
+            // System.out.println("b.getNetValue() = " + b.getNetValue());
             tmp.add(getBillItems().get(b.getSearialNo()));
         }
         billItems.removeAll(tmp);
         for (BillItem b : billItems) {
-            System.out.println("b.getSearialNo() = " + b.getSearialNo());
-            System.out.println("b.getNetValue() = " + b.getNetValue());
+            // System.out.println("b.getSearialNo() = " + b.getSearialNo());
+            // System.out.println("b.getNetValue() = " + b.getNetValue());
 //            getBillItems().remove(b.getSearialNo());
         }
         calTotalWithResetingIndex();
 
-        System.out.println("getBillItems().size() = " + getBillItems().size());
-        System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
+        // System.out.println("getBillItems().size() = " + getBillItems().size());
+        // System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
         selectedBillItems = new ArrayList<>();
         selectedBillItems.addAll(billItems);
-        System.out.println("getBillItems().size() = " + getBillItems().size());
-        System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
+        // System.out.println("getBillItems().size() = " + getBillItems().size());
+        // System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
     }
 
     private void saveBhtBillItem(Bill b) {
@@ -719,8 +719,8 @@ public class CashRecieveBillController implements Serializable {
     }
 
     private void saveBillItem() {
-        System.out.println("getBillItems().size() = " + getBillItems().size());
-        System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
+        // System.out.println("getBillItems().size() = " + getBillItems().size());
+        // System.out.println("getSelectedBillItems().size() = " + getSelectedBillItems().size());
         for (BillItem tmp : getSelectedBillItems()) {
             tmp.setCreatedAt(new Date());
             tmp.setCreater(getSessionController().getLoggedUser());

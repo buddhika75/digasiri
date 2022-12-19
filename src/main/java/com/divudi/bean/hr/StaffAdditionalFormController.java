@@ -466,18 +466,18 @@ public class StaffAdditionalFormController implements Serializable {
             if (a.getFromTime() != null && a.getToTime() != null) {
                 Calendar frmCal = Calendar.getInstance();
                 frmCal.setTime(a.getFromTime());
-                //System.out.println("frmCal = " + frmCal);
+                //// System.out.println("frmCal = " + frmCal);
                 Calendar toCal = Calendar.getInstance();
                 frmCal.setTime(a.getToTime());
-                //System.out.println("toCal = " + toCal);
-                //System.out.println("toCal.getTimeInMillis() = " + toCal.getTimeInMillis());
-                //System.out.println("frmCal.getTimeInMillis() = " + frmCal.getTimeInMillis());
-                //System.out.println("toCal.getTimeInMillis()-frmCal.getTimeInMillis() = " + (toCal.getTimeInMillis() - frmCal.getTimeInMillis()));
+                //// System.out.println("toCal = " + toCal);
+                //// System.out.println("toCal.getTimeInMillis() = " + toCal.getTimeInMillis());
+                //// System.out.println("frmCal.getTimeInMillis() = " + frmCal.getTimeInMillis());
+                //// System.out.println("toCal.getTimeInMillis()-frmCal.getTimeInMillis() = " + (toCal.getTimeInMillis() - frmCal.getTimeInMillis()));
                 long time = ((toCal.getTime().getTime() - frmCal.getTime().getTime()) / (1000 * 60));
                 awt.setAf(a);
                 awt.setTime(time);
-                //System.out.println("awt.getAf() = " + awt.getAf());
-                //System.out.println("awt.getTime() = " + awt.getTime());
+                //// System.out.println("awt.getAf() = " + awt.getAf());
+                //// System.out.println("awt.getTime() = " + awt.getTime());
                 aditionalWithTimes.add(awt);
             }
         }
@@ -713,9 +713,9 @@ public class StaffAdditionalFormController implements Serializable {
         hm.put("stf", getCurrentAdditionalForm().getStaff());
 
         staffShifts = staffShiftFacade.findBySQL(sql, hm, TemporalType.DATE);
-        System.out.println("sql = " + sql);
-        System.out.println("hm = " + hm);
-        System.out.println("staffShifts.size() = " + staffShifts.size());
+        // System.out.println("sql = " + sql);
+        // System.out.println("hm = " + hm);
+        // System.out.println("staffShifts.size() = " + staffShifts.size());
 
     }
 
@@ -835,15 +835,15 @@ public class StaffAdditionalFormController implements Serializable {
 
 //        if (fetchCurrentSalaryCycle(date) != null) {
 //            SalaryCycle s = fetchCurrentSalaryCycle(date);
-//            System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
-//            System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
-//            System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
-//            System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
+//            // System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
+//            // System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
+//            // System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
+//            // System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
 //            Date nowDate = CommonFunctions.getEndOfDay();
-//            System.out.println("nowDate = " + nowDate);
+//            // System.out.println("nowDate = " + nowDate);
 //            if (nowDate.getTime() > s.getDayOffPhToDate().getTime()) {
 //                double d = (nowDate.getTime() - s.getDayOffPhToDate().getTime()) / (1000 * 60 * 60 * 24);
-//                System.out.println("d = " + d);
+//                // System.out.println("d = " + d);
 //                if (d > 3) {
 //                    JsfUtil.addErrorMessage("You Can't Add This Addional."
 //                            + "because you can add only additionls within 3 days after Day off / PH To Date");
@@ -911,15 +911,15 @@ public class StaffAdditionalFormController implements Serializable {
         }
         if (fetchCurrentSalaryCycle(date) != null) {
             SalaryCycle s = fetchCurrentSalaryCycle(date);
-            System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
-            System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
-            System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
-            System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
+            // System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
+            // System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
+            // System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
+            // System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
             Date nowDate = CommonFunctions.getEndOfDay();
-            System.out.println("nowDate = " + nowDate);
+            // System.out.println("nowDate = " + nowDate);
             if (nowDate.getTime() > s.getDayOffPhToDate().getTime()) {
                 double d = (nowDate.getTime() - s.getDayOffPhToDate().getTime()) / (1000 * 60 * 60 * 24);
-                System.out.println("d = " + d);
+                // System.out.println("d = " + d);
                 if (d > 3) {
                     JsfUtil.addErrorMessage("You Can't Add This Addional."
                             + "because you can add only additionls within 3 days after Day off / PH To Date");
@@ -998,15 +998,15 @@ public class StaffAdditionalFormController implements Serializable {
 
 //        if (fetchCurrentSalaryCycle(date) != null) {
 //            SalaryCycle s = fetchCurrentSalaryCycle(date);
-//            System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
-//            System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
-//            System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
-//            System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
+//            // System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
+//            // System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
+//            // System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
+//            // System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
 //            Date nowDate = CommonFunctions.getEndOfDay();
-//            System.out.println("nowDate = " + nowDate);
+//            // System.out.println("nowDate = " + nowDate);
 //            if (nowDate.getTime() > s.getDayOffPhToDate().getTime()) {
 //                double d = (nowDate.getTime() - s.getDayOffPhToDate().getTime()) / (1000 * 60 * 60 * 24);
-//                System.out.println("d = " + d);
+//                // System.out.println("d = " + d);
 //                if (d > 3) {
 //                    JsfUtil.addErrorMessage("You Can't Add This Addional."
 //                            + "because you can add only additionls within 3 days after Day off / PH To Date");
@@ -1090,11 +1090,11 @@ public class StaffAdditionalFormController implements Serializable {
 
         StaffShift staffShift = staffShiftFacade.find(currentAdditionalForm.getStaffShift().getId());
 
-        System.out.println("staffShift = " + staffShift);
+        // System.out.println("staffShift = " + staffShift);
 
-        System.out.println("staffShift.getDayType() = " + staffShift.getDayType());
+        // System.out.println("staffShift.getDayType() = " + staffShift.getDayType());
 
-        System.out.println("currentAdditionalForm.getStaffShift().getDayType() = " + currentAdditionalForm.getStaffShift().getDayType());
+        // System.out.println("currentAdditionalForm.getStaffShift().getDayType() = " + currentAdditionalForm.getStaffShift().getDayType());
 
         Shift shift = null;
 
@@ -1106,12 +1106,12 @@ public class StaffAdditionalFormController implements Serializable {
         if (currentAdditionalForm.getStaffShift().getDayType() != null || currentAdditionalForm.getStaffShift().getDayType() == DayType.DayOff
                 || currentAdditionalForm.getStaffShift().getShift().isHalfShift()) {
             dayType = currentAdditionalForm.getStaffShift().getDayType();
-            System.out.println("currentAdditionalForm.getStaffShift().getShift().isHalfShift() = " + currentAdditionalForm.getStaffShift().getShift().isHalfShift());
-            System.out.println("currentAdditionalForm.getStaffShift().getShift().getName() = " + currentAdditionalForm.getStaffShift().getShift().getName());
-            System.out.println("dayType if = " + dayType);
+            // System.out.println("currentAdditionalForm.getStaffShift().getShift().isHalfShift() = " + currentAdditionalForm.getStaffShift().getShift().isHalfShift());
+            // System.out.println("currentAdditionalForm.getStaffShift().getShift().getName() = " + currentAdditionalForm.getStaffShift().getShift().getName());
+            // System.out.println("dayType if = " + dayType);
         } else {
             dayType = phDateController.getHolidayType(date);
-            System.out.println("dayType else = " + dayType);
+            // System.out.println("dayType else = " + dayType);
         }
         shift = currentAdditionalForm.getStaffShift().getShift();
 
@@ -1262,7 +1262,7 @@ public class StaffAdditionalFormController implements Serializable {
         hm.put("dtp", dayType);
 
         Shift sh = shiftFacade.findFirstBySQL(sql, hm, TemporalType.DATE);
-        System.out.println("sh 1 = " + sh);
+        // System.out.println("sh 1 = " + sh);
         if (sh == null) {
             sh = new Shift();
             sh.setCreatedAt(new Date());
@@ -1274,7 +1274,7 @@ public class StaffAdditionalFormController implements Serializable {
             sh.setEndingTime(null);
             shiftFacade.create(sh);
         }
-//        System.out.println("sh.getName() = " + sh.getShift().getName());
+//        // System.out.println("sh.getName() = " + sh.getShift().getName());
         return sh;
     }
 
@@ -1293,7 +1293,7 @@ public class StaffAdditionalFormController implements Serializable {
         hm.put("dtp", dayType);
 
         Shift sh = shiftFacade.findFirstBySQL(sql, hm, TemporalType.DATE);
-        System.out.println("sh 1 = " + sh);
+        // System.out.println("sh 1 = " + sh);
         if (sh == null) {
             sh = new Shift();
             sh.setCreatedAt(new Date());
@@ -1305,7 +1305,7 @@ public class StaffAdditionalFormController implements Serializable {
             sh.setEndingTime(null);
             shiftFacade.create(sh);
         }
-        System.out.println("sh 2 = " + sh);
+        // System.out.println("sh 2 = " + sh);
         return sh;
     }
 

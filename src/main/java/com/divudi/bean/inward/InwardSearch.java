@@ -180,7 +180,7 @@ public class InwardSearch implements Serializable {
             return;
         }
         for (Bill b : bill.getBackwardReferenceBills()) {
-            //   //System.out.println("b = " + b);
+            //   //// System.out.println("b = " + b);
         }
 
     }
@@ -549,7 +549,7 @@ public class InwardSearch implements Serializable {
 
             if (!getWebUserController().hasPrivilege("LabBillCancelSpecial")) {
 
-                //System.out.println("patientInvestigationController.sampledForAnyItemInTheBill(bill) = " + patientInvestigationController.sampledForAnyItemInTheBill(bill));
+                //// System.out.println("patientInvestigationController.sampledForAnyItemInTheBill(bill) = " + patientInvestigationController.sampledForAnyItemInTheBill(bill));
                 if (patientInvestigationController.sampledForAnyItemInTheBill(getBill())) {
                     UtilityController.addErrorMessage("Sample Already collected can't cancel");
                     return;
@@ -781,7 +781,7 @@ public class InwardSearch implements Serializable {
         HashMap hm = new HashMap();
         hm.put("sbt", SurgeryBillType.TimedService);
         hm.put("bil", getBill());
-        //System.out.println("getBillFacade().findFirstBySQL(sql, hm) = " + getBillFacade().findFirstBySQL(sql, hm));
+        //// System.out.println("getBillFacade().findFirstBySQL(sql, hm) = " + getBillFacade().findFirstBySQL(sql, hm));
         if (getBillFacade().findFirstBySQL(sql, hm) == null && checkBathcReferenceBillTimeService()) {
             return false;
         } else {
@@ -800,13 +800,13 @@ public class InwardSearch implements Serializable {
         hm.put("bil", getBill());
 
         List<Bill> bs = getBillFacade().findBySQL(sql, hm);
-        //System.out.println("bs = " + bs);
+        //// System.out.println("bs = " + bs);
         for (Bill b : bs) {
             List<EncounterComponent> enc = getBillBean().getEncounterComponents(b);
-            //System.out.println("enc = " + enc);
+            //// System.out.println("enc = " + enc);
             for (EncounterComponent e : enc) {
-                //System.out.println("e = " + e);
-                //System.out.println("e.getBillFee().getPatientItem().isRetired() = " + e.getBillFee().getPatientItem().isRetired());
+                //// System.out.println("e = " + e);
+                //// System.out.println("e.getBillFee().getPatientItem().isRetired() = " + e.getBillFee().getPatientItem().isRetired());
                 if (!e.getBillFee().getPatientItem().isRetired()) {
                     return false;
                 }
@@ -987,7 +987,7 @@ public class InwardSearch implements Serializable {
     }
 
     public List<Bill> getBillsToApproveCancellation() {
-        ////System.out.println("1");
+        ////// System.out.println("1");
         billsToApproveCancellation = ejbApplication.getBillsToCancel();
         return billsToApproveCancellation;
     }
@@ -1139,7 +1139,7 @@ public class InwardSearch implements Serializable {
 
             b.setPaidForBillFee(nB.getPaidForBillFee());
 
-            //System.out.println("nB.getPaidForBillFee() = " + nB.getPaidForBillFee());
+            //// System.out.println("nB.getPaidForBillFee() = " + nB.getPaidForBillFee());
             getBillItemFacede().create(b);
 
             cancelBillComponents(can, b);
@@ -1333,7 +1333,7 @@ public class InwardSearch implements Serializable {
         }
         double tot = 0.0;
         for (BillFee f : getBillFees()) {
-            ////System.out.println("Tot" + f.getFeeValue());
+            ////// System.out.println("Tot" + f.getFeeValue());
             tot += f.getFeeValue();
         }
 

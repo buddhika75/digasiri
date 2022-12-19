@@ -122,7 +122,7 @@ public class InvestigationController implements Serializable {
             if (ix.getInstitution() != null && !ix.getDepartment().getInstitution().equals(ix.getInstitution())) {
                 ix.setInstitution(ix.getDepartment().getInstitution());
                 getFacade().edit(ix);
-                System.out.println("ix = " + ix.getName());
+                // System.out.println("ix = " + ix.getName());
             }
         }
     }
@@ -140,7 +140,7 @@ public class InvestigationController implements Serializable {
                 m.put("ixn", ix.getName());
 
                 getFacade().edit(ix);
-                System.out.println("ix = " + ix.getName());
+                // System.out.println("ix = " + ix.getName());
             }
         }
     }
@@ -220,7 +220,7 @@ public class InvestigationController implements Serializable {
             s.setRetiredAt(null);
             s.setRetirer(null);
             getFacade().edit(s);
-            //System.out.println("undeleted = " + s);
+            //// System.out.println("undeleted = " + s);
         }
         selectedIxs = null;
         listDeletedIxs();
@@ -289,7 +289,7 @@ public class InvestigationController implements Serializable {
         Date fromDate = null;
         Date toDate = null;
 
-        System.out.println("prepareSelectedReportSamples");
+        // System.out.println("prepareSelectedReportSamples");
         selectedPatientReports = new ArrayList<>();
         ixWithoutSamples = new ArrayList<>();
         System.err.println("selectedIxs.size() = " + selectedIxs.size());
@@ -332,7 +332,7 @@ public class InvestigationController implements Serializable {
 
     public List<Department> getInstitutionDepatrments() {
         List<Department> d;
-        ////System.out.println("gettin ins dep ");
+        ////// System.out.println("gettin ins dep ");
         if (getCurrent().getInstitution() == null) {
             return new ArrayList<Department>();
         } else {
@@ -373,7 +373,7 @@ public class InvestigationController implements Serializable {
 
     public void reportItemsToWorksheetItems() {
         for (WorksheetItem wi : getWorksheetItemFacade().findAll()) {
-            ////System.out.println("item removing is " + wi);
+            ////// System.out.println("item removing is " + wi);
             getWorksheetItemFacade().remove(wi);
         }
         for (Investigation i : getItems()) {
@@ -383,7 +383,7 @@ public class InvestigationController implements Serializable {
                     wi.setItem(i);
                     wi.setName(ri.getName());
                     i.getWorksheetItems().add(wi);
-                    ////System.out.println("Worksheet added " + wi);
+                    ////// System.out.println("Worksheet added " + wi);
                 }
             }
             getItemFacade().edit(i);
@@ -420,7 +420,7 @@ public class InvestigationController implements Serializable {
     }
 
     public List<Investigation> completeInvest(String query) {
-        System.out.println("master" + listMasterItemsOnly);
+        // System.out.println("master" + listMasterItemsOnly);
         if (query == null || query.trim().equals("")) {
             return new ArrayList<>();
         }
@@ -434,7 +434,7 @@ public class InvestigationController implements Serializable {
                 + " and (upper(c.name) like :n or "
                 + " upper(c.fullName) like :n or "
                 + " upper(c.code) like :n or upper(c.printName) like :n ) ";
-        ////System.out.println(sql);
+        ////// System.out.println(sql);
 
         m.put("n", "%" + query.toUpperCase() + "%");
 
@@ -455,7 +455,7 @@ public class InvestigationController implements Serializable {
     }
 
     public List<InvestigationWithCount> completeInvestWithIiCount(String query) {
-        System.out.println("master" + listMasterItemsOnly);
+        // System.out.println("master" + listMasterItemsOnly);
         if (query == null || query.trim().equals("")) {
             return new ArrayList<>();
         }
@@ -469,7 +469,7 @@ public class InvestigationController implements Serializable {
                 + " and (upper(c.name) like :n or "
                 + " upper(c.fullName) like :n or "
                 + " upper(c.code) like :n or upper(c.printName) like :n ) ";
-        ////System.out.println(sql);
+        ////// System.out.println(sql);
 
         m.put("n", "%" + query.toUpperCase() + "%");
 
@@ -504,7 +504,7 @@ public class InvestigationController implements Serializable {
         } else {
             // sql = "select c from Investigation c where c.retired=false and upper(c.name) like '%" + query.toUpperCase() + "%' order by c.name";
             sql = "select c from Investigation c where c.retired=false and type(c)!=Packege and upper(c.name) like '%" + query.toUpperCase() + "%' order by c.name";
-            ////System.out.println(sql);
+            ////// System.out.println(sql);
             suggestions = getFacade().findBySQL(sql);
         }
         return suggestions;
@@ -779,7 +779,7 @@ public class InvestigationController implements Serializable {
                 String ix = w.get(1);
                 String ic = w.get(2);
                 String f = w.get(4);
-                ////System.out.println(code + " " + ix + " " + ic + " " + f);
+                ////// System.out.println(code + " " + ix + " " + ic + " " + f);
 
                 Investigation tix = new Investigation();
                 tix.setCode(code);
@@ -827,35 +827,35 @@ public class InvestigationController implements Serializable {
 //        }
         getCurrent().setCategory(getCurrent().getInvestigationCategory());
         getCurrent().setSymanticType(SymanticType.Laboratory_Procedure);
-        System.out.println("getCurrent().getInwardChargeType() = " + getCurrent().getInwardChargeType());
+        // System.out.println("getCurrent().getInwardChargeType() = " + getCurrent().getInwardChargeType());
         if (getCurrent().getInwardChargeType()==null) {
             getCurrent().setInwardChargeType(InwardChargeType.Laboratory);
         }
 //        getCurrent().setInstitution(institution);
         if (getCurrent().getId() != null && getCurrent().getId() > 0) {
-            ////System.out.println("1");
+            ////// System.out.println("1");
             if (billedAs == false) {
-                ////System.out.println("2");
+                ////// System.out.println("2");
                 getCurrent().setBilledAs(getCurrent());
 
             }
             if (reportedAs == false) {
-                ////System.out.println("3");
+                ////// System.out.println("3");
                 getCurrent().setReportedAs(getCurrent());
             }
             getFacade().edit(getCurrent());
             UtilityController.addSuccessMessage("Updated Successfully.");
         } else {
-            ////System.out.println("4");
+            ////// System.out.println("4");
             getCurrent().setCreatedAt(new Date());
             getCurrent().setCreater(getSessionController().getLoggedUser());
             getFacade().create(getCurrent());
             if (billedAs == false) {
-                ////System.out.println("5");
+                ////// System.out.println("5");
                 getCurrent().setBilledAs(getCurrent());
             }
             if (reportedAs == false) {
-                ////System.out.println("6");
+                ////// System.out.println("6");
                 getCurrent().setReportedAs(getCurrent());
             }
             getFacade().edit(getCurrent());
@@ -874,7 +874,7 @@ public class InvestigationController implements Serializable {
         for (Investigation in : fetchInvestigations()) {
             InvestigationWithInvestigationItems items = new InvestigationWithInvestigationItems();
             items.setI(in);
-            System.out.println("in.getName() = " + in.getName());
+            // System.out.println("in.getName() = " + in.getName());
             items.setFlags(fetchFlags(in));
             if (items.getFlags().isEmpty()) {
                 continue;
@@ -889,7 +889,7 @@ public class InvestigationController implements Serializable {
         List<InvestigationItemWithInvestigationItemValueFlags> lisFlags = new ArrayList<>();
         for (InvestigationItem ii : fetchInvestigationItemsOfDynamicLabelType(i)) {
             InvestigationItemWithInvestigationItemValueFlags flags = new InvestigationItemWithInvestigationItemValueFlags();
-            System.out.println("ii.getName() = " + ii.getName());
+            // System.out.println("ii.getName() = " + ii.getName());
             flags.setInvestigationItem(ii);
             flags.setFlags(fetchDynamicLabels(ii));
             if (flags.getFlags().isEmpty()) {
@@ -913,7 +913,7 @@ public class InvestigationController implements Serializable {
         sql += " order by c.name";
 
         investigations = getFacade().findBySQL(sql);
-        System.out.println("investigations.size() = " + investigations.size());
+        // System.out.println("investigations.size() = " + investigations.size());
         return investigations;
     }
 
@@ -929,7 +929,7 @@ public class InvestigationController implements Serializable {
         m.put("ixType", InvestigationItemType.DynamicLabel);
 
         investigationItemsOfDynamicLabelType = getInvestigationItemFacade().findBySQL(sql, m);
-        System.out.println("investigationItemsOfDynamicLabelType.size() = " + investigationItemsOfDynamicLabelType.size());
+        // System.out.println("investigationItemsOfDynamicLabelType.size() = " + investigationItemsOfDynamicLabelType.size());
         return investigationItemsOfDynamicLabelType;
     }
 
@@ -943,7 +943,7 @@ public class InvestigationController implements Serializable {
 
         m.put("ii", ii);
         dynamicLabels = getInvestigationItemValueFlagFacade().findBySQL(sql, m);
-        System.out.println("dynamicLabels.size() = " + dynamicLabels.size());
+        // System.out.println("dynamicLabels.size() = " + dynamicLabels.size());
         return dynamicLabels;
     }
 
@@ -1099,12 +1099,12 @@ public class InvestigationController implements Serializable {
         for (Item item : temp) {
             ItemWithFee iwf = new ItemWithFee();
             iwf.setItem(item);
-            System.out.println("iwf.getItem().getName() = " + iwf.getItem().getName());
+            // System.out.println("iwf.getItem().getName() = " + iwf.getItem().getName());
             sql = "select c from ItemFee c where c.retired = false "
                     + " and type(c.item) =Investigation "
                     + " and c.item.id=" + item.getId() + " order by c.item.name";
             iwf.setItemFees(getItemFeeFacade().findBySQL(sql));
-            System.out.println("iwf.getItemFees().size() = " + iwf.getItemFees().size());
+            // System.out.println("iwf.getItemFees().size() = " + iwf.getItemFees().size());
             itemWithFees.add(iwf);
         }
         

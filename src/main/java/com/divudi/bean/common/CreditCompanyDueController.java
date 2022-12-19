@@ -136,7 +136,7 @@ public class CreditCompanyDueController implements Serializable {
         Set<Institution> setIns = new HashSet<>();
 
         List<Institution> list = getCreditBean().getCreditCompanyFromBillsPharmacy(true);
-        System.out.println("list.size() = " + list.size());
+        // System.out.println("list.size() = " + list.size());
 
         setIns.addAll(list);
 
@@ -569,11 +569,11 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/Inward
         Date startTime = new Date();
 
         List<Institution> setIns = getCreditBean().getCreditInstitutionPharmacy(Arrays.asList(new BillType[]{BillType.PharmacyWholeSale, BillType.PharmacySale}), getFromDate(), getToDate(), true);
-        System.out.println("setIns.size() = " + setIns.size());
+        // System.out.println("setIns.size() = " + setIns.size());
         items = new ArrayList<>();
         for (Institution ins : setIns) {
             List<Bill> bills = getCreditBean().getCreditBillsPharmacy(ins, Arrays.asList(new BillType[]{BillType.PharmacyWholeSale, BillType.PharmacySale}), getFromDate(), getToDate(), true);
-            System.out.println("bills.size() = " + bills.size());
+            // System.out.println("bills.size() = " + bills.size());
             InstitutionBills newIns = new InstitutionBills();
             newIns.setInstitution(ins);
             newIns.setBills(bills);
@@ -717,7 +717,7 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/Inward
         m.put("toDate", td);
         m.put("fromDate", fd);
         m.put("cl", BilledBill.class);
-        System.out.println("sql = " + sql);
+        // System.out.println("sql = " + sql);
         return getBillFacade().findDoubleByJpql(sql, m, TemporalType.TIMESTAMP);
 
     }
@@ -923,7 +923,7 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/Inward
 //                    + " ( c.paymentFinalized is null or c.paymentFinalized=false )"
 //                    + " and ( (upper(c.bhtNo) like :q )or (upper(c.patient.person.name)"
 //                    + " like :q) ) order by c.bhtNo";
-//            ////System.out.println(sql);
+//            ////// System.out.println(sql);
 //            //      h.put("btp", BillType.InwardPaymentBill);
 //            h.put("q", "%" + query.toUpperCase() + "%");
 //            //suggestions = admissionFacade().findBySQL(sql, h);

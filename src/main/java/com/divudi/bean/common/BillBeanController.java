@@ -637,8 +637,8 @@ public class BillBeanController implements Serializable {
         hm.put("refTypes", refBillTypes);
         hm.put("fromDate", fromDate);
         hm.put("toDate", toDate);
-        //System.out.println("hm = " + hm);
-        //System.out.println("sql = " + sql);
+        //// System.out.println("hm = " + hm);
+        //// System.out.println("sql = " + sql);
         return getBillItemFacade().findAggregates(sql, hm, TemporalType.TIMESTAMP);
 
     }
@@ -810,8 +810,8 @@ public class BillBeanController implements Serializable {
         hm.put("fromDate", fromDate);
         hm.put("toDate", toDate);
         Bill b;
-        //System.out.println("hm = " + hm);
-        //System.out.println("sql = " + sql);
+        //// System.out.println("hm = " + hm);
+        //// System.out.println("sql = " + sql);
         return getBillItemFacade().findAggregates(sql, hm, TemporalType.TIMESTAMP);
     }
 
@@ -832,8 +832,8 @@ public class BillBeanController implements Serializable {
         hm.put("refType2", BillType.InwardProfessional);
         hm.put("fromDate", fromDate);
         hm.put("toDate", toDate);
-        //System.out.println("hm = " + hm);
-        //System.out.println("sql = " + sql);
+        //// System.out.println("hm = " + hm);
+        //// System.out.println("sql = " + sql);
         return getBillItemFacade().findAggregates(sql, hm, TemporalType.TIMESTAMP);
 
     }
@@ -1417,8 +1417,8 @@ public class BillBeanController implements Serializable {
         hm.put("pm3", PaymentMethod.Cheque);
         hm.put("pm4", PaymentMethod.Slip);
         double netTotal = getBillFacade().findDoubleByJpql(sql, hm, TemporalType.TIMESTAMP);
-        System.out.println("billType--" + billType);
-        System.out.println("netTotal--" + netTotal);
+        // System.out.println("billType--" + billType);
+        // System.out.println("netTotal--" + netTotal);
 
         return netTotal;
     }
@@ -1437,8 +1437,8 @@ public class BillBeanController implements Serializable {
         hm.put("toDate", toDate);
         hm.put("pm", PaymentMethod.Credit);
         double netTotal = getBillFacade().findDoubleByJpql(sql, hm, TemporalType.TIMESTAMP);
-        System.out.println("billType" + billType);
-        System.out.println("netTotal" + netTotal);
+        // System.out.println("billType" + billType);
+        // System.out.println("netTotal" + netTotal);
 
         return netTotal;
     }
@@ -2668,7 +2668,7 @@ public class BillBeanController implements Serializable {
         temMap.put("billType", type);
         temMap.put("toDate", toDate);
         temMap.put("fromDate", fromDate);
-        ////System.out.println("sql ");
+        ////// System.out.println("sql ");
         lstBills = getBillFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
 
         if (lstBills == null) {
@@ -2689,7 +2689,7 @@ public class BillBeanController implements Serializable {
         temMap.put("billType", type);
         temMap.put("toDate", toDate);
         temMap.put("fromDate", fromDate);
-        ////System.out.println("sql ");
+        ////// System.out.println("sql ");
         lstBills = getBillFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
 
         if (lstBills == null) {
@@ -2840,10 +2840,10 @@ public class BillBeanController implements Serializable {
 //        bill.setNetTotal(net);
 //        bill.setDiscount(dis);
         if (sessionController.getInstitutionPreference().isPartialPaymentOfOpdBillsAllowed()) {
-            //System.out.println("cashRemain" + billController.getCashRemain());
+            //// System.out.println("cashRemain" + billController.getCashRemain());
             if (billController.getCashRemain() != 0) {
                 if (tot > billController.getCashRemain()) {
-                    System.out.println("1.1.cashRemain" + billController.getCashRemain());
+                    // System.out.println("1.1.cashRemain" + billController.getCashRemain());
                     bill.setBalance(tot - billController.getCashRemain());
                     bill.setTotal(tot);
                     bill.setNetTotal(billController.getCashRemain());
@@ -2851,7 +2851,7 @@ public class BillBeanController implements Serializable {
                     bill.setCashPaid(billController.getCashRemain());
                     billController.setCashRemain(0.0);
                 } else {
-                    System.out.println("2.1.cashRemain" + billController.getCashRemain());
+                    // System.out.println("2.1.cashRemain" + billController.getCashRemain());
                     bill.setBalance(0.0);
                     bill.setTotal(tot);
                     bill.setNetTotal(net);
@@ -2867,7 +2867,7 @@ public class BillBeanController implements Serializable {
                 bill.setCashPaid(0.0);
                 bill.setDiscount(dis);
             }
-            //System.out.println(".................");
+            //// System.out.println(".................");
 
         } else {
             bill.setTotal(tot);
@@ -2976,7 +2976,7 @@ public class BillBeanController implements Serializable {
         if (e.getBillItem().getId() == null) {
             getBillItemFacade().create(e.getBillItem());
         }
-        //////System.out.println("Saving Bill Item : " + e.getBillItem().getItem().getName());
+        //////// System.out.println("Saving Bill Item : " + e.getBillItem().getItem().getName());
 
         saveBillComponent(e, b, wu);
         saveBillFee(e, b, wu);
@@ -3195,7 +3195,7 @@ public class BillBeanController implements Serializable {
             b.setBillItem(billItem);
             b.setCreatedAt(new Date());
             b.setItem(billItem.getItem());
-            ////System.out.println("Bill Item is " + billItem.getItem());
+            ////// System.out.println("Bill Item is " + billItem.getItem());
             b.setName(billItem.getItem().getName());
             b.setPackege(null);
             b.setStaff(billItem.getItem().getStaff());
@@ -3231,7 +3231,7 @@ public class BillBeanController implements Serializable {
             f.setFee(i);
             f.setFeeValue(i.getFee());
             f.setFeeGrossValue(i.getFee());
-            //      ////System.out.println("Fee Value is " + f.getFeeValue());
+            //      ////// System.out.println("Fee Value is " + f.getFeeValue());
             // f.setBill(billItem.getBill());
             f.setBillItem(billItem);
             f.setCreatedAt(new Date());
@@ -3322,7 +3322,7 @@ public class BillBeanController implements Serializable {
                     //  f.setBill(billItem.getBill());
                     f.setBillItem(billItem);
                     f.setCreatedAt(new Date());
-                    System.out.println("i.getFeeType() = " + i.getFeeType());
+                    // System.out.println("i.getFeeType() = " + i.getFeeType());
                     if (pi.getDepartment() != null) {
                         if (i.getFeeType() == FeeType.CollectingCentre && collectingCentreBillController.getCollectingCentre() != null) {
                             f.setDepartment(departmentController.getDefaultDepatrment(collectingCentreBillController.getCollectingCentre()));
@@ -3352,8 +3352,8 @@ public class BillBeanController implements Serializable {
                     f.setStaff(i.getStaff());
 
                     if (f.getBillItem().getItem().isVatable()) {
-                        System.out.println("f.getFee().getFeeType() = " + f.getFee().getFeeType());
-                        System.out.println("collectingCentreBillController.getCollectingCentre() = " + collectingCentreBillController.getCollectingCentre());
+                        // System.out.println("f.getFee().getFeeType() = " + f.getFee().getFeeType());
+                        // System.out.println("collectingCentreBillController.getCollectingCentre() = " + collectingCentreBillController.getCollectingCentre());
                         if (!(f.getFee().getFeeType() == FeeType.CollectingCentre && collectingCentreBillController.getCollectingCentre() != null)) {
                             f.setFeeVat(f.getFeeValue() * f.getBillItem().getItem().getVatPercentage() / 100);
                         }
@@ -3373,31 +3373,31 @@ public class BillBeanController implements Serializable {
                 f.setFee(i);
                 f.setFeeValue(i.getFee());
                 f.setFeeGrossValue(i.getFee());
-                ////System.out.println("Fee Value is " + f.getFeeValue());
+                ////// System.out.println("Fee Value is " + f.getFeeValue());
                 // f.setBill(billItem.getBill());
                 f.setBillItem(billItem);
                 f.setCreatedAt(new Date());
                 if (billItem.getItem().getDepartment() != null) {
-                    System.out.println("i.getFeeType() = " + i.getFeeType());
-                    System.out.println("billItem.getItem().getDepartment().getName() = " + billItem.getItem().getDepartment().getName());
+                    // System.out.println("i.getFeeType() = " + i.getFeeType());
+                    // System.out.println("billItem.getItem().getDepartment().getName() = " + billItem.getItem().getDepartment().getName());
                     if (i.getFeeType() == FeeType.CollectingCentre && collectingCentreBillController.getCollectingCentre() != null) {
                         f.setDepartment(departmentController.getDefaultDepatrment(collectingCentreBillController.getCollectingCentre()));
                     } else {
                         f.setDepartment(billItem.getItem().getDepartment());
                     }
-                    System.out.println("f.getDepartment().getName() = " + f.getDepartment().getName());
+                    // System.out.println("f.getDepartment().getName() = " + f.getDepartment().getName());
                 } else {
                     //  f.setDepartment(billItem.getBill().getDepartment());
                 }
                 if (billItem.getItem().getInstitution() != null) {
-                    System.out.println("i.getFeeType() = " + i.getFeeType());
-                    System.out.println("billItem.getItem().getInstitution().getName() = " + billItem.getItem().getInstitution().getName());
+                    // System.out.println("i.getFeeType() = " + i.getFeeType());
+                    // System.out.println("billItem.getItem().getInstitution().getName() = " + billItem.getItem().getInstitution().getName());
                     if (i.getFeeType() == FeeType.CollectingCentre && collectingCentreBillController.getCollectingCentre() != null) {
                         f.setInstitution(collectingCentreBillController.getCollectingCentre());
                     } else {
                         f.setInstitution(billItem.getItem().getInstitution());
                     }
-                    System.out.println("f.getInstitution().getName() = " + f.getInstitution().getName());
+                    // System.out.println("f.getInstitution().getName() = " + f.getInstitution().getName());
                 } else {
                     //   f.setInstitution(billItem.getBill().getDepartment().getInstitution());
                 }
@@ -3409,8 +3409,8 @@ public class BillBeanController implements Serializable {
                 f.setSpeciality(i.getSpeciality());
 
                 if (f.getBillItem().getItem().isVatable()) {
-                    System.out.println("f.getFee().getFeeType() = " + f.getFee().getFeeType());
-                    System.out.println("collectingCentreBillController.getCollectingCentre() = " + collectingCentreBillController.getCollectingCentre());
+                    // System.out.println("f.getFee().getFeeType() = " + f.getFee().getFeeType());
+                    // System.out.println("collectingCentreBillController.getCollectingCentre() = " + collectingCentreBillController.getCollectingCentre());
                     if (!(f.getFee().getFeeType() == FeeType.CollectingCentre && collectingCentreBillController.getCollectingCentre() != null)) {
                         f.setFeeVat(f.getFeeValue() * f.getBillItem().getItem().getVatPercentage() / 100);
                     }

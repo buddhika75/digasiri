@@ -102,7 +102,7 @@ public class BhtEditController implements Serializable {
         hm.put("pEnc", current);
         Bill bill = getBillFacade().findFirstBySQL(sql, hm);
         if (bill != null) {
-            System.out.println("bill.getInsId() = " + bill.getInsId());
+            // System.out.println("bill.getInsId() = " + bill.getInsId());
             return true;
         }
 
@@ -134,7 +134,7 @@ public class BhtEditController implements Serializable {
         }
 
         if (getComment() == null || getComment().trim().equals("")) {
-            //System.out.println("comment = " + comment);
+            //// System.out.println("comment = " + comment);
             UtilityController.addErrorMessage("Type a Comment");
             return;
         }
@@ -186,7 +186,7 @@ public class BhtEditController implements Serializable {
             suggestions = new ArrayList<>();
         } else {
             sql = "select c from Admission c where c.retired=false and c.discharged=false and (upper(c.bhtNo) like '%" + query.toUpperCase() + "%' or upper(c.patient.person.name) like '%" + query.toUpperCase() + "%') order by c.bhtNo";
-            ////System.out.println(sql);
+            ////// System.out.println(sql);
             suggestions = getFacade().findBySQL(sql);
         }
         return suggestions;
@@ -203,7 +203,7 @@ public class BhtEditController implements Serializable {
                     //                    + " and c.discharged=false "
                     + " and (upper(c.bhtNo) like '%" + query.toUpperCase() + "%' or upper(c.patient.person.name) like '%" + query.toUpperCase() + "%') "
                     + " order by c.bhtNo ";
-            ////System.out.println(sql);
+            ////// System.out.println(sql);
             suggestions = getFacade().findBySQL(sql);
         }
         return suggestions;

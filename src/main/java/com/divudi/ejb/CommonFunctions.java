@@ -124,25 +124,25 @@ public class CommonFunctions {
     }
 
     public Date guessDob(String docStr) {
-        ////System.out.println("year string is " + docStr);
+        ////// System.out.println("year string is " + docStr);
         try {
             int years = Integer.valueOf(docStr);
-            ////System.out.println("int year is " + years);
+            ////// System.out.println("int year is " + years);
             Calendar now = Calendar.getInstance(TimeZone.getTimeZone("IST"));
-            ////System.out.println("now before is " + now);
+            ////// System.out.println("now before is " + now);
             now.add(Calendar.YEAR, -years);
-            ////System.out.println("now after is " + now);
-            ////System.out.println("now time is " + now.getTime());
+            ////// System.out.println("now after is " + now);
+            ////// System.out.println("now time is " + now.getTime());
             return now.getTime();
         } catch (Exception e) {
-            ////System.out.println("Error is " + e.getMessage());
+            ////// System.out.println("Error is " + e.getMessage());
             return new Date();
 
         }
     }
 
     public Date guessDob(YearMonthDay yearMonthDay) {
-        // ////System.out.println("year string is " + docStr);
+        // ////// System.out.println("year string is " + docStr);
         int years = 0;
         int month = 0;
         int day = 0;
@@ -165,25 +165,25 @@ public class CommonFunctions {
 
             return now.getTime();
         } catch (Exception e) {
-            ////System.out.println("Error is " + e.getMessage());
+            ////// System.out.println("Error is " + e.getMessage());
             return new Date();
 
         }
     }
 
     public Date guessDobFromMonth(String docStr) {
-        ////System.out.println("year string is " + docStr);
+        ////// System.out.println("year string is " + docStr);
         try {
             int month = Integer.valueOf(docStr);
-            ////System.out.println("int month is " + month);
+            ////// System.out.println("int month is " + month);
             Calendar now = Calendar.getInstance(TimeZone.getTimeZone("IST"));
-            ////System.out.println("now before is " + now);
+            ////// System.out.println("now before is " + now);
             now.add(Calendar.MONTH, -month);
-            ////System.out.println("now after is " + now);
-            ////System.out.println("now time is " + now.getTime());
+            ////// System.out.println("now after is " + now);
+            ////// System.out.println("now time is " + now.getTime());
             return now.getTime();
         } catch (Exception e) {
-            ////System.out.println("Error is " + e.getMessage());
+            ////// System.out.println("Error is " + e.getMessage());
             return new Date();
 
         }
@@ -198,7 +198,7 @@ public class CommonFunctions {
         if (ageInDays < 0) {
             return "";
         }
-        ////System.out.println("Age in days " + ageInDays);
+        ////// System.out.println("Age in days " + ageInDays);
         if (ageInDays < 60) {
             return ageInDays + " days";
         } else if (ageInDays < 366) {
@@ -252,7 +252,7 @@ public class CommonFunctions {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DATE);
         calendar.set(year, month, day, 0, 0, 0);
-        //System.out.println("calendar.getTime() = " + calendar.getTime());
+        //// System.out.println("calendar.getTime() = " + calendar.getTime());
         return calendar.getTime();
     }
 
@@ -288,7 +288,7 @@ public class CommonFunctions {
         int day = calendar.get(Calendar.DATE);
         calendar.set(year, month, day, 23, 59, 59);
         calendar.set(Calendar.MILLISECOND, 999);
-        //System.out.println("calendar.getTime() = " + calendar.getTime());
+        //// System.out.println("calendar.getTime() = " + calendar.getTime());
         return calendar.getTime();
     }
 
@@ -307,7 +307,7 @@ public class CommonFunctions {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DATE);
         calendar.set(year, month, 1, 0, 0, 0);
-        System.out.println("calendar.getTime() = " + calendar.getTime());
+        // System.out.println("calendar.getTime() = " + calendar.getTime());
         return calendar.getTime();
     }
 
@@ -316,7 +316,7 @@ public class CommonFunctions {
         cal.setTime(date);
         cal.set(Calendar.MONTH, 0);
         cal.set(Calendar.DATE, 1);
-        ////System.out.println("First : " + cal.getTime());
+        ////// System.out.println("First : " + cal.getTime());
         return cal.getTime();
     }
     
@@ -325,7 +325,7 @@ public class CommonFunctions {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);
-        System.out.println("First : " + cal.getTime());
+        // System.out.println("First : " + cal.getTime());
         return cal.getTime();
     }
 
@@ -334,7 +334,7 @@ public class CommonFunctions {
         cal.setTime(date);
         cal.set(Calendar.MONTH, 11);
         cal.set(Calendar.DATE, 31);
-        ////System.out.println("Last : " + cal.getTime());
+        ////// System.out.println("Last : " + cal.getTime());
         return cal.getTime();
     }
     
@@ -345,7 +345,7 @@ public class CommonFunctions {
         cal.set(Calendar.MONTH, 11);
         cal.set(Calendar.DATE, 31);
         cal.set(cal.get(Calendar.YEAR), 11, 31, 23, 59, 59);
-        System.out.println("Last : " + cal.getTime());
+        // System.out.println("Last : " + cal.getTime());
         return cal.getTime();
     }
 
@@ -362,13 +362,13 @@ public class CommonFunctions {
 
 // get start of this week in milliseconds
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-        //      ////System.out.println("Start of this week:       " + cal.getTime());
-        //       ////System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
+        //      ////// System.out.println("Start of this week:       " + cal.getTime());
+        //       ////// System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
 
 // start of the next week
 //        cal.add(Calendar.WEEK_OF_YEAR, 1);
-//        ////System.out.println("Start of the next week:   " + cal.getTime());
-//        ////System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
+//        ////// System.out.println("Start of the next week:   " + cal.getTime());
+//        ////// System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
         return cal.getTime();
     }
 
@@ -383,15 +383,15 @@ public class CommonFunctions {
 
 // get start of this week in milliseconds
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-        //   ////System.out.println("Start of this week:       " + cal.getTime());
-        //     ////System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
+        //   ////// System.out.println("Start of this week:       " + cal.getTime());
+        //     ////// System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
 
         cal.add(Calendar.DATE, 7);
 
 // start of the next week
 //        cal.add(Calendar.WEEK_OF_YEAR, 1);
-//        ////System.out.println("Start of the next week:   " + cal.getTime());
-//        ////System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
+//        ////// System.out.println("Start of the next week:   " + cal.getTime());
+//        ////// System.out.println("... in milliseconds:      " + cal.getTimeInMillis());
         return cal.getTime();
     }
 

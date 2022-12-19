@@ -215,12 +215,12 @@ public class ReportsTransfer implements Serializable {
         } else {
             sql += "order by  SUM(bi.pharmaceuticalBillItem.stock.itemBatch.retailsaleRate * bi.pharmaceuticalBillItem.qty) asc";
         }
-        //System.out.println("sql = " + sql);
-        //System.out.println("m = " + m);
+        //// System.out.println("sql = " + sql);
+        //// System.out.println("m = " + m);
         List<Object[]> objs = getBillItemFacade().findAggregates(sql, m, TemporalType.TIMESTAMP);
         movementRecords = new ArrayList<>();
         if (objs == null) {
-            //System.out.println("objs = " + objs);
+            //// System.out.println("objs = " + objs);
             return;
         }
         for (Object[] obj : objs) {
@@ -380,7 +380,7 @@ public class ReportsTransfer implements Serializable {
 
         billItems = getBillItemFacade().findBySQL(sql, m, TemporalType.TIMESTAMP);
 
-        System.out.println("billItems.size() = " + billItems.size());
+        // System.out.println("billItems.size() = " + billItems.size());
 
         return billItems;
     }
@@ -953,7 +953,7 @@ public class ReportsTransfer implements Serializable {
     public void fillItemCountsWithOutMargin(BillType bt) {
 
         List<Object[]> list = fetchBillItemWithOutMargin(bt);
-        //System.out.println("list = " + list);
+        //// System.out.println("list = " + list);
         if (list == null) {
             return;
         }
@@ -1448,7 +1448,7 @@ public class ReportsTransfer implements Serializable {
         for (Item i : fetchStockItems()) {
             ItemBHTIssueCountTrancerReciveCount count = new ItemBHTIssueCountTrancerReciveCount();
             count.setI(i);
-            System.out.println("i.getName() = " + i.getName());
+            // System.out.println("i.getName() = " + i.getName());
             List<Object[]> object = fetchItemDetails(i);
             double qty;
             try {
@@ -1457,7 +1457,7 @@ public class ReportsTransfer implements Serializable {
             } catch (Exception e) {
                 qty = 0.0;
             }
-            System.out.println("qty = " + qty);
+            // System.out.println("qty = " + qty);
             double totalValue;
             try {
                 totalValue = (double) object.get(0)[1];
@@ -1465,7 +1465,7 @@ public class ReportsTransfer implements Serializable {
             } catch (Exception e) {
                 totalValue = 0.0;
             }
-            System.out.println("totalValue = " + totalValue);
+            // System.out.println("totalValue = " + totalValue);
             count.setCountIssue(qty);
             count.setTotalIssue(totalValue);
             List<Object[]> objectBHT = fetchBHTIsssue(BillType.PharmacyBhtPre, i);
@@ -1476,7 +1476,7 @@ public class ReportsTransfer implements Serializable {
             } catch (Exception e) {
                 qtyBHT = 0.0;
             }
-            System.out.println("qtyBHT = " + qtyBHT);
+            // System.out.println("qtyBHT = " + qtyBHT);
             double totalBHTValue;
             try {
                 totalBHTValue = (double) objectBHT.get(0)[1];
@@ -1484,7 +1484,7 @@ public class ReportsTransfer implements Serializable {
             } catch (Exception e) {
                 totalBHTValue = 0.0;
             }
-            System.out.println("totalBHTValue = " + totalBHTValue);
+            // System.out.println("totalBHTValue = " + totalBHTValue);
             count.setCountBht(qtyBHT);
             count.setTotalBht(totalBHTValue);
             itemBHTIssueCountTrancerReciveCounts.add(count);
@@ -1503,7 +1503,7 @@ public class ReportsTransfer implements Serializable {
                 + " order by s.itemBatch.item.name";
         m.put("d", toDepartment);
         List<Item> items = getItemFacade().findBySQL(sql, m);
-        System.out.println("items.size() = " + items.size());
+        // System.out.println("items.size() = " + items.size());
         return items;
     }
 

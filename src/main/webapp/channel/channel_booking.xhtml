@@ -415,6 +415,7 @@
                             </p:tabView>
                             <h:panelGrid columns="4" style="min-width: 100%;">
                                 <p:commandButton   id="btnAdd" 
+                                                   onclick="if (! confirm('Are you sure?')) return false"
                                                    value="Add" process=":#{p:component('tabNewPt')} :#{p:component('tabSearchPt')} btnAdd :#{p:component('pgNewBookingDetail')}" 
                                                    update="gpThisBookingDetails" style="float: right;" 
                                                    action="#{channelBillController.add}" 

@@ -115,11 +115,11 @@ public class SmsController implements Serializable {
 
     public boolean sendSms(String number, String message, String username, String password, String sendingAlias) {
 
-        System.out.println("number = " + number);
-        System.out.println("message = " + message);
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
-        System.out.println("sendingAlias = " + sendingAlias);
+        // System.out.println("number = " + number);
+        // System.out.println("message = " + message);
+        // System.out.println("username = " + username);
+        // System.out.println("password = " + password);
+        // System.out.println("sendingAlias = " + sendingAlias);
 
         Map m = new HashMap();
         m.put("userName", username);
@@ -211,17 +211,17 @@ public class SmsController implements Serializable {
 
             String messageBody2 = msg;
 
-            System.out.println("messageBody2 = " + messageBody2.length());
+            // System.out.println("messageBody2 = " + messageBody2.length());
 
             final StringBuilder request = new StringBuilder(url);
             request.append(sendingNo.substring(1, 10));
             request.append(pw);
 
             try {
-                System.out.println("pw = " + pw);
-                System.out.println("sendingNo = " + sendingNo);
-                System.out.println("sendingNo.substring(1, 10) = " + sendingNo.substring(1, 10));
-                System.out.println("text = " + messageBody2);
+                // System.out.println("pw = " + pw);
+                // System.out.println("sendingNo = " + sendingNo);
+                // System.out.println("sendingNo.substring(1, 10) = " + sendingNo.substring(1, 10));
+                // System.out.println("text = " + messageBody2);
 
                 stringResponse = Unirest.post(request.toString()).field("message", messageBody2).asString();
 

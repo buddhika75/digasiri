@@ -127,9 +127,9 @@ public class PettyCashBillController implements Serializable {
         Calendar c = Calendar.getInstance();
         c.set(year.get(Calendar.YEAR), 3, 1, 0, 0, 0);
         Date fd = c.getTime();
-        System.out.println("d = " + fd);
+        // System.out.println("d = " + fd);
         String inv = createInvoiceNumberSuffix() + getCurrent().getIntInvoiceNumber();
-        System.out.println("inv = " + inv);
+        // System.out.println("inv = " + inv);
         String sql = "Select b From BilledBill b where "
                 + " b.retired=false "
                 + " and b.cancelled=false "
@@ -139,12 +139,12 @@ public class PettyCashBillController implements Serializable {
         HashMap h = new HashMap();
         h.put("btp", BillType.PettyCash);
         h.put("fd", fd);
-        System.out.println("h = " + h);
-        System.out.println("sql = " + sql);
+        // System.out.println("h = " + h);
+        // System.out.println("sql = " + sql);
         List<Bill> tmp = getBillFacade().findBySQL(sql, h, TemporalType.TIMESTAMP);
 
         if (tmp.size() > 0) {
-            System.out.println("tmp.get(0).getInsId() =" + tmp.get(0).getInsId());
+            // System.out.println("tmp.get(0).getInsId() =" + tmp.get(0).getInsId());
             return true;
         }
 
@@ -158,7 +158,7 @@ public class PettyCashBillController implements Serializable {
         String s1 = y + "";
         String s2 = y + 1 + "";
         String s = s1.substring(2, 4) + s2.substring(2, 4) + "-";
-        System.out.println("s = " + s);
+        // System.out.println("s = " + s);
 
         return s;
     }
@@ -259,7 +259,7 @@ public class PettyCashBillController implements Serializable {
         getSessionController().setLoggedUser(wb);
         UtilityController.addSuccessMessage("Bill Saved");
         printPreview = true;
-        System.out.println("getCurrent().getInvoiceNumber() = " + getCurrent().getInvoiceNumber());
+        // System.out.println("getCurrent().getInvoiceNumber() = " + getCurrent().getInvoiceNumber());
 
         commonController.printReportDetails(fromDate, toDate, startTime, "Payments/OPD/Petty Cash/ Petty Cash payment(/faces/petty_cash_bill.xhtml)");
 

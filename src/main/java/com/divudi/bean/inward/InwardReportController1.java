@@ -349,7 +349,7 @@ public class InwardReportController1 implements Serializable {
     }
 
     public List<Object[]> fetchDoctorPaymentInwardModified(Date frmDate, Date tDate, boolean byDischargedDate) {
-        //System.out.println("fetchDoctorPaymentInwardModified");
+        //// System.out.println("fetchDoctorPaymentInwardModified");
         HashMap hm = new HashMap();
         String sql = "Select b.staff.speciality,"
                 + " sum(b.feeValue) "
@@ -394,7 +394,7 @@ public class InwardReportController1 implements Serializable {
     }
 
     private List<Object[]> fetchDoctorPaymentInwardPaid(Date frmDate, Date tDate, boolean byDischargDate) {
-        //System.out.println("fetchDoctorPaymentInwardPaid");
+        //// System.out.println("fetchDoctorPaymentInwardPaid");
         String sql;
         Map m = new HashMap();
         m.put("bclass", BilledBill.class);
@@ -451,14 +451,14 @@ public class InwardReportController1 implements Serializable {
         sql += " group by bf.paidForBillFee.staff.speciality "
                 + " order by bf.paidForBillFee.staff.speciality.name ";
 
-        //System.out.println("sql = " + sql);
-        //System.out.println("m = " + m);
+        //// System.out.println("sql = " + sql);
+        //// System.out.println("m = " + m);
         return getBillFeeFacade().findAggregates(sql, m, TemporalType.TIMESTAMP);
 
     }
 
     public void createDoctorPaymentInward(Date frmDate, Date tDate, boolean byDischargedDate) {
-        //System.out.println("createDoctorPaymentInward");
+        //// System.out.println("createDoctorPaymentInward");
         professionals = new ArrayList<>();
         professionalGross = 0;
         List<Object[]> list = fetchDoctorPaymentInwardModified(frmDate, tDate, byDischargedDate);
@@ -482,8 +482,8 @@ public class InwardReportController1 implements Serializable {
     public void createDoctorPaymentInwardPaid(Date frmDate, Date tDate, boolean byDischargedDate) {
         professionalsPaid = new ArrayList<>();
         professionalGrossPaid = 0;
-        //System.out.println("frmDate = " + frmDate);
-        //System.out.println("tDate = " + tDate);
+        //// System.out.println("frmDate = " + frmDate);
+        //// System.out.println("tDate = " + tDate);
         List<Object[]> list = fetchDoctorPaymentInwardPaid(frmDate, tDate, byDischargedDate);
         for (Object[] obj : list) {
             Speciality sp = (Speciality) obj[0];
@@ -1523,7 +1523,7 @@ public class InwardReportController1 implements Serializable {
     }
 
     public void processProfessionalPayment() {
-        //System.out.println("professinal payment bill processing");
+        //// System.out.println("professinal payment bill processing");
         makeNull();
 
         createDoctorPaymentInward(getFromDate(), getToDate(), false);
@@ -2318,10 +2318,10 @@ public class InwardReportController1 implements Serializable {
         }
 
         sql += " order by bi.bill.patientEncounter.bhtNo";
-        //System.out.println("m = " + m);
-        //System.out.println("sql = " + sql);
+        //// System.out.println("m = " + m);
+        //// System.out.println("sql = " + sql);
         billItemOutSide = BillItemFacade.findBySQL(sql, m, TemporalType.TIMESTAMP);
-        //System.out.println("billItemOutSide = " + billItemOutSide);
+        //// System.out.println("billItemOutSide = " + billItemOutSide);
         totalOfProcessInwardChargesOutSideCharges();
 
 //        PatientEncounter pe = new PatientEncounter();

@@ -217,7 +217,7 @@ public class BillBhtController implements Serializable {
             getBillSearch().setBill((BilledBill) b);
             getBillSearch().setPaymentMethod(b.getPaymentMethod());
             getBillSearch().setComment("Batch Cancell");
-            ////System.out.println("ggg : " + getBillSearch().getComment());
+            ////// System.out.println("ggg : " + getBillSearch().getComment());
             getBillSearch().cancelBill();
         }
 
@@ -238,7 +238,7 @@ public class BillBhtController implements Serializable {
                 if (e.getBillItem().getItem().getDepartment().equals(d)) {
                     BillItem bi = saveBillItems(myBill, e.getBillItem(), e, e.getLstBillFees(), getSessionController().getLoggedUser(), matrixDepartment);
                     bi.setSearialNo(tmpBis.size());
-                    System.out.println("tmpBis.size() = " + tmpBis.size());
+                    // System.out.println("tmpBis.size() = " + tmpBis.size());
                     //getBillBean().calculateBillItem(myBill, e);
                     tmpBis.add(bi);
                     tmp.add(e);
@@ -293,7 +293,7 @@ public class BillBhtController implements Serializable {
 
             BillItem billItem = saveBillItems(bill, e.getBillItem(), e, e.getLstBillFees(), webUser, matrixDepartment);
             billItem.setSearialNo(list.size());
-            System.out.println("list.size() = " + list.size());
+            // System.out.println("list.size() = " + list.size());
             for (BillFee bf : billItem.getBillFees()) {
                 PriceMatrix priceMatrix = getPriceMatrixController().fetchInwardMargin(billItem, bf.getFeeGrossValue(), matrixDepartment, paymentMethod);
                 getInwardBean().setBillFeeMargin(bf, bf.getBillItem().getItem(), priceMatrix);
@@ -733,16 +733,16 @@ public class BillBhtController implements Serializable {
     public void removeBillItem() {
 
         //TODO: Need to add Logic
-        ////System.out.println(getIndex());
+        ////// System.out.println(getIndex());
         if (getIndex() != null) {
             boolean remove;
             BillEntry temp = getLstBillEntries().get(getIndex());
-            ////System.out.println("Removed Item:" + temp.getBillItem().getNetValue());
+            ////// System.out.println("Removed Item:" + temp.getBillItem().getNetValue());
             recreateList(temp);
             // remove = getLstBillEntries().remove(getIndex());
 
             //  getLstBillEntries().remove(index);
-            //////System.out.println("Is Removed:" + remove);
+            //////// System.out.println("Is Removed:" + remove);
             calTotals();
 
         }
@@ -754,7 +754,7 @@ public class BillBhtController implements Serializable {
         for (BillEntry b : getLstBillEntries()) {
             if (b.getBillItem().getItem() != r.getBillItem().getItem()) {
                 temp.add(b);
-                ////System.out.println(b.getBillItem().getNetValue());
+                ////// System.out.println(b.getBillItem().getNetValue());
             }
         }
         lstBillEntries = temp;

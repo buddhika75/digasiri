@@ -198,11 +198,11 @@ public class StaffLeaveFromLateAndEarlyController implements Serializable {
                 + " order by ss.shiftDate ";
         hm.put("frmTime", from);
         hm.put("toTime", to);
-        System.out.println("sql = " + sql);
-        System.out.println("from = " + from);
-        System.out.println("to = " + to);
-        System.out.println("staffShift.getShiftDate() = " + staffShift.getShiftDate());
-        System.out.println("staffShift.getStaff() = " + staffShift.getStaff());
+        // System.out.println("sql = " + sql);
+        // System.out.println("from = " + from);
+        // System.out.println("to = " + to);
+        // System.out.println("staffShift.getShiftDate() = " + staffShift.getShiftDate());
+        // System.out.println("staffShift.getStaff() = " + staffShift.getStaff());
 
         return staffShiftFacade.findBySQL(sql, hm, TemporalType.DATE, count);
     }
@@ -256,11 +256,11 @@ public class StaffLeaveFromLateAndEarlyController implements Serializable {
         hm.put("frmTime", from);
         hm.put("toTime", to);
 
-        System.out.println("sql = " + sql);
-        System.out.println("from = " + from);
-        System.out.println("to = " + to);
-        System.out.println("staffShift.getShiftDate() = " + staffShift.getShiftDate());
-        System.out.println("staffShift.getStaff() = " + staffShift.getStaff());
+        // System.out.println("sql = " + sql);
+        // System.out.println("from = " + from);
+        // System.out.println("to = " + to);
+        // System.out.println("staffShift.getShiftDate() = " + staffShift.getShiftDate());
+        // System.out.println("staffShift.getStaff() = " + staffShift.getStaff());
 
         return staffShiftFacade.findBySQL(sql, hm, TemporalType.DATE, count);
     }
@@ -541,8 +541,8 @@ public class StaffLeaveFromLateAndEarlyController implements Serializable {
         hm.put("stf", staffShift);
         hm.put("fd", fromDate);
         hm.put("td", toDate);
-        System.out.println("hm = " + hm);
-        System.out.println("sql = " + sql);
+        // System.out.println("hm = " + hm);
+        // System.out.println("sql = " + sql);
 
         LeaveForm lf = leaveFormFacade.findFirstBySQL(sql, hm, TemporalType.DATE);
         return lf != null ? (LeaveFormSystem) lf : null;
@@ -573,8 +573,8 @@ public class StaffLeaveFromLateAndEarlyController implements Serializable {
         HashMap hm = new HashMap();
         hm.put("stf", staffShift);
         hm.put("fr", form);
-        System.out.println("hm = " + hm);
-        System.out.println("sql = " + sql);
+        // System.out.println("hm = " + hm);
+        // System.out.println("sql = " + sql);
 
         StaffLeave staffLeave = staffLeaveFacade.findFirstBySQL(sql, hm, TemporalType.DATE);
         return staffLeave != null ? (StaffLeaveSystem) staffLeave : null;
@@ -587,8 +587,8 @@ public class StaffLeaveFromLateAndEarlyController implements Serializable {
 
         HashMap hm = new HashMap();
         hm.put("stf", staffShift);
-        System.out.println("hm = " + hm);
-        System.out.println("sql = " + sql);
+        // System.out.println("hm = " + hm);
+        // System.out.println("sql = " + sql);
 
         StaffLeave staffLeave = staffLeaveFacade.findFirstBySQL(sql, hm, TemporalType.DATE);
         return staffLeave != null ? (StaffLeaveSystem) staffLeave : null;
@@ -599,8 +599,8 @@ public class StaffLeaveFromLateAndEarlyController implements Serializable {
         ss.resetLeaveData(leaveType);
         ss.setLeaveType(leaveType);
         ss.calLeaveTime();
-        System.out.println("ss.getLeavedTime(add) = " + ss.getLeavedTime());
-        System.out.println("ss.getLeavedTimeOther(add) = " + ss.getLeavedTimeOther());
+        // System.out.println("ss.getLeavedTime(add) = " + ss.getLeavedTime());
+        // System.out.println("ss.getLeavedTimeOther(add) = " + ss.getLeavedTimeOther());
         ss.setLeaveForm(form);
         // ss.setLeaveType(leaveType); move to up 
         ss.setAutoLeave(true);

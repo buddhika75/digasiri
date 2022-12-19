@@ -142,16 +142,16 @@ public class DataAdministrationController {
         List<ItemBatch> ibs = itemBatchFacade.findAll();
         for (ItemBatch ib : ibs) {
             if (ib.getItem() != null) {
-                //System.out.println("ib.getItem().getName() = " + ib.getItem().getName());
+                //// System.out.println("ib.getItem().getName() = " + ib.getItem().getName());
             }
             if (ib.getWholesaleRate() == 0) {
-                //System.out.println("ib.getPurcahseRate = " + ib.getPurcahseRate());
-                //System.out.println("ib.getWholesaleRate() = " + ib.getWholesaleRate());
+                //// System.out.println("ib.getPurcahseRate = " + ib.getPurcahseRate());
+                //// System.out.println("ib.getWholesaleRate() = " + ib.getWholesaleRate());
                 ib.setWholesaleRate((ib.getPurcahseRate() / 115) * 108);
                 itemBatchFacade.edit(ib);
-                //System.out.println("ib.getWholesaleRate() = " + ib.getWholesaleRate());
+                //// System.out.println("ib.getWholesaleRate() = " + ib.getWholesaleRate());
             } else {
-                //System.out.println("no change");
+                //// System.out.println("no change");
             }
         }
     }
@@ -168,19 +168,19 @@ public class DataAdministrationController {
                 + " FROM Item i "
                 + " GROUP BY i.category";
 
-        //System.out.println("sql = " + sql);
+        //// System.out.println("sql = " + sql);
         m = new HashMap();
 
         Set<Category> usedCats = new HashSet<>(categoryFacade.findBySQL(sql, m));
 
-        //System.out.println("Used Cats " + usedCats.size());
-        //System.out.println("All Cats after removing " + allCats.size());
+        //// System.out.println("Used Cats " + usedCats.size());
+        //// System.out.println("All Cats after removing " + allCats.size());
         allCats.removeAll(usedCats);
-        //System.out.println("All Cats after removing " + allCats.size());
+        //// System.out.println("All Cats after removing " + allCats.size());
 
         for (Category c : allCats) {
-            //System.out.println("c = " + c);
-            //System.out.println("c.getName() = " + c.getName());
+            //// System.out.println("c = " + c);
+            //// System.out.println("c.getName() = " + c.getName());
             c.setRetired(true);
             c.setRetiredAt(new Date());
             c.setRetireComments("Bulk1");
@@ -209,10 +209,10 @@ public class DataAdministrationController {
         m.put("bt2", BillType.PharmacyPre);
         List<Bill> bs = getBillFacade().findBySQL(sql, m, 20);
         for (Bill b : bs) {
-            //System.out.println("b = " + b);
-            //System.out.println("b.getBillType() = " + b.getBillType());
+            //// System.out.println("b = " + b);
+            //// System.out.println("b.getBillType() = " + b.getBillType());
             if (b.getBillItems().get(0).getRate() == b.getBillItems().get(0).getPharmaceuticalBillItem().getStock().getItemBatch().getWholesaleRate()) {
-                //System.out.println("whole sale bill");
+                //// System.out.println("whole sale bill");
                 if (b.getBillType() == BillType.PharmacySale) {
                     b.setBillType(BillType.PharmacyWholeSale);
                 }
@@ -247,19 +247,19 @@ public class DataAdministrationController {
                 n++;
                 billItemFacade.edit(bi);
             }
-            //System.out.println(newLine);
-            //System.out.println("Error number " + i + newLine);
+            //// System.out.println(newLine);
+            //// System.out.println("Error number " + i + newLine);
 
-            //System.out.println("Bill Details " + newLine);
-            //System.out.println("\tIns Number = " + b.getInsId() + newLine);
-            //System.out.println("\tDep Number = " + b.getDeptId() + newLine);
-            //System.out.println("\tBill Date = " + b.getCreatedAt() + newLine);
-            //System.out.println("\tValue = " + b.getNetTotal() + newLine);
-            //System.out.println("Cancelled Bill Details " + newLine);
-            //System.out.println("\tIns Number = " + cb.getInsId() + newLine);
-            //System.out.println("\tDep Number = " + cb.getDeptId() + newLine);
-            //System.out.println("\tBill Date = " + cb.getCreatedAt() + newLine);
-            //System.out.println("\tValue = " + cb.getNetTotal() + newLine);
+            //// System.out.println("Bill Details " + newLine);
+            //// System.out.println("\tIns Number = " + b.getInsId() + newLine);
+            //// System.out.println("\tDep Number = " + b.getDeptId() + newLine);
+            //// System.out.println("\tBill Date = " + b.getCreatedAt() + newLine);
+            //// System.out.println("\tValue = " + b.getNetTotal() + newLine);
+            //// System.out.println("Cancelled Bill Details " + newLine);
+            //// System.out.println("\tIns Number = " + cb.getInsId() + newLine);
+            //// System.out.println("\tDep Number = " + cb.getDeptId() + newLine);
+            //// System.out.println("\tBill Date = " + cb.getCreatedAt() + newLine);
+            //// System.out.println("\tValue = " + cb.getNetTotal() + newLine);
             i++;
         }
     }
@@ -271,7 +271,7 @@ public class DataAdministrationController {
             if (a instanceof Amp) {
                 Amp amp = (Amp) a;
                 if (amp.getDepartmentType() == null) {
-                    System.out.println("amp.getName() = " + amp.getName());
+                    // System.out.println("amp.getName() = " + amp.getName());
                     amp.setDepartmentType(DepartmentType.Pharmacy);
                     itemFacade.edit(amp);
                 }
@@ -298,16 +298,16 @@ public class DataAdministrationController {
 //        bills = billFacade.findBySQL(s, m);
         bills = billFacade.findBySQL(s, m, 10);
         for (Bill cb : bills) {
-            System.out.println("cb = " + cb);
-            System.out.println("cb.insId() = " + cb.getInsId());
-            System.out.println("cb.deptId() = " + cb.getDeptId());
+            // System.out.println("cb = " + cb);
+            // System.out.println("cb.insId() = " + cb.getInsId());
+            // System.out.println("cb.deptId() = " + cb.getDeptId());
             for (BillItem bi : cb.getBillItems()) {
                 System.err.println("**************");
-                System.out.println("bi = " + bi);
-                System.out.println("bi.getRetiredAt() = " + bi.getRetiredAt());
-                System.out.println("bi.isRetired() = " + bi.isRetired());
-                System.out.println("bi.getBill().getBillType() = " + bi.getBill().getBillType());
-                System.out.println("bi.getReferenceBill() = " + bi.getReferenceBill());
+                // System.out.println("bi = " + bi);
+                // System.out.println("bi.getRetiredAt() = " + bi.getRetiredAt());
+                // System.out.println("bi.isRetired() = " + bi.isRetired());
+                // System.out.println("bi.getBill().getBillType() = " + bi.getBill().getBillType());
+                // System.out.println("bi.getReferenceBill() = " + bi.getReferenceBill());
                 if (bi.getReferanceBillItem() != null) {
                     if (bi.getReferanceBillItem().getBill() != null) {
                     } else {
@@ -316,8 +316,8 @@ public class DataAdministrationController {
                 }
                 if (bi.getReferenceBill() != null) {
                 }
-                System.out.println("bi.getReferenceBill().getDepartment().getName() = " + bi.getReferenceBill().getDepartment().getName());
-                System.out.println("bi.getBill().getInstitution().getName() = " + bi.getBill().getInstitution().getName());
+                // System.out.println("bi.getReferenceBill().getDepartment().getName() = " + bi.getReferenceBill().getDepartment().getName());
+                // System.out.println("bi.getBill().getInstitution().getName() = " + bi.getBill().getInstitution().getName());
                 System.err.println("**************");
                 String sql;
                 sql = "Select bf From BillFee bf where bf.retired=false and bf.billItem.id=" + bi.getId();
@@ -327,7 +327,7 @@ public class DataAdministrationController {
                 } else {
                     sql = "Select bi From BillItem bi where bi.retired=false and bi.referanceBillItem.id=" + bi.getReferanceBillItem().getId();
                     BillItem billItem = getBillItemFacade().findFirstBySQL(sql);
-                    System.out.println("billItem = " + billItem);
+                    // System.out.println("billItem = " + billItem);
                     sql = "Select bf From BillFee bf where bf.retired=false and bf.billItem.id=" + billItem.getId();
                     tmp = getBillFeeFacade().findBySQL(sql);
                     if (tmp.size() > 0) {
@@ -357,16 +357,16 @@ public class DataAdministrationController {
 
         items = itemFacade.findBySQL(sql, m);
 
-        System.out.println("items.size() = " + items.size());
+        // System.out.println("items.size() = " + items.size());
         int j = 1;
         for (Item i : items) {
             i.setVatable(true);
             i.setVatPercentage(15.0);
             itemFacade.edit(i);
             System.err.println("**** " + j + " ****");
-            System.out.println("i.getName() = " + i.getName());
-            System.out.println("i.getVatPercentage() = " + i.getVatPercentage());
-            System.out.println("i.isVatable() = " + i.isVatable());
+            // System.out.println("i.getName() = " + i.getName());
+            // System.out.println("i.getVatPercentage() = " + i.getVatPercentage());
+            // System.out.println("i.isVatable() = " + i.isVatable());
             System.err.println("*******");
             j++;
         }
@@ -421,7 +421,7 @@ public class DataAdministrationController {
         bts.add(BillType.PharmacyTransferIssue);
         bts.add(BillType.PharmacyTransferReceive);
         bts.add(BillType.PharmacyTransferRequest);
-        //System.out.println("arr" + bts);
+        //// System.out.println("arr" + bts);
         m.put("bt", bts);
 
 //        j="select b from Bill b where (b.billType=: bts and b.billType=: bts2 and b.billType=: bts3)";
@@ -432,26 +432,26 @@ public class DataAdministrationController {
         bills = getBillFacade().findBySQL(j, m);
 
         for (Bill b : bills) {
-            //System.out.println("b = " + b);
+            //// System.out.println("b = " + b);
             double gt = 0;
             double nt = 0;
             for (BillItem bi : b.getBillItems()) {
-                //System.out.println("billitem" + b.getBillItems());
-                ////System.out.println("bi.getPharmaceuticalBillItem().getStock().getItemBatch().getRetailsaleRate() = " + bi.getPharmaceuticalBillItem().getStock().getItemBatch());
+                //// System.out.println("billitem" + b.getBillItems());
+                ////// System.out.println("bi.getPharmaceuticalBillItem().getStock().getItemBatch().getRetailsaleRate() = " + bi.getPharmaceuticalBillItem().getStock().getItemBatch());
 
-                //System.out.println("bi.getRate() = " + bi.getRate());
-                //System.out.println("bi.getNetValue() = " + bi.getNetValue());
-                //System.out.println("bi.getQty() = " + bi.getQty());
-                //System.out.println("bi.getNetValue() = " + bi.getNetValue());
+                //// System.out.println("bi.getRate() = " + bi.getRate());
+                //// System.out.println("bi.getNetValue() = " + bi.getNetValue());
+                //// System.out.println("bi.getQty() = " + bi.getQty());
+                //// System.out.println("bi.getNetValue() = " + bi.getNetValue());
                 bi.setRate((double) fetchPharmacyuticalBillitem(bi));
-                //System.out.println("Rate" + fetchPharmacyuticalBillitem(bi));
-                //System.out.println("getRate" + bi.getRate());
+                //// System.out.println("Rate" + fetchPharmacyuticalBillitem(bi));
+                //// System.out.println("getRate" + bi.getRate());
                 bi.setNetRate((double) fetchPharmacyuticalBillitem(bi));
 
                 //                bi.setRate(bi.getPharmaceuticalBillItem().getStock().getItemBatch().getRetailsaleRate());
 //                bi.setNetRate(bi.getPharmaceuticalBillItem().getStock().getItemBatch().getRetailsaleRate());
-                //System.out.println("rate" + bi.getNetRate());
-                //System.out.println("Net rate" + bi.getNetValue());
+                //// System.out.println("rate" + bi.getNetRate());
+                //// System.out.println("Net rate" + bi.getNetValue());
                 bi.setNetValue(bi.getNetRate() * bi.getQty());
                 bi.setGrossValue(bi.getNetValue());
 
@@ -535,37 +535,37 @@ public class DataAdministrationController {
             }
         }
         for (Institution a : selectedInstitutions) {
-            System.out.println("a.getName() = " + a.getName());
+            // System.out.println("a.getName() = " + a.getName());
             if (bool1) {
                 if (val1 != 0.0) {
-                    System.out.println("a.getStandardCreditLimit() = " + a.getStandardCreditLimit());
-                    System.out.println("val1 = " + val1);
+                    // System.out.println("a.getStandardCreditLimit() = " + a.getStandardCreditLimit());
+                    // System.out.println("val1 = " + val1);
                     a.setStandardCreditLimit(val1);
-                    System.out.println("a.getStandardCreditLimit() = " + a.getStandardCreditLimit());
+                    // System.out.println("a.getStandardCreditLimit() = " + a.getStandardCreditLimit());
                 }
             }
             if (bool2) {
                 if (val2 != 0.0) {
-                    System.out.println("a.getAllowedCredit() = " + a.getAllowedCredit());
-                    System.out.println("val2 = " + val2);
+                    // System.out.println("a.getAllowedCredit() = " + a.getAllowedCredit());
+                    // System.out.println("val2 = " + val2);
                     a.setAllowedCredit(val2);
-                    System.out.println("a.getAllowedCredit() = " + a.getAllowedCredit());
+                    // System.out.println("a.getAllowedCredit() = " + a.getAllowedCredit());
                 }
             }
             if (bool3) {
                 if (val3 != 0.0) {
-                    System.out.println("a.getMaxCreditLimit() = " + a.getMaxCreditLimit());
-                    System.out.println("val3 = " + val3);
+                    // System.out.println("a.getMaxCreditLimit() = " + a.getMaxCreditLimit());
+                    // System.out.println("val3 = " + val3);
                     a.setMaxCreditLimit(val3);
-                    System.out.println("a.getMaxCreditLimit() = " + a.getMaxCreditLimit());
+                    // System.out.println("a.getMaxCreditLimit() = " + a.getMaxCreditLimit());
                 }
             }
             if (bool4) {
                 if (val4 != 0.0) {
-                    System.out.println("a.getBallance() = " + a.getBallance());
-                    System.out.println("val4 = " + val4);
+                    // System.out.println("a.getBallance() = " + a.getBallance());
+                    // System.out.println("val4 = " + val4);
                     a.setBallance(val4);
-                    System.out.println("a.getBallance() = " + a.getBallance());
+                    // System.out.println("a.getBallance() = " + a.getBallance());
                 }
             }
             institutionFacade.edit(a);
@@ -613,21 +613,21 @@ public class DataAdministrationController {
         m.put("ins", reportKeyWord.getInstitution());
 
         staffs = getStaffFacade().findBySQL(sql, m);
-        System.out.println("staffs.size() = " + staffs.size());
+        // System.out.println("staffs.size() = " + staffs.size());
         for (Staff s : staffs) {
             s.getPerson().setZoneCode(reportKeyWord.getString());
-            System.out.println("s.getPerson().getName() = " + s.getPerson().getName());
-            System.out.println("1.s.getPerson().getNic() = " + s.getPerson().getNic());
+            // System.out.println("s.getPerson().getName() = " + s.getPerson().getName());
+            // System.out.println("1.s.getPerson().getNic() = " + s.getPerson().getNic());
             if (s.getPerson().getNic() != null && !s.getPerson().getNic().equals("")) {
-                System.out.println("s.getPerson().getNic().length() = " + s.getPerson().getNic().length());
+                // System.out.println("s.getPerson().getNic().length() = " + s.getPerson().getNic().length());
                 if (s.getPerson().getNic().length() >= 9) {
                     String s1 = s.getPerson().getNic().substring(0, 9);
-                    System.out.println("s1 = " + s1);
+                    // System.out.println("s1 = " + s1);
                     s.getPerson().setNic(s1 + "V");
                 }
 
             }
-            System.out.println("2.s.getPerson().getNic() = " + s.getPerson().getNic());
+            // System.out.println("2.s.getPerson().getNic() = " + s.getPerson().getNic());
             getPersonFacade().edit(s.getPerson());
         }
         JsfUtil.addSuccessMessage("Successfully Updated...");
@@ -641,7 +641,7 @@ public class DataAdministrationController {
         Map m = new HashMap();
 
         sql = "select i from Item i where i.retired=false ";
-        System.out.println("item = " + item);
+        // System.out.println("item = " + item);
         if (vatableItem) {
             sql += " and i.vatable=true";
         } else {
@@ -672,10 +672,10 @@ public class DataAdministrationController {
             }
         }
         sql += " order by i.name ";
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
         items = itemFacade.findBySQL(sql, m);
-        System.out.println("items.size() = " + items.size());
+        // System.out.println("items.size() = " + items.size());
 
     }
 
@@ -690,7 +690,7 @@ public class DataAdministrationController {
                 i.setVatPercentage(vatPrecentage);
                 i.setVatable(true);
                 itemFacade.edit(i);
-                System.out.println("vatPrecentage = " + vatPrecentage);
+                // System.out.println("vatPrecentage = " + vatPrecentage);
             }
             JsfUtil.addSuccessMessage("Succesfully Edited VAT For " + selectedItems.size() + " records with vat status ");
         } else {
@@ -699,7 +699,7 @@ public class DataAdministrationController {
                 i.setVatPercentage(vatPrecentage);
                 i.setVatable(false);
                 itemFacade.edit(i);
-                System.out.println("vatPrecentage = " + vatPrecentage);
+                // System.out.println("vatPrecentage = " + vatPrecentage);
 
             }
             JsfUtil.addSuccessMessage("Succesfully Edited VAT For " + selectedItems.size() + " records and items as without vat items");
@@ -717,7 +717,7 @@ public class DataAdministrationController {
                 i.setVatPercentage(vatPrecentage);
                 i.setVatable(true);
                 itemFacade.edit(i);
-                System.out.println("vatPrecentage = " + vatPrecentage);
+                // System.out.println("vatPrecentage = " + vatPrecentage);
             }
             JsfUtil.addSuccessMessage("Succesfully Added VAT For " + selectedItems.size() + " records with vat status ");
         } else {
@@ -726,7 +726,7 @@ public class DataAdministrationController {
                 i.setVatPercentage(vatPrecentage);
                 i.setVatable(false);
                 itemFacade.edit(i);
-                System.out.println("vatPrecentage = " + vatPrecentage);
+                // System.out.println("vatPrecentage = " + vatPrecentage);
 
             }
             JsfUtil.addSuccessMessage("Succesfully Added VAT For " + selectedItems.size() + " records and items as without vat items");
@@ -747,7 +747,7 @@ public class DataAdministrationController {
                 i.setVatPercentage(vatPrecentage);
                 i.setVatable(true);
                 itemFacade.edit(i);
-                System.out.println("vatPrecentage = " + vatPrecentage);
+                // System.out.println("vatPrecentage = " + vatPrecentage);
             }
             JsfUtil.addSuccessMessage("Succesfully Removed VAT For " + selectedItems.size() + " records with vat status ");
         } else {
@@ -756,7 +756,7 @@ public class DataAdministrationController {
                 i.setVatPercentage(vatPrecentage);
                 i.setVatable(false);
                 itemFacade.edit(i);
-                System.out.println("vatPrecentage = " + vatPrecentage);
+                // System.out.println("vatPrecentage = " + vatPrecentage);
 
             }
             JsfUtil.addSuccessMessage("Succesfully Removed VAT For " + selectedItems.size() + " records and items as without vat");
@@ -770,15 +770,15 @@ public class DataAdministrationController {
             JsfUtil.addErrorMessage("Please Select the item");
             return true;
         }
-        //System.out.println("1.vatPrecentage = " + vatPrecentage);
+        //// System.out.println("1.vatPrecentage = " + vatPrecentage);
         if (vatPrecentage == null) {
-            // System.out.println("2.vatPrecentage = " + vatPrecentage);
+            // // System.out.println("2.vatPrecentage = " + vatPrecentage);
             JsfUtil.addErrorMessage("Pleace Check your VAT presentage Value");
             return true;
 
         }
         if (vatPrecentage <= 0.0) {
-            //System.out.println("3.vatPrecentage = " + vatPrecentage);
+            //// System.out.println("3.vatPrecentage = " + vatPrecentage);
             JsfUtil.addErrorMessage("Pleace Check your VAT presentage Value");
             return true;
         }
@@ -807,11 +807,11 @@ public class DataAdministrationController {
                 + " and s.originatingSession is null "
                 + " and type(s)=:class ";
         m.put("class", ServiceSession.class);
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
         
         sessions=serviceSessionFacade.findBySQL(sql, m);
-        System.out.println("sessions.size() = " + sessions.size());
+        // System.out.println("sessions.size() = " + sessions.size());
         
         sql = "Select s From ServiceSession s where s.retired=false "
                 + " and s.originatingSession is not null "
@@ -820,7 +820,7 @@ public class DataAdministrationController {
         m.put("cd", new Date());
         
         sessions.addAll(serviceSessionFacade.findBySQL(sql, m, TemporalType.TIMESTAMP));
-        System.out.println("sessions.size() = " + sessions.size());
+        // System.out.println("sessions.size() = " + sessions.size());
 
         return sessions;
     }

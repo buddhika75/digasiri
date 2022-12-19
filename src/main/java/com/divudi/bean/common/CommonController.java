@@ -70,7 +70,7 @@ public class CommonController implements Serializable {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dob);
         cal.add(Calendar.YEAR, 50);
-        System.out.println("cal = " + cal.getTime());
+        // System.out.println("cal = " + cal.getTime());
         return cal.getTime();
     }
 
@@ -142,8 +142,8 @@ public class CommonController implements Serializable {
     public Date getConvertDateTimeFormat24(String dateString) throws ParseException{
         DateFormat d = new SimpleDateFormat("dd-MM-yyyy");
         Date date=d.parse(dateString);
-        System.out.println("date = " + date);
-        System.out.println("dateString = " + dateString);
+        // System.out.println("date = " + date);
+        // System.out.println("dateString = " + dateString);
         return date;
     }
     
@@ -151,7 +151,7 @@ public class CommonController implements Serializable {
         String s="";
         NumberFormat myFormatter = new DecimalFormat("##0.00");
         s=myFormatter.format(d);
-        System.out.println("s = " + s);
+        // System.out.println("s = " + s);
         return s;
     }
     
@@ -210,7 +210,7 @@ public class CommonController implements Serializable {
 
             Transport.send(message);
 
-            System.out.println("Send Successfully");
+            // System.out.println("Send Successfully");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);

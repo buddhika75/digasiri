@@ -86,7 +86,7 @@ public class StockHistoryRecorder {
 //    @Schedule(second="*/1", minute="*",hour="*", persistent=false)
     public void myTimer() {
         Date startTime = new Date();
-        //System.out.println("Start writing stock history: " + startTime);
+        //// System.out.println("Start writing stock history: " + startTime);
         for (Department d : fetchStockDepartment()) {
             if (!d.isRetired()) {
                 for (Item amp : fetchStockItem(d)) {
@@ -110,57 +110,57 @@ public class StockHistoryRecorder {
                         getStockHistoryFacade().create(h);
                     }
                 }
-                //System.out.println("hx finished for = " + d);
+                //// System.out.println("hx finished for = " + d);
             }
         }
-        //System.out.println("End writing stock history: " + new Date());
-//        //System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
+        //// System.out.println("End writing stock history: " + new Date());
+//        //// System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
     }
 
     @SuppressWarnings("unused")
     @Schedule(hour = "00", minute = "15", second = "00", dayOfMonth = "*", info = "Daily Mid Night", persistent = false)
     public void myTimerDaily() {
         Date startTime = new Date();
-        System.out.println("Start writing stock history: " + startTime);
+        // System.out.println("Start writing stock history: " + startTime);
         for (FeeChange fc : fetchFeeChanges()) {
             System.err.println("fc.getFee().getName() = " + fc.getFee().getName());
             System.err.println("fc.getFee().getFeeType() = " + fc.getFee().getFeeType());
             if (fc.getFee().getStaff() != null) {
-                System.out.println("fc.getFee().getStaff().getPerson().getName() = " + fc.getFee().getStaff().getPerson().getName());
+                // System.out.println("fc.getFee().getStaff().getPerson().getName() = " + fc.getFee().getStaff().getPerson().getName());
             }
             for (ItemFee f : fetchServiceSessionFees(fc.getFee().getFeeType(), fc.getFee().getName(), fc.getFee().getStaff())) {
-                System.out.println("1.f.getFee() = " + f.getFee());
+                // System.out.println("1.f.getFee() = " + f.getFee());
                 f.setFee(f.getFee() + fc.getFee().getFee());
-                System.out.println("2.f.getFee() = " + f.getFee());
-                System.out.println("fc.getFee().getFee() = " + fc.getFee().getFee());
-                System.out.println("1.f.getFfee() = " + f.getFfee());
+                // System.out.println("2.f.getFee() = " + f.getFee());
+                // System.out.println("fc.getFee().getFee() = " + fc.getFee().getFee());
+                // System.out.println("1.f.getFfee() = " + f.getFfee());
                 f.setFfee(f.getFfee() + fc.getFee().getFfee());
-                System.out.println("2.f.getFfee() = " + f.getFfee());
-                System.out.println("fc.getFee().getFfee() = " + fc.getFee().getFfee());
+                // System.out.println("2.f.getFfee() = " + f.getFfee());
+                // System.out.println("fc.getFee().getFfee() = " + fc.getFee().getFfee());
                 getItemFeeFacade().edit(f);
             }
             fc.setDoneAt(new Date());
             fc.setDone(true);
             getFeeChangeFacade().edit(fc);
         }
-        //System.out.println("End writing stock history: " + new Date());
-//        //System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
+        //// System.out.println("End writing stock history: " + new Date());
+//        //// System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
     }
 
     @SuppressWarnings("unused")
     @Schedule(hour = "01", minute = "15", second = "00", dayOfMonth = "*", info = "Daily Mornining", persistent = false)
     public void myTimerDailyChannelShedule() {
         Date startTime = new Date();
-        System.out.println("Start Create Shedule " + startTime);
+        // System.out.println("Start Create Shedule " + startTime);
 
         for (Staff s : staffs()) {
             generateSessions(s);
         }
 
-        System.out.println("Start and End Create Shedule " + startTime + " - " + new Date());
+        // System.out.println("Start and End Create Shedule " + startTime + " - " + new Date());
 
-        //System.out.println("End writing stock history: " + new Date());
-//        //System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
+        //// System.out.println("End writing stock history: " + new Date());
+//        //// System.out.println("TIme taken for Hx is " + (((new Date()) - startTime )/(1000*60*60)) + " minutes.");
     }
 
     public void generateSessions(Staff staff) {
@@ -176,9 +176,9 @@ public class StockHistoryRecorder {
                     + " and s.originatingSession is null "
                     + " and type(s)=:class "
                     + " order by s.sessionWeekday,s.startingTime ";
-            System.out.println("Consultant = " + staff.getPerson().getName());
-            System.out.println("m = " + m);
-            System.out.println("sql = " + sql);
+            // System.out.println("Consultant = " + staff.getPerson().getName());
+            // System.out.println("m = " + m);
+            // System.out.println("sql = " + sql);
             List<Long> tmp = new ArrayList<>();
             System.err.println("Time stage 2.1 = " + new Date());
             tmp = serviceSessionFacade.findLongList(sql, m);
@@ -214,10 +214,10 @@ public class StockHistoryRecorder {
 //        m.put(m, Staff.)
            sql="select s from Staff s where s.retired=false and type(s) =:class";
            m.put("class",Doctor.class );
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
         docters = staffFacade.findBySQL(sql, m);
-        System.out.println("docters.size() = " + docters.size());
+        // System.out.println("docters.size() = " + docters.size());
 
         return docters;
     }
@@ -255,17 +255,17 @@ public class StockHistoryRecorder {
                         sessionDate.setTime(ss.getSessionDate());
                         Calendar nDate = Calendar.getInstance();
                         nDate.setTime(nowDate);
-                        System.out.println("ss.getId() = " + ss.getId());
-                        System.out.println("ss.getSessionDate() = " + ss.getSessionDate());
-                        System.out.println("ss.getName() = " + ss.getName());
+                        // System.out.println("ss.getId() = " + ss.getId());
+                        // System.out.println("ss.getSessionDate() = " + ss.getSessionDate());
+                        // System.out.println("ss.getName() = " + ss.getName());
                         if (sessionDate.get(Calendar.DATE) == nDate.get(Calendar.DATE)&&sessionDate.get(Calendar.MONTH) == nDate.get(Calendar.MONTH)&&sessionDate.get(Calendar.YEAR) == nDate.get(Calendar.YEAR)) {
                             ServiceSession newSs = new ServiceSession();
                             newSs = channelBean.fetchCreatedServiceSession(ss.getStaff(), nowDate, ss);
-                            System.out.println("newSs 1 = " + newSs);
+                            // System.out.println("newSs 1 = " + newSs);
                             if (newSs == null) {
                                 newSs = channelBean.createServiceSessionForChannelShedule(ss, nowDate);
                             }
-                            System.out.println("newSs 2 = " + newSs);
+                            // System.out.println("newSs 2 = " + newSs);
                             //Temprory
 //                            newSs.setDisplayCount(channelBean.getBillSessionsCount(ss, nowDate));
 //                            newSs.setTransDisplayCountWithoutCancelRefund(channelBean.getBillSessionsCountWithOutCancelRefund(ss, nowDate));
@@ -292,7 +292,7 @@ public class StockHistoryRecorder {
 //                            System.err.println("Cretate New");
                                 newSs = channelBean.createServiceSessionForChannelShedule(ss, nowDate);
                             }
-//                        System.out.println("newSs = " + newSs);
+//                        // System.out.println("newSs = " + newSs);
                             //Temprory
 //                            newSs.setDisplayCount(channelBean.getBillSessionsCount(newSs, nowDate));
 //                            newSs.setTransDisplayCountWithoutCancelRefund(channelBean.getBillSessionsCountWithOutCancelRefund(newSs, nowDate));
@@ -316,17 +316,17 @@ public class StockHistoryRecorder {
                         sessionDate.setTime(ss.getSessionDate());
                         Calendar nDate = Calendar.getInstance();
                         nDate.setTime(nowDate);
-                        System.out.println("ss.getId() = " + ss.getId());
-                        System.out.println("ss.getSessionDate() = " + ss.getSessionDate());
-                        System.out.println("ss.getName() = " + ss.getName());
+                        // System.out.println("ss.getId() = " + ss.getId());
+                        // System.out.println("ss.getSessionDate() = " + ss.getSessionDate());
+                        // System.out.println("ss.getName() = " + ss.getName());
                         if (sessionDate.get(Calendar.DATE) == nDate.get(Calendar.DATE)&&sessionDate.get(Calendar.MONTH) == nDate.get(Calendar.MONTH)&&sessionDate.get(Calendar.YEAR) == nDate.get(Calendar.YEAR)) {
                             ServiceSession newSs = new ServiceSession();
                             newSs = channelBean.fetchCreatedServiceSession(ss.getStaff(), nowDate, ss);
-                            System.out.println("newSs 1 = " + newSs);
+                            // System.out.println("newSs 1 = " + newSs);
                             if (newSs == null) {
                                 newSs = channelBean.createServiceSessionForChannelShedule(ss, nowDate);
                             }
-                            System.out.println("newSs 2 = " + newSs);
+                            // System.out.println("newSs 2 = " + newSs);
                             //Temprory
 //                            newSs.setDisplayCount(channelBean.getBillSessionsCount(ss, nowDate));
 //                            newSs.setTransDisplayCountWithoutCancelRefund(channelBean.getBillSessionsCountWithOutCancelRefund(ss, nowDate));
@@ -352,7 +352,7 @@ public class StockHistoryRecorder {
 //                            System.err.println("Cretate New");
                                 newSs = channelBean.createServiceSessionForChannelShedule(ss, nowDate);
                             }
-//                        System.out.println("newSs = " + newSs);
+//                        // System.out.println("newSs = " + newSs);
                             //Temprory
 //                            newSs.setDisplayCount(channelBean.getBillSessionsCount(newSs, nowDate));
 //                            newSs.setTransDisplayCountWithoutCancelRefund(channelBean.getBillSessionsCountWithOutCancelRefund(newSs, nowDate));
@@ -466,9 +466,9 @@ public class StockHistoryRecorder {
                 + " and fc.done!=true ";
         m.put("ed", getCommonFunctions().getEndOfDay(new Date()));
         List<FeeChange> changes = getFeeChangeFacade().findBySQL(sql, m, TemporalType.DATE);
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("changes.size() = " + changes.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("changes.size() = " + changes.size());
         return changes;
     }
 
@@ -496,7 +496,7 @@ public class StockHistoryRecorder {
         m.put("ft", ft);
         m.put("a", s);
         List<ItemFee> itemFees = getItemFeeFacade().findBySQL(sql, m);
-        System.out.println("itemFees.size() = " + itemFees.size());
+        // System.out.println("itemFees.size() = " + itemFees.size());
         return itemFees;
     }
 

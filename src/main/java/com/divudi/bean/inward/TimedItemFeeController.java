@@ -56,7 +56,7 @@ public class TimedItemFeeController implements Serializable {
 
     public List<Department> getInstitutionDepatrments() {
         List<Department> d;
-        //////System.out.println("gettin ins dep ");
+        //////// System.out.println("gettin ins dep ");
         if (getCurrentFee().getInstitution() == null) {
             return new ArrayList<Department>();
         } else {
@@ -143,7 +143,7 @@ public class TimedItemFeeController implements Serializable {
         }
         tif.setEditedAt(new Date());
         tif.setCreater(getSessionController().getLoggedUser());
-        System.out.println("tif.getFee() = " + tif.getFee());
+        // System.out.println("tif.getFee() = " + tif.getFee());
         getTimedItemFeeFacade().edit(tif);
         JsfUtil.addSuccessMessage("Fee Updated");
         currentIx.setTotal(calTot());

@@ -471,7 +471,7 @@ public class InwardBeanController implements Serializable {
         hm.put("pe", patientEncounter);
 
         return getBillFeeFacade().findBySQL(sql, hm, TemporalType.TIME);
-        ////System.out.println("Size : " + profesionallFee.size());
+        ////// System.out.println("Size : " + profesionallFee.size());
 
     }
 
@@ -491,7 +491,7 @@ public class InwardBeanController implements Serializable {
         hm.put("pe", patientEncounter);
 
         return getBillFeeFacade().findBySQL(sql, hm, TemporalType.TIME);
-        ////System.out.println("Size : " + profesionallFee.size());
+        ////// System.out.println("Size : " + profesionallFee.size());
 
     }
 
@@ -517,7 +517,7 @@ public class InwardBeanController implements Serializable {
             getBillFeeFacade().edit(bf);
         }
 
-        ////System.out.println("Size : " + profesionallFee.size());
+        ////// System.out.println("Size : " + profesionallFee.size());
     }
 
     public List<Bill> fetchIssueTable(PatientEncounter patientEncounter, BillType billType) {
@@ -1860,9 +1860,9 @@ public class InwardBeanController implements Serializable {
     public double calCount(TimedItemFee tif, Date admittedDate, Date dischargedDate) {
 
         double duration = tif.getDurationHours() * 60;
-        System.out.println("duration = " + duration);
+        // System.out.println("duration = " + duration);
         double overShoot = tif.getOverShootHours() * 60;
-        System.out.println("overShoot = " + overShoot);
+        // System.out.println("overShoot = " + overShoot);
         //  double tempFee = tif.getFee();
         double consumeTime = 0;
 
@@ -1883,10 +1883,10 @@ public class InwardBeanController implements Serializable {
                 count = (long) (consumeTime / duration);
             }
             
-            System.out.println("count = " + count);
+            // System.out.println("count = " + count);
 
             calculation = (consumeTime - (count * duration));
-            System.out.println("calculation = " + calculation);
+            // System.out.println("calculation = " + calculation);
             if ((overShoot != 0 && overShoot <= calculation)||count==0) {
                 System.err.println("count = " + count);
                 count++;

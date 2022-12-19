@@ -376,17 +376,17 @@ public class SearchController implements Serializable {
 
     public void createCreditBillsWithBill(BillType refBillType) {
         bills = fetchBills(BillType.CashRecieveBill, refBillType);
-        //System.out.println("bills = " + bills);
+        //// System.out.println("bills = " + bills);
         withbills = new ArrayList<>();
 
         for (Bill b : bills) {
             billsWithbill bWithbill = new billsWithbill();
             bWithbill.setB(b);
             bWithbill.setCaBills(fetchCreditBills(BillType.CashRecieveBill, b));
-            //System.out.println("bWithbill.getCaBills() = " + bWithbill.getCaBills());
+            //// System.out.println("bWithbill.getCaBills() = " + bWithbill.getCaBills());
             withbills.add(bWithbill);
         }
-        //System.out.println("withbills = " + withbills);
+        //// System.out.println("withbills = " + withbills);
 
     }
 
@@ -867,7 +867,7 @@ public class SearchController implements Serializable {
 
         sql += " order by b.createdAt desc  ";
 //    
-        //     ////System.out.println("sql = " + sql);
+        //     ////// System.out.println("sql = " + sql);
 
         if (maxNum == true) {
             bills = getBillFacade().findBySQL(sql, m, TemporalType.TIMESTAMP, 25);
@@ -901,7 +901,7 @@ public class SearchController implements Serializable {
                 + " and b.toStaff is not null "
                 + " order by b.createdAt ";
 //    
-        //     ////System.out.println("sql = " + sql);
+        //     ////// System.out.println("sql = " + sql);
         bills = getBillFacade().findBySQL(sql, m, TemporalType.TIMESTAMP);
 
         netTotalValue = 0.0;
@@ -957,7 +957,7 @@ public class SearchController implements Serializable {
 
         sql += " order by b.createdAt desc  ";
 //    
-        //     ////System.out.println("sql = " + sql);
+        //     ////// System.out.println("sql = " + sql);
         bills = getBillFacade().findBySQL(sql, m, TemporalType.TIMESTAMP, 50);
 
         commonController.printReportDetails(fromDate, toDate, startTime, "Pharmacy/Sale Bills/Search sale pre bill(/faces/pharmacy/pharmacy_search_sale_pre_bill.xhtml)");
@@ -1074,7 +1074,7 @@ public class SearchController implements Serializable {
 
         sql += " order by b.createdAt desc  ";
 //    
-        //     ////System.out.println("sql = " + sql);
+        //     ////// System.out.println("sql = " + sql);
         bills = getBillFacade().findBySQL(sql, m, TemporalType.TIMESTAMP, 50);
 
     }
@@ -1124,7 +1124,7 @@ public class SearchController implements Serializable {
 
         sql += " order by b.createdAt desc  ";
 //    
-        //     ////System.out.println("sql = " + sql);
+        //     ////// System.out.println("sql = " + sql);
         bills = getBillFacade().findBySQL(sql, m, TemporalType.TIMESTAMP, 50);
 
     }
@@ -1200,7 +1200,7 @@ public class SearchController implements Serializable {
 
         sql += " order by b.createdAt desc  ";
 //    
-        //     ////System.out.println("sql = " + sql);
+        //     ////// System.out.println("sql = " + sql);
         bills = getBillFacade().findBySQL(sql, m, TemporalType.TIMESTAMP, 50);
 
     }
@@ -1280,11 +1280,11 @@ public class SearchController implements Serializable {
         bills = new ArrayList<>();
         netTotalValue = 0.0;
         for (Bill b : list) {
-//            //System.out.println("b = ");
+//            //// System.out.println("b = ");
 
             Bill refBill = getActiveRefBill(b);
             if (refBill == null) {
-                //System.out.println("b = " + refBill);
+                //// System.out.println("b = " + refBill);
                 netTotalValue += b.getNetTotal();
                 bills.add(b);
             }
@@ -1350,11 +1350,11 @@ public class SearchController implements Serializable {
         bills = new ArrayList<>();
         netTotalValue = 0.0;
         for (Bill b : list) {
-//            //System.out.println("b = ");
+//            //// System.out.println("b = ");
 
             Bill refBill = getActiveRefBillnotApprove(b, billType2);
             if (refBill == null) {
-                //System.out.println("b = " + refBill);
+                //// System.out.println("b = " + refBill);
                 netTotalValue += b.getNetTotal();
                 bills.add(b);
             }
@@ -1396,11 +1396,11 @@ public class SearchController implements Serializable {
         bills = new ArrayList<>();
         netTotalValue = 0.0;
         for (Bill b : list) {
-//            //System.out.println("b = ");
+//            //// System.out.println("b = ");
 
             Bill refBill = getActiveRefBillnotApprove(b, billType2);
             if (refBill == null) {
-                //System.out.println("b = " + refBill);
+                //// System.out.println("b = " + refBill);
                 netTotalValue += b.getNetTotal();
                 bills.add(b);
             }
@@ -2658,7 +2658,7 @@ public class SearchController implements Serializable {
         HashMap hm = new HashMap();
         hm.put("ref", b);
         hm.put("btp", BillType.PharmacyBhtPre);
-        System.out.println("getBillFacade().findBySQL(sql, hm) = " + getBillFacade().findBySQL(sql, hm));
+        // System.out.println("getBillFacade().findBySQL(sql, hm) = " + getBillFacade().findBySQL(sql, hm));
         return getBillFacade().findBySQL(sql, hm);
     }
 
@@ -2723,7 +2723,7 @@ public class SearchController implements Serializable {
         temMap.put("btpc", BillType.CollectingCentreBill);
 
         billFees = getBillFeeFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP, 50);
-        System.out.println("billFees.size() = " + billFees.size());
+        // System.out.println("billFees.size() = " + billFees.size());
         List<BillFee> removeingBillFees=new ArrayList<>();
         for (BillFee bf : billFees) {
             sql = "SELECT bi FROM BillItem bi where bi.retired=false and bi.referanceBillItem.id=" + bf.getBillItem().getId();
@@ -2734,7 +2734,7 @@ public class SearchController implements Serializable {
             } 
             
         }
-        System.out.println("removeingBillFees.size() = " + removeingBillFees.size());
+        // System.out.println("removeingBillFees.size() = " + removeingBillFees.size());
         billFees.removeAll(removeingBillFees);
         calTotal();
 
@@ -2792,7 +2792,7 @@ public class SearchController implements Serializable {
         temMap.put("btpc", BillType.CollectingCentreBill);
 
         billFees = getBillFeeFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
-        System.out.println("billFees.size() = " + billFees.size());
+        // System.out.println("billFees.size() = " + billFees.size());
         List<BillFee> removeingBillFees=new ArrayList<>();
         for (BillFee bf : billFees) {
             sql = "SELECT bi FROM BillItem bi where bi.retired=false and bi.referanceBillItem.id=" + bf.getBillItem().getId();
@@ -2803,7 +2803,7 @@ public class SearchController implements Serializable {
             } 
             
         }
-        System.out.println("removeingBillFees.size() = " + removeingBillFees.size());
+        // System.out.println("removeingBillFees.size() = " + removeingBillFees.size());
         billFees.removeAll(removeingBillFees);
         calTotal();
 
@@ -2828,19 +2828,19 @@ public class SearchController implements Serializable {
         if (speciality != null) {
             sql += " and b.staff.speciality=:special ";
             temMap.put("special", speciality);
-            //System.out.println(speciality);
+            //// System.out.println(speciality);
         }
 
         if (staff != null) {
             sql += " and b.staff=:staff ";
             temMap.put("staff", staff);
-            //System.out.println(staff);
+            //// System.out.println(staff);
         }
 
         if (item != null) {
             sql += " and b.billItem.item=:item ";
             temMap.put("item", item);
-            //System.out.println(item);
+            //// System.out.println(item);
         }
 
         sql += "  order by b.staff.id    ";
@@ -2874,19 +2874,19 @@ public class SearchController implements Serializable {
         if (speciality != null) {
             sql += " and b.paidForBillFee.staff.speciality=:special ";
             temMap.put("special", speciality);
-            //System.out.println(speciality);
+            //// System.out.println(speciality);
         }
 
         if (staff != null) {
             sql += " and b.paidForBillFee.staff=:staff ";
             temMap.put("staff", staff);
-            //System.out.println(staff);
+            //// System.out.println(staff);
         }
 
         if (item != null) {
             sql += " and b.paidForBillFee.billItem.item=:item ";
             temMap.put("item", item);
-            //System.out.println(item);
+            //// System.out.println(item);
         }
 
         sql += "  order by b.paidForBillFee.staff.id    ";
@@ -3116,8 +3116,8 @@ public class SearchController implements Serializable {
 
         sql += "  order by b.staff.id    ";
 
-        //System.out.println("temMap = " + temMap);
-        //System.out.println("sql = " + sql);
+        //// System.out.println("temMap = " + temMap);
+        //// System.out.println("sql = " + sql);
         billFees = getBillFeeFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
         calTotal();
 
@@ -3176,8 +3176,8 @@ public class SearchController implements Serializable {
         temMap.put("fromDate", getFromDate());
         temMap.put("btp", BillType.InwardBill);
         temMap.put("btp2", BillType.InwardProfessional);
-        //System.out.println("temMap = " + temMap);
-        //System.out.println("sql = " + sql);
+        //// System.out.println("temMap = " + temMap);
+        //// System.out.println("sql = " + sql);
 
         billFees = getBillFeeFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
         calTotal();
@@ -3663,7 +3663,7 @@ public class SearchController implements Serializable {
         Map temMap = new HashMap();
 
 //        if(webUserController.hasPrivilege("LabSearchBillLoggedInstitution")){
-//            System.out.println("inside ins");
+//            // System.out.println("inside ins");
 //            sql+="and b.institution =:ins ";
 //            temMap.put("ins", getSessionController().getInstitution());
 //        }
@@ -3719,7 +3719,7 @@ public class SearchController implements Serializable {
         temMap.put("ins", getSessionController().getInstitution());
 
 //        if(webUserController.hasPrivilege("LabSearchBillLoggedInstitution")){
-//            System.out.println("inside ins");
+//            // System.out.println("inside ins");
 //            sql+="and b.institution =:ins ";
 //            temMap.put("ins", getSessionController().getInstitution());
 //        }
@@ -3784,14 +3784,14 @@ public class SearchController implements Serializable {
             return "";
         }
 
-        System.out.println("getSessionController().getPhoneNo() = " + getSessionController().getPhoneNo());
-        System.out.println("getSessionController().getBillNo() = " + getSessionController().getBillNo());
+        // System.out.println("getSessionController().getPhoneNo() = " + getSessionController().getPhoneNo());
+        // System.out.println("getSessionController().getBillNo() = " + getSessionController().getBillNo());
 //        String s1=getSessionController().getPhoneNo().substring(0, 3);
-//        System.out.println("s1 = " + s1);
+//        // System.out.println("s1 = " + s1);
 //        String s2=getSessionController().getPhoneNo().substring(3, 10);
-//        System.out.println("s2 = " + s2);
+//        // System.out.println("s2 = " + s2);
 //        String no=s1+"-"+s2;
-//        System.out.println("no = " + no);
+//        // System.out.println("no = " + no);
         jpql = " select pr from PatientInvestigation pr where pr.retired=false and "
                 + " upper(pr.billItem.bill.patient.person.phone)=:pn and "
                 + " (upper(pr.billItem.bill.insId)=:bn or upper(pr.billItem.bill.deptId)=:bn) "
@@ -3801,9 +3801,9 @@ public class SearchController implements Serializable {
         m.put("bn", getSessionController().getBillNo());
 
         userPatientInvestigations = patientInvestigationFacade.findBySQL(jpql, m, 20);
-        System.out.println("m = " + m);
-        System.out.println("userPatientInvestigations = " + userPatientInvestigations.size());
-        System.out.println("jpql = " + jpql);
+        // System.out.println("m = " + m);
+        // System.out.println("userPatientInvestigations = " + userPatientInvestigations.size());
+        // System.out.println("jpql = " + jpql);
 
 //        return "/reports_list";
         return "/reports_list_new";
@@ -3816,10 +3816,10 @@ public class SearchController implements Serializable {
         Map temMap = new HashMap();
         sql += " order by pi.id desc  ";
         temMap.put("pt", getTransferController().getPatient());
-//        ////System.out.println("temMap = " + temMap);
-//        ////System.out.println("sql = " + sql);
+//        ////// System.out.println("temMap = " + temMap);
+//        ////// System.out.println("sql = " + sql);
         patientInvestigationsSigle = getPatientInvestigationFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP, 50);
-//        ////System.out.println("patientInvestigations.size() = " + patientInvestigations.size());
+//        ////// System.out.println("patientInvestigations.size() = " + patientInvestigations.size());
     }
 
     public void createPatientInvestigationsTableAll() {
@@ -3832,7 +3832,7 @@ public class SearchController implements Serializable {
         Map temMap = new HashMap();
 
 //        if(webUserController.hasPrivilege("LabSearchBillLoggedInstitution")){
-//            System.out.println("inside ins");
+//            // System.out.println("inside ins");
 //            sql+="and b.institution =:ins ";
 //            temMap.put("ins", getSessionController().getInstitution());
 //        }
@@ -3888,7 +3888,7 @@ public class SearchController implements Serializable {
                 + " where bi.referanceBillItem.id=:bi ";
         m.put("bi", pi.getBillItem().getId());
         List<BillItem> bis = getBillItemFacade().findBySQL(sql, m);
-        System.out.println("bis.size() = " + bis.size());
+        // System.out.println("bis.size() = " + bis.size());
         if (bis.isEmpty()) {
             pi.getBillItem().setTransRefund(false);
         } else {
@@ -3907,7 +3907,7 @@ public class SearchController implements Serializable {
         temMap.put("ins", getSessionController().getInstitution());
 
 //        if(webUserController.hasPrivilege("LabSearchBillLoggedInstitution")){
-//            System.out.println("inside ins");
+//            // System.out.println("inside ins");
 //            sql+="and b.institution =:ins ";
 //            temMap.put("ins", getSessionController().getInstitution());
 //        }
@@ -4200,9 +4200,9 @@ public class SearchController implements Serializable {
         //System.err.println("Sql " + sql);
         pbs = getBillFacade().findBySQLWithoutCache(sql, temMap2, TemporalType.TIMESTAMP, 50);
 
-        System.out.println("pbs = " + pbs);
-        System.out.println("abs = " + abs);
-        System.out.println("aceptPaymentBills = " + aceptPaymentBills);
+        // System.out.println("pbs = " + pbs);
+        // System.out.println("abs = " + abs);
+        // System.out.println("aceptPaymentBills = " + aceptPaymentBills);
         abs.removeAll(pbs);
         aceptPaymentBills.addAll(abs);
 
@@ -4639,7 +4639,7 @@ public class SearchController implements Serializable {
 
         //System.err.println("Sql " + sql);
         bills = getBillFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP, 50);
-        System.out.println("size" + bills.size());
+        // System.out.println("size" + bills.size());
 
     }
 
@@ -4974,7 +4974,7 @@ public class SearchController implements Serializable {
         temMap.put("class", BilledBill.class);
 
         billItems = getBillItemFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP, 50);
-        //System.out.println("billItems = " + billItems);
+        //// System.out.println("billItems = " + billItems);
 
     }
 
@@ -5029,7 +5029,7 @@ public class SearchController implements Serializable {
         temMap.put("class", BilledBill.class);
 
         billItems = getBillItemFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
-        //System.out.println("billItems = " + billItems);
+        //// System.out.println("billItems = " + billItems);
 
     }
 
@@ -6337,15 +6337,15 @@ public class SearchController implements Serializable {
 
 //        bills=getBillFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
         List<Object> objs = getBillFacade().findObjectBySQL(sql, temMap, TemporalType.TIMESTAMP);
-        System.out.println("sql = " + sql);
-        System.out.println("temMap = " + temMap);
-        System.out.println("objs.size() = " + objs.size());
+        // System.out.println("sql = " + sql);
+        // System.out.println("temMap = " + temMap);
+        // System.out.println("objs.size() = " + objs.size());
 
         for (Object o : objs) {
             String s = (String) o;
             if (s != null && !"".equals(s)) {
                 String ss = s.substring(0, 3);
-//                System.out.println("ss = " + ss);
+//                // System.out.println("ss = " + ss);
                 if (ss.equals("077") || ss.equals("076")
                         || ss.equals("071") || ss.equals("072")
                         || ss.equals("075") || ss.equals("078")) {
@@ -6355,7 +6355,7 @@ public class SearchController implements Serializable {
             }
         }
 
-        System.out.println("telephoneNumbers.size() = " + telephoneNumbers.size());
+        // System.out.println("telephoneNumbers.size() = " + telephoneNumbers.size());
 
     }
 
@@ -6379,17 +6379,17 @@ public class SearchController implements Serializable {
 
         String messageBody2 = smsText;
 
-        System.out.println("messageBody2 = " + messageBody2.length());
+        // System.out.println("messageBody2 = " + messageBody2.length());
 
         final StringBuilder request = new StringBuilder(url);
         request.append(sendingNo.substring(1, 10));
         request.append(pw);
 
         try {
-            System.out.println("pw = " + pw);
-            System.out.println("sendingNo = " + sendingNo);
-            System.out.println("sendingNo.substring(1, 10) = " + sendingNo.substring(1, 10));
-            System.out.println("text = " + messageBody2);
+            // System.out.println("pw = " + pw);
+            // System.out.println("sendingNo = " + sendingNo);
+            // System.out.println("sendingNo.substring(1, 10) = " + sendingNo.substring(1, 10));
+            // System.out.println("text = " + messageBody2);
 
             stringResponse = Unirest.post(request.toString()).field("message", messageBody2).asString();
 
@@ -6401,7 +6401,7 @@ public class SearchController implements Serializable {
     }
 
     public void sendSmsAll() {
-        System.out.println("selectedTelephoneNumbers.size() = " + selectedTelephoneNumbers.size());
+        // System.out.println("selectedTelephoneNumbers.size() = " + selectedTelephoneNumbers.size());
         if (selectedTelephoneNumbers==null) {
             JsfUtil.addErrorMessage("Please Select Numbers");
             return;
@@ -6430,17 +6430,17 @@ public class SearchController implements Serializable {
 
             String messageBody2 = smsText;
 
-            System.out.println("messageBody2 = " + messageBody2.length());
+            // System.out.println("messageBody2 = " + messageBody2.length());
 
             final StringBuilder request = new StringBuilder(url);
             request.append(sendingNo.substring(1, 10));
             request.append(pw);
 
             try {
-                System.out.println("pw = " + pw);
-                System.out.println("sendingNo = " + sendingNo);
-                System.out.println("sendingNo.substring(1, 10) = " + sendingNo.substring(1, 10));
-                System.out.println("text = " + messageBody2);
+                // System.out.println("pw = " + pw);
+                // System.out.println("sendingNo = " + sendingNo);
+                // System.out.println("sendingNo.substring(1, 10) = " + sendingNo.substring(1, 10));
+                // System.out.println("text = " + messageBody2);
 
                 stringResponse = Unirest.post(request.toString()).field("message", messageBody2).asString();
 
@@ -6470,9 +6470,9 @@ public class SearchController implements Serializable {
 //        temMap.put("em", "");
 //        
 //        bills=getBillFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
-//        System.out.println("sql = " + sql);
-//        System.out.println("temMap = " + temMap);
-//        System.out.println("bills.size() = " + bills.size());
+//        // System.out.println("sql = " + sql);
+//        // System.out.println("temMap = " + temMap);
+//        // System.out.println("bills.size() = " + bills.size());
 //
 //    }
 

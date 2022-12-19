@@ -274,7 +274,7 @@ public class Api {
 //                    object.put("session_current_app_no", channelBean.getBillSessionsCount((long) s[0], (Date) s[1]));
 //                    object.put("session_fee", getCommonController().getDouble((double) fetchLocalFee((long) s[0], PaymentMethod.Agent, false)));
 //                    object.put("session_is_leaved", s[10]);
-//                    System.out.println("s.length = " + s.length);
+//                    // System.out.println("s.length = " + s.length);
 //                    array.put(object);
 ////            s[10]=fetchLocalFee((long)s[0], PaymentMethod.Agent, true);
 //                }
@@ -317,7 +317,7 @@ public class Api {
         try {
 
             String s = fetchErrors(name, phone, doc_code, ss_id, a_id, ar_no);
-            System.out.println("s = " + s);
+            // System.out.println("s = " + s);
             if (!"".equals(s)) {
                 jSONObjectOut.put("make_booking", s);
                 jSONObjectOut.put("error", "1");
@@ -339,10 +339,10 @@ public class Api {
                 jSONObjectOut.put("error_description", "No Data.");
                 return jSONObjectOut.toString();
             }
-            System.out.println("ss = " + ss);
+            // System.out.println("ss = " + ss);
 
             Bill b = saveBilledBill(ss, name, phone, doc_code, a_id, ar_no);
-            System.out.println("b = " + b);
+            // System.out.println("b = " + b);
 
             bill = billDetails(b.getId());
             jSONObjectOut.put("make_booking", bill);
@@ -459,9 +459,9 @@ public class Api {
         m.put("typ", PersonInstitutionType.Channelling);
         consultants = getStaffFacade().findAggregates(sql, m);
 
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("consultants.size() = " + consultants.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("consultants.size() = " + consultants.size());
 
         return consultants;
     }
@@ -503,9 +503,9 @@ public class Api {
 
         sessions = getStaffFacade().findAggregates(sql, m, TemporalType.TIMESTAMP);
 
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("sessions.size() = " + sessions.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("sessions.size() = " + sessions.size());
 
         return sessions;
     }
@@ -537,12 +537,12 @@ public class Api {
 
         sessions = getServiceSessionFacade().findBySQL(sql, m, TemporalType.TIMESTAMP);
 
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("sessions.size() = " + sessions.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("sessions.size() = " + sessions.size());
         
         for (ServiceSession session : sessions) {
-            System.out.println("session.getId() = " + session.getId());
+            // System.out.println("session.getId() = " + session.getId());
         }
 
 
@@ -564,7 +564,7 @@ public class Api {
 //                objects.add(ob);
 //            }
 //        }
-//        System.out.println("objects.size() = " + objects.size());
+//        // System.out.println("objects.size() = " + objects.size());
 
         return sessions;
     }
@@ -596,9 +596,9 @@ public class Api {
 
         sessions = getStaffFacade().findObjects(sql, m);
 
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("sessions.size() = " + sessions.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("sessions.size() = " + sessions.size());
 
         for (Object s : sessions) {
             Date d = (Date) s;
@@ -621,9 +621,9 @@ public class Api {
         m.put("id", billId);
         billObjects = billSessionFacade.findBySQL(sql, m);
 
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("billObjects.length = " + billObjects.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("billObjects.length = " + billObjects.size());
 
         Map map = new HashMap();
         if (!billObjects.isEmpty()) {
@@ -645,7 +645,7 @@ public class Api {
             }
         }
 
-        System.out.println("map.length = " + map.size());
+        // System.out.println("map.length = " + map.size());
         array.put(map);
 
         return array;
@@ -672,9 +672,9 @@ public class Api {
         m.put("td", commonFunctions.getEndOfDay(toDate));
         billObjects = billSessionFacade.findBySQL(sql, m, TemporalType.TIMESTAMP);
 
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("billObjects.length = " + billObjects.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("billObjects.length = " + billObjects.size());
 
         for (BillSession o : billObjects) {
             try {
@@ -734,11 +734,11 @@ public class Api {
             }
         }
         m.put("ses", serviceSessionFacade.find(id).getOriginatingSession().getId());
-//        System.out.println("paymentMethod = " + paymentMethod);
-//        System.out.println("feeTypes = " + feeTypes);
-//        System.out.println("m = " + m);
+//        // System.out.println("paymentMethod = " + paymentMethod);
+//        // System.out.println("feeTypes = " + feeTypes);
+//        // System.out.println("m = " + m);
         Double obj = ItemFeeFacade.findDoubleByJpql(jpql, m);
-        System.out.println("obj = " + obj);
+        // System.out.println("obj = " + obj);
         if (obj == null) {
             return 0;
         }
@@ -881,7 +881,7 @@ public class Api {
         getBillFacade().create(bill);
 
         if (bill.getBillType() == BillType.ChannelCash || bill.getBillType() == BillType.ChannelAgent) {
-            System.out.println("paidBill 1= " + bill.getPaidBill());
+            // System.out.println("paidBill 1= " + bill.getPaidBill());
             bill.setPaidBill(bill);
             getBillFacade().edit(bill);
         }
@@ -939,7 +939,7 @@ public class Api {
         List<BillFee> billFeeList = new ArrayList<>();
         double tmpTotal = 0;
         double tmpDiscount = 0;
-        System.out.println("ss.getOriginatingSession().getItemFees() = " + ss.getOriginatingSession().getItemFees().size());
+        // System.out.println("ss.getOriginatingSession().getItemFees() = " + ss.getOriginatingSession().getItemFees().size());
         for (ItemFee f : ss.getOriginatingSession().getItemFees()) {
             if (bill.getPaymentMethod() != PaymentMethod.Agent) {
                 if (f.getFeeType() == FeeType.OtherInstitution) {
@@ -963,9 +963,9 @@ public class Api {
                 bf.setInstitution(bill.getInstitution());
             } else if (f.getFeeType() == FeeType.Staff) {
                 bf.setSpeciality(f.getSpeciality());
-                System.out.println("bf.getSpeciality() = " + bf.getSpeciality());
+                // System.out.println("bf.getSpeciality() = " + bf.getSpeciality());
                 bf.setStaff(f.getStaff());
-                System.out.println("bf.getStaff() = " + bf.getStaff());
+                // System.out.println("bf.getStaff() = " + bf.getStaff());
             }
 
             bf.setFee(f);
@@ -999,15 +999,15 @@ public class Api {
         }
         bill.setTotal(tmpTotal);
         bill.setNetTotal(tmpTotal);
-        System.out.println("tmpDiscount = " + tmpDiscount);
-        System.out.println("tmpTotal = " + tmpTotal);
-        System.out.println("bill.getNetTotal() = " + bill.getNetTotal());
-        System.out.println("bill.getTotal() = " + bill.getTotal());
+        // System.out.println("tmpDiscount = " + tmpDiscount);
+        // System.out.println("tmpTotal = " + tmpTotal);
+        // System.out.println("bill.getNetTotal() = " + bill.getNetTotal());
+        // System.out.println("bill.getTotal() = " + bill.getTotal());
         getBillFacade().edit(bill);
 
         billItem.setDiscount(tmpDiscount);
         billItem.setNetValue(tmpTotal);
-        System.out.println("billItem.getNetValue() = " + billItem.getNetValue());
+        // System.out.println("billItem.getNetValue() = " + billItem.getNetValue());
         getBillItemFacade().edit(billItem);
 
         return billFeeList;
@@ -1051,9 +1051,9 @@ public class Api {
             }
         }
         m.put("ses", item);
-//        System.out.println("paymentMethod = " + paymentMethod);
-//        System.out.println("feeTypes = " + feeTypes);
-//        System.out.println("m = " + m);
+//        // System.out.println("paymentMethod = " + paymentMethod);
+//        // System.out.println("feeTypes = " + feeTypes);
+//        // System.out.println("m = " + m);
         Double obj = getItemFeeFacade().findDoubleByJpql(jpql, m);
 
         if (obj == null) {
@@ -1092,9 +1092,9 @@ public class Api {
             }
         }
         m.put("ses", item);
-//        System.out.println("paymentMethod = " + paymentMethod);
-//        System.out.println("feeTypes = " + feeTypes);
-//        System.out.println("m = " + m);
+//        // System.out.println("paymentMethod = " + paymentMethod);
+//        // System.out.println("feeTypes = " + feeTypes);
+//        // System.out.println("m = " + m);
         Double obj = getItemFeeFacade().findDoubleByJpql(jpql, m);
 
         if (obj == null) {
@@ -1153,8 +1153,8 @@ public class Api {
             insId = getBillNumberBean().institutionBillNumberGenerator(ss.getInstitution(), bts, billClassType, suffix);
         }
 
-        System.out.println("billClassType = " + billClassType);
-        System.out.println("insId = " + insId);
+        // System.out.println("billClassType = " + billClassType);
+        // System.out.println("insId = " + insId);
 
         return insId;
     }
@@ -1195,17 +1195,17 @@ public class Api {
             deptId = getBillNumberBean().departmentBillNumberGenerator(ss.getInstitution(), ss.getDepartment(), bts, billClassType, suffix);
         }
 
-        System.out.println("billClassType = " + billClassType);
-        System.out.println("deptId = " + deptId);
+        // System.out.println("billClassType = " + billClassType);
+        // System.out.println("deptId = " + deptId);
 
         return deptId;
     }
 
     public void updateBallance(Institution ins, double transactionValue, HistoryType historyType, Bill bill, BillItem billItem, BillSession billSession, String refNo) {
-        System.out.println("updating agency balance");
-        System.out.println("ins.getName() = " + ins.getName());
-        System.out.println("ins.getBallance() before " + ins.getBallance());
-        System.out.println("transactionValue = " + transactionValue);
+        // System.out.println("updating agency balance");
+        // System.out.println("ins.getName() = " + ins.getName());
+        // System.out.println("ins.getBallance() before " + ins.getBallance());
+        // System.out.println("transactionValue = " + transactionValue);
         AgentHistory agentHistory = new AgentHistory();
         agentHistory.setCreatedAt(new Date());
 //        agentHistory.setCreater(null);

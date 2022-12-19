@@ -122,11 +122,11 @@ public class ChannelSearchController implements Serializable {
     }
 
     public void searchForBillSessions() {
-        System.out.println("getFromDate() = " + getFromDate());
-        System.out.println("getToDate() = " + getToDate());
-        System.out.println("txtSearch = " + txtSearch);
-        System.out.println("txtSearchRef = " + txtSearchRef);
-        System.out.println("txtSearchPhone = " + txtSearchPhone);
+        // System.out.println("getFromDate() = " + getFromDate());
+        // System.out.println("getToDate() = " + getToDate());
+        // System.out.println("txtSearch = " + txtSearch);
+        // System.out.println("txtSearchRef = " + txtSearchRef);
+        // System.out.println("txtSearchPhone = " + txtSearchPhone);
         if (getFromDate() == null && getToDate() == null 
                 && (txtSearch == null || txtSearch.trim().equals("")) 
                 && (txtSearchRef == null || txtSearchRef.trim().equals("")) 
@@ -140,7 +140,7 @@ public class ChannelSearchController implements Serializable {
         }
         if (getFromDate() != null && getToDate() != null) {
             double count = commonController.dateDifferenceInMinutes(getFromDate(), getToDate()) / (60 * 24);
-            System.out.println("count = " + count);
+            // System.out.println("count = " + count);
             if (count > 1) {
                 JsfUtil.addErrorMessage("Please Selected Date Range To Long.(Date Range limit for 1 day)");
                 return;
@@ -185,9 +185,9 @@ public class ChannelSearchController implements Serializable {
         } else {
             searchedBillSessions = getBillSessionFacade().findBySQL(sql, m);
         }
-        System.out.println("m = " + m);
-        System.out.println("sql = " + sql);
-        System.out.println("searchedBillSessions = " + searchedBillSessions.size());
+        // System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("searchedBillSessions = " + searchedBillSessions.size());
 
     }
 
@@ -265,7 +265,7 @@ public class ChannelSearchController implements Serializable {
 //        }
 //        if (!getWebUserController().hasPrivilege("LabBillCancelSpecial")) {
 //
-//            //System.out.println("patientInvestigationController.sampledForAnyItemInTheBill(bill) = " + patientInvestigationController.sampledForAnyItemInTheBill(bill));
+//            //// System.out.println("patientInvestigationController.sampledForAnyItemInTheBill(bill) = " + patientInvestigationController.sampledForAnyItemInTheBill(bill));
 //            if (patientInvestigationController.sampledForAnyItemInTheBill(bill)) {
 //                UtilityController.addErrorMessage("Sample Already collected can't cancel");
 //                return true;

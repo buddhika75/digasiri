@@ -705,7 +705,7 @@ public class StoreCalculation {
 //
 //        } else {
 //            qty = (ph.getPharmaceuticalBillItem().getQty() + ph.getPharmaceuticalBillItem().getFreeQty()) * item.getDblValue();
-//            //      ////System.out.println("sssssss " + qty);
+//            //      ////// System.out.println("sssssss " + qty);
 //        }
 //
 //        if (itb.getId() != null) {

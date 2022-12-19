@@ -185,7 +185,7 @@ public class InwardReportController implements Serializable {
         if (withoutCancelBHT) {
             sql += " and b.retired=false ";
         }
-        System.out.println("discharged = " + discharged);
+        // System.out.println("discharged = " + discharged);
         if (discharged != null) {
             if (discharged) {
                 sql += " and b.discharged=true ";
@@ -193,7 +193,7 @@ public class InwardReportController implements Serializable {
                 sql += " and b.discharged=false ";
             }
         }
-        System.out.println("finalized = " + finalized);
+        // System.out.println("finalized = " + finalized);
         if (finalized != null) {
             if (finalized) {
                 sql += " and b.paymentFinalized=true ";
@@ -207,8 +207,8 @@ public class InwardReportController implements Serializable {
         m.put("fd", fromDate);
         m.put("td", toDate);
         patientEncounters = getPeFacade().findBySQL(sql, m, TemporalType.TIMESTAMP);
-        System.out.println("sql = " + sql);
-        System.out.println("m = " + m);
+        // System.out.println("sql = " + sql);
+        // System.out.println("m = " + m);
         calTtoal();
     }
 
@@ -546,14 +546,14 @@ public class InwardReportController implements Serializable {
     }
 
     public void updateOutSideBill(BillItem bi) {
-        //System.out.println("In");
-        //System.out.println("Bill ID -" + getBill().getId());
-        //System.out.println("Bill Creater -" + getSessionController().getLoggedUser());
+        //// System.out.println("In");
+        //// System.out.println("Bill ID -" + getBill().getId());
+        //// System.out.println("Bill Creater -" + getSessionController().getLoggedUser());
         getBill().setEditor(getSessionController().getLoggedUser());
         getBill().setEditedAt(new Date());
         getBillFacade().edit(getBill());
         UtilityController.addSuccessMessage("Updated");
-        //System.out.println("Out");
+        //// System.out.println("Out");
     }
 
     public void createOutSideBills() {
@@ -963,8 +963,8 @@ public class InwardReportController implements Serializable {
             temMap.put("cc", institution);
         }
 
-        System.out.println("sql = " + sql);
-        System.out.println("temMap = " + temMap);
+        // System.out.println("sql = " + sql);
+        // System.out.println("temMap = " + temMap);
 
         return getBillItemFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
     }
@@ -1002,8 +1002,8 @@ public class InwardReportController implements Serializable {
             temMap.put("cc", institution);
         }
 
-        System.out.println("sql = " + sql);
-        System.out.println("temMap = " + temMap);
+        // System.out.println("sql = " + sql);
+        // System.out.println("temMap = " + temMap);
 
         return getBillItemFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
     }

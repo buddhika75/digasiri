@@ -88,20 +88,20 @@ public class PatientController implements Serializable {
                 barcode = new DefaultStreamedContent(new FileInputStream(barcodeFile), "image/jpeg");
 
             } catch (Exception ex) {
-                //   //System.out.println("ex = " + ex.getMessage());
+                //   //// System.out.println("ex = " + ex.getMessage());
             }
         } else {
-            //   //System.out.println("else = ");
+            //   //// System.out.println("else = ");
             try {
                 Barcode bc = BarcodeFactory.createCode128A("0000");
                 bc.setBarHeight(5);
                 bc.setBarWidth(3);
                 bc.setDrawingText(true);
                 BarcodeImageHandler.saveJPEG(bc, barcodeFile);
-                //   //System.out.println("12");
+                //   //// System.out.println("12");
                 barcode = new DefaultStreamedContent(new FileInputStream(barcodeFile), "image/jpeg");
             } catch (Exception ex) {
-                //   //System.out.println("ex = " + ex.getMessage());
+                //   //// System.out.println("ex = " + ex.getMessage());
             }
         }
     }
@@ -137,7 +137,7 @@ public class PatientController implements Serializable {
         familyMember.setSerealNumber(familyMembers.size());
         familyMembers.add(familyMember);
         loggedIn = true;
-        System.out.println("familyMembers.size() = " + familyMembers.size());
+        // System.out.println("familyMembers.size() = " + familyMembers.size());
 
         familyMember = null;
 
@@ -190,7 +190,7 @@ public class PatientController implements Serializable {
     }
 
     public StreamedContent getPhoto(Patient p) {
-        ////System.out.println("p is " + p);
+        ////// System.out.println("p is " + p);
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getRenderResponse()) {
             return new DefaultStreamedContent();
@@ -198,7 +198,7 @@ public class PatientController implements Serializable {
             return new DefaultStreamedContent();
         } else {
             if (p.getId() != null && p.getBaImage() != null) {
-                ////System.out.println("giving image");
+                ////// System.out.println("giving image");
                 return new DefaultStreamedContent(new ByteArrayInputStream(p.getBaImage()), p.getFileType(), p.getFileName());
             } else {
                 return new DefaultStreamedContent();
@@ -208,14 +208,14 @@ public class PatientController implements Serializable {
     }
 
     public StreamedContent getPhotoByByte(byte[] p) {
-        ////System.out.println("p is " + p);
+        ////// System.out.println("p is " + p);
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getRenderResponse()) {
             return new DefaultStreamedContent();
         } else if (p == null) {
             return new DefaultStreamedContent();
         } else {
-            //   //System.out.println("giving image");
+            //   //// System.out.println("giving image");
             return new DefaultStreamedContent(new ByteArrayInputStream(p), "image/png", "photo.");
         }
     }
@@ -287,7 +287,7 @@ public class PatientController implements Serializable {
                     + " or upper(p.person.mobile) like :q "
                     + "  order by p.person.name";
             hm.put("q", "%" + query.toUpperCase() + "%");
-            ////System.out.println(sql);
+            ////// System.out.println(sql);
             suggestions = getFacade().findBySQL(sql, hm, 20);
         }
         return suggestions;
@@ -355,34 +355,34 @@ public class PatientController implements Serializable {
             getCurrent().getPerson().setCreatedAt(Calendar.getInstance().getTime());
             getCurrent().getPerson().setCreater(getSessionController().getLoggedUser());
             getPersonFacade().create(getCurrent().getPerson());
-            System.out.println("1.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
-            System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
+            // System.out.println("1.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
+            // System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
         } else {
             getCurrent().getPerson().setEditedAt(Calendar.getInstance().getTime());
             getCurrent().getPerson().setEditer(getSessionController().getLoggedUser());
             getPersonFacade().edit(getCurrent().getPerson());
-            System.out.println("2.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
-            System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
+            // System.out.println("2.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
+            // System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
         }
         if (getCurrent().getId() == null) {
             getCurrent().setCreatedAt(new Date());
             getCurrent().setCreater(getSessionController().getLoggedUser());
             getFacade().create(current);
-            System.out.println("3.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
-            System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
+            // System.out.println("3.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
+            // System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
             UtilityController.addSuccessMessage("Saved as a new patient successfully.");
         } else {
             getCurrent().setEditedAt(Calendar.getInstance().getTime());
             getCurrent().setEditer(getSessionController().getLoggedUser());
             getFacade().edit(getCurrent());
-            System.out.println("4.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
-            System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
+            // System.out.println("4.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
+            // System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
             UtilityController.addSuccessMessage("Updated the patient details successfully.");
         }
         getPersonFacade().flush();
         getFacade().flush();
-        System.out.println("5.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
-        System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
+        // System.out.println("5.getCurrent().getPerson().getTitle() = " + getCurrent().getPerson().getTitle());
+        // System.out.println("getCurrent().getPerson().getNameWithTitle() = " + getCurrent().getPerson().getNameWithTitle());
     }
 
     public PatientFacade getEjbFacade() {
@@ -550,19 +550,19 @@ public class PatientController implements Serializable {
             }
             PatientController controller = (PatientController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "patientController");
-            ////System.out.println("value at converter getAsObject is " + value);
+            ////// System.out.println("value at converter getAsObject is " + value);
             return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
             java.lang.Long key;
-            ////System.out.println(value);
+            ////// System.out.println(value);
             if (value == null || value.equals("null") || value.trim().equals("")) {
                 key = 0l;
             } else {
                 key = Long.valueOf(value);
-                System.out.println(key);
-                System.out.println(value);
+                // System.out.println(key);
+                // System.out.println(value);
             }
             return key;
         }
@@ -628,19 +628,19 @@ public class PatientController implements Serializable {
             }
             PatientController controller = (PatientController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "patientController");
-            ////System.out.println("value at converter getAsObject is " + value);
+            ////// System.out.println("value at converter getAsObject is " + value);
             return controller.getEjbFacade().find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
             java.lang.Long key;
-            ////System.out.println(value);
+            ////// System.out.println(value);
             if (value == null || value.equals("null") || value.trim().equals("")) {
                 key = 0l;
             } else {
                 key = Long.valueOf(value);
-                ////System.out.println(key);
-                ////System.out.println(value);
+                ////// System.out.println(key);
+                ////// System.out.println(value);
             }
             return key;
         }

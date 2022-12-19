@@ -344,7 +344,7 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
 //        m.put("ixbt", Investigation.class);
 //
 //        List<Object[]> bojsl = billFacade.findAggregates(jpql, m, TemporalType.DATE);
-//        //System.out.println("bojsl = " + bojsl);
+//        //// System.out.println("bojsl = " + bojsl);
 //        insInvestigationCountRows = new ArrayList<>();
 //
 //        Map<Institution, ItemInstitutionCollectingCentreCountRow> map = new HashMap<>();
@@ -363,9 +363,9 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
 ////            }
 //            insInvestigationCountRows.add(r);
 //        }
-//        //System.out.println("sql = " + jpql);
-//        //System.out.println("m = " + m);
-//        //System.out.println("insInvestigationCountRows.size() = " + insInvestigationCountRows.size());
+//        //// System.out.println("sql = " + jpql);
+//        //// System.out.println("m = " + m);
+//        //// System.out.println("insInvestigationCountRows.size() = " + insInvestigationCountRows.size());
 //    }
     public List<ItemInstitutionCollectingCentreCountRow> getInsInvestigationCountRows() {
         return insInvestigationCountRows;
@@ -392,11 +392,11 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
 //        countTotal = 0;
 //
 //        long billed = getCount2(new BilledBill());
-//        //System.out.println("billed = " + billed);
+//        //// System.out.println("billed = " + billed);
 //        long cancelled = getCount2(new CancelledBill());
-//        //System.out.println("cancelled = " + cancelled);
+//        //// System.out.println("cancelled = " + cancelled);
 //        long refunded = getCount2(new RefundBill());
-//        //System.out.println("refunded = " + refunded);
+//        //// System.out.println("refunded = " + refunded);
 //
 //        countTotal = billed - (refunded + cancelled);
     }
@@ -425,11 +425,11 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
 //        countTotal = 0;
 //
 //        long billed = getCount2(new BilledBill());
-//        //System.out.println("billed = " + billed);
+//        //// System.out.println("billed = " + billed);
 //        long cancelled = getCount2(new CancelledBill());
-//        //System.out.println("cancelled = " + cancelled);
+//        //// System.out.println("cancelled = " + cancelled);
 //        long refunded = getCount2(new RefundBill());
-//        //System.out.println("refunded = " + refunded);
+//        //// System.out.println("refunded = " + refunded);
 //
 //        countTotal = billed - (refunded + cancelled);
         
@@ -1021,7 +1021,7 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
             temp.setTotal(getTotal(w));
 
             if (temp.getCount() != 0) {
-                //System.out.println(investigationCountWithMachines.size() + " " + temp.getInvestigation().getName());
+                //// System.out.println(investigationCountWithMachines.size() + " " + temp.getInvestigation().getName());
                 investigationCountWithMachines.add(temp);
             }
         }
@@ -1084,7 +1084,7 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
             totalCount += net;
 
             if (temp.getCount() != 0) {
-                //System.out.println(investigationCountWithMachines.size() + " " + temp.getMachine().getName());
+                //// System.out.println(investigationCountWithMachines.size() + " " + temp.getMachine().getName());
                 investigationCountWithMachines.add(temp);
             }
 
@@ -1095,7 +1095,7 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
     public void createLabServiceWithCountByMachine() {
         
         Date startTime = new Date();
-        //System.out.println("createLabServiceWithCountByMachine");
+        //// System.out.println("createLabServiceWithCountByMachine");
         investigationCountWithMachines = new ArrayList<>();
         totalCount = 0;
         for (Machine w : getInvestigationMachines()) {
@@ -1114,7 +1114,7 @@ public class InvestigationMonthSummeryOwnController implements Serializable {
             totalCount += net;
 
             if (temp.getCount() != 0) {
-                //System.out.println(investigationCountWithMachines.size() + " " + temp.getMachine().getName());
+                //// System.out.println(investigationCountWithMachines.size() + " " + temp.getMachine().getName());
                 investigationCountWithMachines.add(temp);
             }
 
@@ -1128,7 +1128,7 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/lab Re
     public void createLabServiceWithCountByMachineAndBillType() {
         
         Date startTime = new Date();
-        //System.out.println("createLabServiceWithCountByMachine");
+        //// System.out.println("createLabServiceWithCountByMachine");
         investigationCountWithMachines = new ArrayList<>();
         totalCount = 0;
         totalOpdCount = 0;
@@ -1171,11 +1171,11 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/lab Re
                 opdCount += net;
                 totalOpdCount+=net;
                 temp.setOpdCount(net);
-                //System.out.println("temp.getInvestigation().getName() = " + temp.getInvestigation().getName());
-                //System.out.println("billed = " + billed);
-                //System.out.println("cancelled = " + cancelled);
-                //System.out.println("refunded = " + refunded);
-                //System.out.println("temp.getOpdCount() = " + temp.getOpdCount());
+                //// System.out.println("temp.getInvestigation().getName() = " + temp.getInvestigation().getName());
+                //// System.out.println("billed = " + billed);
+                //// System.out.println("cancelled = " + cancelled);
+                //// System.out.println("refunded = " + refunded);
+                //// System.out.println("temp.getOpdCount() = " + temp.getOpdCount());
 
                 billed = getItemCount(new BilledBill(), ix, BillType.LabBill);
                 billed += getItemCount(new BilledBill(), ix, BillType.CollectingCentreBill);
@@ -1197,7 +1197,7 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/lab Re
                 temp.setInwardCount(net);
 
                 if (temp.getCount() != 0) {
-                    //System.out.println(investigationCountWithMachines.size() + " " + temp.getMachine().getName());
+                    //// System.out.println(investigationCountWithMachines.size() + " " + temp.getMachine().getName());
                     lst.add(temp);
                 }
 
@@ -1229,7 +1229,7 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/lab Re
         temMap.put("bType", BillType.OpdBill);
         temMap.put("ins", getSessionController().getInstitution());
         investigations = getItemFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
-        //System.out.println("investigations = " + investigations);
+        //// System.out.println("investigations = " + investigations);
 
         return investigations;
     }
@@ -1250,7 +1250,7 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/lab Re
         temMap.put("bType", BillType.OpdBill);
         temMap.put("ins", institution);
         machines = machineFacade.findBySQL(sql, temMap, TemporalType.TIMESTAMP);
-        //System.out.println("investigations = " + machines);
+        //// System.out.println("investigations = " + machines);
 
         return machines;
     }
@@ -1271,7 +1271,7 @@ commonController.printReportDetails(fromDate, toDate, startTime, "Reports/lab Re
         temMap.put("bts", Arrays.asList(bts));
         temMap.put("ins", institution);
         machines = machineFacade.findBySQL(sql, temMap, TemporalType.TIMESTAMP);
-        //System.out.println("investigations = " + machines);
+        //// System.out.println("investigations = " + machines);
 
         return machines;
     }

@@ -146,7 +146,7 @@ public class CashierReportController implements Serializable {
         BillsTotals newB = new BillsTotals();
         newB.setName(billType.getLabel() + " " + suffix);
         newB.setCard(calTotalValueOwnWithoutPro(webUser, bill, PaymentMethod.Card, billType));
-        System.out.println("newB.getCard() = " + newB.getCard());
+        // System.out.println("newB.getCard() = " + newB.getCard());
         finalCardTot += newB.getCard();
         newB.setCash(calTotalValueOwnWithoutPro(webUser, bill, PaymentMethod.Cash, billType));
         finalCashTot += newB.getCash();
@@ -647,7 +647,7 @@ public class CashierReportController implements Serializable {
             return;
         }
         fromDate = commonReport.fetchDate(fromReciptNo);
-        System.out.println("fromDate = " + fromDate);
+        // System.out.println("fromDate = " + fromDate);
         if (fromDate == null) {
             JsfUtil.addErrorMessage("Please Enter Correct From Bill No");
             return;
@@ -657,7 +657,7 @@ public class CashierReportController implements Serializable {
             return;
         }
         toDate = commonReport.fetchDate(toReciptNo);
-        System.out.println("toDate = " + toDate);
+        // System.out.println("toDate = " + toDate);
         if (toDate == null) {
             JsfUtil.addErrorMessage("Please Enter Correct To Bill No");
             return;
@@ -946,7 +946,7 @@ public class CashierReportController implements Serializable {
             return;
         }
         fromDate = commonReport.fetchDate(fromReciptNo);
-        System.out.println("fromDate = " + fromDate);
+        // System.out.println("fromDate = " + fromDate);
         if (fromDate == null) {
             JsfUtil.addErrorMessage("Please Enter Correct From Bill No");
             return;
@@ -956,7 +956,7 @@ public class CashierReportController implements Serializable {
             return;
         }
         toDate = commonReport.fetchDate(toReciptNo);
-        System.out.println("toDate = " + toDate);
+        // System.out.println("toDate = " + toDate);
         if (toDate == null) {
             JsfUtil.addErrorMessage("Please Enter Correct To Bill No");
             return;
@@ -1523,7 +1523,7 @@ public class CashierReportController implements Serializable {
         temMap.put("btp", btpList);
         temMap.put("ins", sessionController.getInstitution());
         cashiers = getWebUserFacade().findBySQL(sql, temMap, TemporalType.TIMESTAMP);
-        System.out.println("cashiers.size() = " + cashiers.size());
+        // System.out.println("cashiers.size() = " + cashiers.size());
         if (cashiers == null) {
             cashiers = new ArrayList<>();
         }

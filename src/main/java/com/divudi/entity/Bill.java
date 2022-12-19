@@ -41,7 +41,6 @@ import javax.persistence.Transient;
  * @author buddhika
  */
 @Entity
-@Table(name = "bill")
 @NamedQueries({
     @NamedQuery(name = "Bill.findAll", query = "SELECT b FROM Bill b"),
     @NamedQuery(name = "Bill.findById", query = "SELECT b FROM Bill b WHERE b.id = :id")})
@@ -113,7 +112,8 @@ public class Bill implements Serializable {
     //Approve
     @ManyToOne
     WebUser approveUser;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+//    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Transient
     Date approveAt;
     //Pharmacy
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -225,12 +225,14 @@ public class Bill implements Serializable {
     //Edited Properties
     @ManyToOne
     private WebUser editor;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+//    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Transient
     private Date editedAt;
     //Checking Property
     @ManyToOne
     private WebUser checkedBy;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+//    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Transient
     private Date checkeAt;
     //Retairing properties
     boolean retired;
@@ -300,7 +302,8 @@ public class Bill implements Serializable {
     private Boolean smsed = false;
     @ManyToOne
     private WebUser smsedUser;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+//    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Transient
     private Date smsedAt;
     @OneToMany(mappedBy = "bill")
     private List<Sms> sentSmses;
@@ -597,11 +600,11 @@ private boolean printed;
     }
 
     public double getDiscountPercentPharmacy() {
-        //System.out.println("getting discount percent");
-//        //System.out.println("bill item"+getBillItems());
-//        //System.out.println(getBillItems().get(0).getPriceMatrix());
+        //// System.out.println("getting discount percent");
+//        //// System.out.println("bill item"+getBillItems());
+//        //// System.out.println(getBillItems().get(0).getPriceMatrix());
         if (!getBillItems().isEmpty() && getBillItems().get(0).getPriceMatrix() != null) {
-            //System.out.println("sys inside");
+            //// System.out.println("sys inside");
             discountPercent = getBillItems().get(0).getPriceMatrix().getDiscountPercent();
         }
 

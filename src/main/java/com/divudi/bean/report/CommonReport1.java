@@ -401,8 +401,8 @@ public class CommonReport1 implements Serializable {
         m.put("fromDate", getFromDate());
         m.put("toDate", getToDate());
         m.put("bt", BillType.OpdBill);
-        //System.out.println("sql = " + sql);
-        //System.out.println("temMap = " + temMap);
+        //// System.out.println("sql = " + sql);
+        //// System.out.println("temMap = " + temMap);
         referralBillItems = billItemFacade.findBySQL(sql, m, TemporalType.TIMESTAMP);
 
         biledBillsTotal = 0.0;
@@ -455,8 +455,8 @@ public class CommonReport1 implements Serializable {
         m.put("fromDate", getFromDate());
         m.put("toDate", getToDate());
         m.put("bt", BillType.OpdBill);
-        //System.out.println("sql = " + sql);
-        //System.out.println("temMap = " + temMap);
+        //// System.out.println("sql = " + sql);
+        //// System.out.println("temMap = " + temMap);
 //        referralBillItems = billItemFacade.findBySQL(sql, m, TemporalType.TIMESTAMP);
         bill = billFacade.findBySQL(sql, m, TemporalType.TIMESTAMP);
         
@@ -489,7 +489,7 @@ public class CommonReport1 implements Serializable {
         m.put("bt", BillType.OpdBill);
 
         List<Object[]> objects = billItemFacade.findAggregates(sql, m, TemporalType.TIMESTAMP);
-        System.out.println("objects.size() = " + objects.size());
+        // System.out.println("objects.size() = " + objects.size());
         biledBillsTotal = 0.0;
         for (Object[] o : objects) {
             Doctor d = (Doctor) o[0];
@@ -500,7 +500,7 @@ public class CommonReport1 implements Serializable {
             docTotals.add(row);
             biledBillsTotal += tot;
         }
-        System.out.println("docTotals.size() = " + docTotals.size());
+        // System.out.println("docTotals.size() = " + docTotals.size());
 
     }
 
@@ -523,7 +523,7 @@ public class CommonReport1 implements Serializable {
         m.put("bt", BillType.OpdBill);
 
         List<Object[]> objects = billItemFacade.findAggregates(sql, m, TemporalType.TIMESTAMP);
-        System.out.println("objects.size() = " + objects.size());
+        // System.out.println("objects.size() = " + objects.size());
         biledBillsTotal = 0.0;
         for (Object[] o : objects) {
             Doctor d= (Doctor) o[0];
@@ -534,7 +534,7 @@ public class CommonReport1 implements Serializable {
             docTotals.add(row);
             biledBillsTotal += tot;
         }
-        System.out.println("docTotals.size() = " + docTotals.size());
+        // System.out.println("docTotals.size() = " + docTotals.size());
 
     }
 
@@ -1760,8 +1760,8 @@ public class CommonReport1 implements Serializable {
         tm.put("billType", billTypes);
         // tm.put("ins", getSessionController().getInstitution());
         tm.put("dep", getDepartment());
-        System.out.println("tm = " + tm);
-        System.out.println("sql = " + sql);
+        // System.out.println("tm = " + tm);
+        // System.out.println("sql = " + sql);
 
         return getBillFacade().findBySQL(sql, tm, TemporalType.TIMESTAMP);
     }
@@ -1802,8 +1802,8 @@ public class CommonReport1 implements Serializable {
         tm.put("billType", billTypes);
         // tm.put("ins", getSessionController().getInstitution());
         tm.put("dep", getDepartment());
-        System.out.println("tm = " + tm);
-        System.out.println("sql = " + sql);
+        // System.out.println("tm = " + tm);
+        // System.out.println("sql = " + sql);
 
         return getBillItemFacade().findBySQL(sql, tm, TemporalType.TIMESTAMP);
     }
@@ -1840,24 +1840,24 @@ public class CommonReport1 implements Serializable {
         tm.put("toDate", toDate);
         tm.put("billType", billTypes);
         tm.put("dep", getDepartment());
-        System.out.println("tm = " + tm);
-        System.out.println("sql = " + sql);
+        // System.out.println("tm = " + tm);
+        // System.out.println("sql = " + sql);
 
         Object[] ob = (Object[]) getBillFacade().findAggregates(sql, tm, TemporalType.TIMESTAMP).get(0);
-        System.out.println("ob = " + ob);
+        // System.out.println("ob = " + ob);
 
         if (ob != null) {
             try {
                 total = (double) ob[0];
-                System.out.println("total = " + total);
+                // System.out.println("total = " + total);
                 discount = (double) ob[1];
-                System.out.println("discount = " + discount);
+                // System.out.println("discount = " + discount);
                 staffTotal = (double) ob[2];
-                System.out.println("staffTotal = " + staffTotal);
+                // System.out.println("staffTotal = " + staffTotal);
                 vat = (double) ob[3];
-                System.out.println("vat = " + vat);
+                // System.out.println("vat = " + vat);
                 netTotal = (double) ob[4];
-                System.out.println("netTotal = " + netTotal);
+                // System.out.println("netTotal = " + netTotal);
             } catch (Exception e) {
             }
         }

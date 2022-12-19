@@ -403,7 +403,7 @@ public class PharmacySaleBhtController implements Serializable {
         }
         items = getStockFacade().findBySQL(sql, m, 20);
         itemsWithoutStocks = completeRetailSaleItems(qry);
-        ////System.out.println("selectedSaleitems = " + itemsWithoutStocks);
+        ////// System.out.println("selectedSaleitems = " + itemsWithoutStocks);
         return items;
     }
 
@@ -436,7 +436,7 @@ public class PharmacySaleBhtController implements Serializable {
         }
         items = getStockFacade().findBySQL(sql, m, 20);
         //  itemsWithoutStocks = completeRetailSaleItems(qry);
-        ////System.out.println("selectedSaleitems = " + itemsWithoutStocks);
+        ////// System.out.println("selectedSaleitems = " + itemsWithoutStocks);
         return items;
     }
 
@@ -522,7 +522,7 @@ public class PharmacySaleBhtController implements Serializable {
                 continue;
             }
             
-            System.out.println("tbi.getDiscount() = " + tbi.getDiscount());
+            // System.out.println("tbi.getDiscount() = " + tbi.getDiscount());
 
             tbi.setInwardChargeType(InwardChargeType.Medicine);
             tbi.setBill(getPreBill());
@@ -940,10 +940,10 @@ public class PharmacySaleBhtController implements Serializable {
         getPreBill().setGrantTotal(grossTot);
         getPreBill().setDiscount(discount);
         
-        System.out.println("getPreBill().getNetTotal() = " + getPreBill().getNetTotal());
-        System.out.println("getPreBill().getTotal() = " + getPreBill().getTotal());
-        System.out.println("getPreBill().getGrantTotal() = " + getPreBill().getGrantTotal());
-        System.out.println("getPreBill().getDiscount() = " + getPreBill().getDiscount());
+        // System.out.println("getPreBill().getNetTotal() = " + getPreBill().getNetTotal());
+        // System.out.println("getPreBill().getTotal() = " + getPreBill().getTotal());
+        // System.out.println("getPreBill().getGrantTotal() = " + getPreBill().getGrantTotal());
+        // System.out.println("getPreBill().getDiscount() = " + getPreBill().getDiscount());
         
     }
 
@@ -1004,27 +1004,27 @@ public class PharmacySaleBhtController implements Serializable {
         billItem.setNetValue(qty * billItem.getNetRate());
         billItem.setDiscount(billItem.getGrossValue() - billItem.getNetValue());
 
-        System.out.println("billItem.getGrossValue() = " + billItem.getGrossValue());
-        System.out.println("billItem.getNetValue() = " + billItem.getNetValue());
-        System.out.println("billItem.getGrossValue() - billItem.getNetValue() = " + (billItem.getGrossValue() - billItem.getNetValue()));
+        // System.out.println("billItem.getGrossValue() = " + billItem.getGrossValue());
+        // System.out.println("billItem.getNetValue() = " + billItem.getNetValue());
+        // System.out.println("billItem.getGrossValue() - billItem.getNetValue() = " + (billItem.getGrossValue() - billItem.getNetValue()));
 
     }
 
     public void calculateBillItemForEditing(BillItem bi) {
-        ////System.out.println("calculateBillItemForEditing");
-        ////System.out.println("bi = " + bi);
+        ////// System.out.println("calculateBillItemForEditing");
+        ////// System.out.println("bi = " + bi);
         if (getPreBill() == null || bi == null || bi.getPharmaceuticalBillItem() == null || bi.getPharmaceuticalBillItem().getStock() == null) {
-            ////System.out.println("calculateItemForEditingFailedBecause of null");
+            ////// System.out.println("calculateItemForEditingFailedBecause of null");
             return;
         }
-        ////System.out.println("bi.getQty() = " + bi.getQty());
-        ////System.out.println("bi.getRate() = " + bi.getRate());
+        ////// System.out.println("bi.getQty() = " + bi.getQty());
+        ////// System.out.println("bi.getRate() = " + bi.getRate());
         bi.setGrossValue(bi.getPharmaceuticalBillItem().getStock().getItemBatch().getRetailsaleRate() * bi.getQty());
         bi.setNetValue(bi.getQty() * bi.getPharmaceuticalBillItem().getStock().getItemBatch().getRetailsaleRate());
         bi.setDiscount(bi.getGrossValue() - bi.getNetValue());
-        System.out.println("bi.getNetValue() = " + bi.getNetValue());
-        System.out.println("bi.getGrossValue() = " + bi.getGrossValue());
-        System.out.println("bi.getDiscount() = " + bi.getDiscount());
+        // System.out.println("bi.getNetValue() = " + bi.getNetValue());
+        // System.out.println("bi.getGrossValue() = " + bi.getGrossValue());
+        // System.out.println("bi.getDiscount() = " + bi.getDiscount());
 
     }
 
@@ -1038,7 +1038,7 @@ public class PharmacySaleBhtController implements Serializable {
     }
 
     public void calculateAllRates() {
-        System.out.println("calculating all rates");
+        // System.out.println("calculating all rates");
         for (BillItem tbi : getPreBill().getBillItems()) {
             calculateRates(tbi);
             calculateBillItemForEditing(tbi);
@@ -1051,9 +1051,9 @@ public class PharmacySaleBhtController implements Serializable {
     }
 
     public void calculateRates(BillItem bi) {
-        ////System.out.println("calculating rates");
+        ////// System.out.println("calculating rates");
         if (bi.getPharmaceuticalBillItem().getStock() == null) {
-            ////System.out.println("stock is null");
+            ////// System.out.println("stock is null");
             return;
         }
         getBillItem();
@@ -1066,7 +1066,7 @@ public class PharmacySaleBhtController implements Serializable {
     }
 
     public List<Stock> completeAvailableStocksSelectedPharmacy(String qry) {
-        System.out.println("department = " + department);
+        // System.out.println("department = " + department);
         if (department == null) {
             JsfUtil.addErrorMessage("Please Select Depatment");
             return new ArrayList<>();
@@ -1084,7 +1084,7 @@ public class PharmacySaleBhtController implements Serializable {
             sql = "select i from Stock i where i.stock >:s and i.department=:d and (upper(i.itemBatch.item.name) like :n or upper(i.itemBatch.item.code) like :n)  order by i.itemBatch.item.name, i.itemBatch.dateOfExpire";
         }
 //        itemsWithoutStocks = completeRetailSaleItems(qry);
-        ////System.out.println("selectedSaleitems = " + itemsWithoutStocks);
+        ////// System.out.println("selectedSaleitems = " + itemsWithoutStocks);
         return getStockFacade().findBySQL(sql, m, 20);
     }
 
@@ -1092,23 +1092,23 @@ public class PharmacySaleBhtController implements Serializable {
 
         //User Stock Container Save if New Bill
         UserStockContainer usc = userStockController.saveUserStockContainer(getUserStockContainer(), getSessionController().getLoggedUser());
-        System.out.println("b.getPatientEncounter().getBhtNo() = " + b.getPatientEncounter().getBhtNo());
+        // System.out.println("b.getPatientEncounter().getBhtNo() = " + b.getPatientEncounter().getBhtNo());
         setPatientEncounter(b.getPatientEncounter());
         billItems = new ArrayList<>();
         for (PharmaceuticalBillItem i : getPharmaceuticalBillItemFacade().getPharmaceuticalBillItems(b)) {
-            System.out.println("i.getQtyInUnit() = " + i.getQtyInUnit());
+            // System.out.println("i.getQtyInUnit() = " + i.getQtyInUnit());
             double billedIssue = getPharmacyCalculation().getBilledInwardPharmacyRequest(i.getBillItem(), BillType.PharmacyBhtPre);
-            System.out.println("billedIssue = " + billedIssue);
+            // System.out.println("billedIssue = " + billedIssue);
             double cancelledIssue = getPharmacyCalculation().getCancelledInwardPharmacyRequest(i.getBillItem(), BillType.PharmacyBhtPre);
-            System.out.println("cancelledIssue = " + cancelledIssue);
+            // System.out.println("cancelledIssue = " + cancelledIssue);
             double refundedIssue = getPharmacyCalculation().getRefundedInwardPharmacyRequest(i.getBillItem(), BillType.PharmacyBhtPre);
-            System.out.println("refundedIssue = " + refundedIssue);
+            // System.out.println("refundedIssue = " + refundedIssue);
 
             double issuableQty = Math.abs(i.getQtyInUnit()) - (Math.abs(billedIssue) - (Math.abs(cancelledIssue) + Math.abs(refundedIssue)));
-            System.out.println("issuableQty = " + issuableQty);
+            // System.out.println("issuableQty = " + issuableQty);
 
             List<StockQty> stockQtys = pharmacyBean.getStockByQty(i.getBillItem().getItem(), issuableQty, getSessionController().getDepartment());
-            System.out.println("stockQtys.size() = " + stockQtys.size());
+            // System.out.println("stockQtys.size() = " + stockQtys.size());
 
             for (StockQty sq : stockQtys) {
                 if (sq.getQty() == 0) {
@@ -1151,7 +1151,7 @@ public class PharmacySaleBhtController implements Serializable {
 
         }
 
-        System.out.println("getBillItems().size() = " + getBillItems().size());
+        // System.out.println("getBillItems().size() = " + getBillItems().size());
         getPreBill().setBillItems(getBillItems());
 
 //        boolean flag = false;

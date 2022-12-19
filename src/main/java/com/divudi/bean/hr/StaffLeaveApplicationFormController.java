@@ -254,7 +254,7 @@ public class StaffLeaveApplicationFormController implements Serializable {
     }
 
     public StaffLeaveEntitle fetchLeaveEntitle(Staff staff, LeaveType leaveType, Date frm) {
-        System.out.println("frm = " + frm);
+        // System.out.println("frm = " + frm);
 
         String sql = "select  ss "
                 + " from StaffLeaveEntitle ss "
@@ -307,12 +307,12 @@ public class StaffLeaveApplicationFormController implements Serializable {
                 getCurrentLeaveForm().getStaff(), getCurrentLeaveForm().getLeaveType(),
                 getCurrentLeaveForm().getFromDate(),
                 getCurrentLeaveForm().getToDate());
-        //System.out.println("getCurrentLeaveForm().getStaff() = " + getCurrentLeaveForm().getStaff());
-        //System.out.println("getCurrentLeaveForm().getLeaveType() = " + getCurrentLeaveForm().getLeaveType());
-        //System.out.println("commonFunctions.getLastDayOfYear(getCurrentLeaveForm().getFromDate()) = " + commonFunctions.getLastDayOfYear(getCurrentLeaveForm().getFromDate()));
-        //System.out.println("commonFunctions.getFirstDayOfYear(getCurrentLeaveForm().getFromDate()) = " + commonFunctions.getFirstDayOfYear(getCurrentLeaveForm().getFromDate()));
-        //System.out.println("staffLeaveEntitle = " + staffLeaveEntitle);
-        //System.out.println("leaveTypeLocal.isExceptionalLeave() = " + leaveTypeLocal.isExceptionalLeave());
+        //// System.out.println("getCurrentLeaveForm().getStaff() = " + getCurrentLeaveForm().getStaff());
+        //// System.out.println("getCurrentLeaveForm().getLeaveType() = " + getCurrentLeaveForm().getLeaveType());
+        //// System.out.println("commonFunctions.getLastDayOfYear(getCurrentLeaveForm().getFromDate()) = " + commonFunctions.getLastDayOfYear(getCurrentLeaveForm().getFromDate()));
+        //// System.out.println("commonFunctions.getFirstDayOfYear(getCurrentLeaveForm().getFromDate()) = " + commonFunctions.getFirstDayOfYear(getCurrentLeaveForm().getFromDate()));
+        //// System.out.println("staffLeaveEntitle = " + staffLeaveEntitle);
+        //// System.out.println("leaveTypeLocal.isExceptionalLeave() = " + leaveTypeLocal.isExceptionalLeave());
 
         if (!leaveTypeLocal.isExceptionalLeave() && staffLeaveEntitle == null) {
             UtilityController.addErrorMessage("Please Set Leave Enttile count for this Staff in Administration");
@@ -413,15 +413,15 @@ public class StaffLeaveApplicationFormController implements Serializable {
         }
         if (staffAdditionalFormController.fetchCurrentSalaryCycle(currentLeaveForm.getFromDate()) != null) {
             SalaryCycle s = staffAdditionalFormController.fetchCurrentSalaryCycle(currentLeaveForm.getFromDate());
-            System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
-            System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
-            System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
-            System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
+            // System.out.println("s.getWorkedFromDate() = " + s.getWorkedFromDate());
+            // System.out.println("s.getWorkedToDate() = " + s.getWorkedToDate());
+            // System.out.println("s.getDayOffPhFromDate() = " + s.getDayOffPhFromDate());
+            // System.out.println("s.getDayOffPhToDate() = " + s.getDayOffPhToDate());
             Date nowDate = com.divudi.java.CommonFunctions.getEndOfDay();
-            System.out.println("nowDate = " + nowDate);
+            // System.out.println("nowDate = " + nowDate);
             if (nowDate.getTime() > s.getDayOffPhToDate().getTime()) {
                 double d = (nowDate.getTime() - s.getDayOffPhToDate().getTime()) / (1000 * 60 * 60 * 24);
-                System.out.println("d = " + d);
+                // System.out.println("d = " + d);
                 if (d > 3) {
                     JsfUtil.addErrorMessage("You Can't Add This Addional."
                             + "because you can add only additionls within 3 days after Day off / PH To Date");
