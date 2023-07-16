@@ -108,7 +108,7 @@ public class LabReportSearchByInstitutionController implements Serializable {
     public void searchAll() {
         String sql;
         if (txtSearch != null) {
-            sql = "select pi from PatientInvestigation pi join pi.investigation i join pi.billItem.bill b join b.patient.person p where (upper(p.name) like '%" + txtSearch.toUpperCase() + "%' or upper(b.insId) like '%" + txtSearch.toUpperCase() + "%' or p.phone like '%" + txtSearch + "%' or upper(i.name) like '%" + txtSearch.toUpperCase() + "%' ) order by pi.id desc";
+            sql = "select pi from PatientInvestigation pi join pi.investigation i join pi.billItem.bill b join b.patient.person p where ((p.name) like '%" + txtSearch.toUpperCase() + "%' or upper(b.insId) like '%" + txtSearch.toUpperCase() + "%' or p.phone like '%" + txtSearch + "%' or upper(i.name) like '%" + txtSearch.toUpperCase() + "%' ) order by pi.id desc";
             searchedPatientInvestigations = getPiFacade().findBySQL(sql, 50);
         } else {
             searchedPatientInvestigations = null;
@@ -1048,7 +1048,7 @@ public class LabReportSearchByInstitutionController implements Serializable {
             patientInvestigations = new ArrayList<>();
         } else {
             String sql = "select pi from PatientInvestigation pi join pi.investigation i "
-                    + " join pi.billItem.bill b join b.patient.person p where (upper(p.name) "
+                    + " join pi.billItem.bill b join b.patient.person p where ((p.name) "
                     + " like '%" + txtSearch.toUpperCase() + "%' or upper(b.insId) like '%"
                     + txtSearch.toUpperCase() + "%' or p.phone like '%" + txtSearch + "%' "
                     + " or upper(i.name) like '%" + txtSearch.toUpperCase() + "%' )  "

@@ -334,7 +334,7 @@ public class AmpController implements Serializable {
         if (qry != null) {
             a = getFacade().findBySQL("select c from Amp c where "
                     + " c.retired=false and (c.departmentType!=:dep or c.departmentType is null) "
-                    + " and (upper(c.name) like :n or upper(c.code)  "
+                    + " and ((c.name) like :n or upper(c.code)  "
                     + "like :n or upper(c.barcode) like :n) order by c.name", m, 30);
         }
 
@@ -355,7 +355,7 @@ public class AmpController implements Serializable {
                     + " c.retired=false and"
                     + " (c.departmentType is null"
                     + " or c.departmentType!=:dep )and "
-                    + "(upper(c.name) like :n ) order by c.name", m, 30);
+                    + "((c.name) like :n ) order by c.name", m, 30);
             ////// System.out.println("a size is " + a.size());
         }
         if (ampList == null) {
@@ -375,7 +375,7 @@ public class AmpController implements Serializable {
                     + " c.retired=false and"
                     + " (c.departmentType is null"
                     + " or c.departmentType!=:dep )and "
-                    + "(upper(c.name) like :n ) order by c.name", m, 30);
+                    + "((c.name) like :n ) order by c.name", m, 30);
             ////// System.out.println("a size is " + a.size());
         }
         return vmps;
@@ -393,7 +393,7 @@ public class AmpController implements Serializable {
         if (qry != null) {
             ampList = getFacade().findBySQL("select c from Amp c where "
                     + " c.retired=false and (c.departmentType is null or c.departmentType!=:dep) and "
-                    + "(upper(c.code) like :n ) order by c.code", m, 30);
+                    + "((c.code) like :n ) order by c.code", m, 30);
             ////// System.out.println("a size is " + a.size());
         }
         if (ampList == null) {
@@ -409,7 +409,7 @@ public class AmpController implements Serializable {
         m.put("dep", DepartmentType.Store);
         String sql = "select c from Amp c where "
                 + " c.retired=false and c.departmentType!=:dep and "
-                + "(upper(c.barcode) like :n ) order by c.barcode";
+                + "((c.barcode) like :n ) order by c.barcode";
         //   //// System.out.println("sql = " + sql);
         //   //// System.out.println("m = " + m);
 

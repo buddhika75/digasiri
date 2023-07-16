@@ -2603,7 +2603,7 @@ public class BillBeanController implements Serializable {
         sql = "select b from BilledBill b where"
                 + " b.billType = :billType and b.retired=false"
                 + " and  b.createdAt between :fromDate and :toDate"
-                + " and (upper(b.patient.person.name) like '%" + searchStr.toUpperCase() + "%' "
+                + " and ((b.patient.person.name) like '%" + searchStr.toUpperCase() + "%' "
                 + " or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%' "
                 + " or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.insId desc  ";
         temMap.put("billType", type);
@@ -2624,7 +2624,7 @@ public class BillBeanController implements Serializable {
         sql = "select b from PreBill b where"
                 + " b.billType = :billType and b.retired=false"
                 + " and  b.createdAt between :fromDate and :toDate"
-                + " and (upper(b.patient.person.name) like '%" + searchStr.toUpperCase() + "%' "
+                + " and ((b.patient.person.name) like '%" + searchStr.toUpperCase() + "%' "
                 + " or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%' "
                 + " or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.insId desc  ";
         temMap.put("billType", type);
@@ -2643,7 +2643,7 @@ public class BillBeanController implements Serializable {
         String sql;
         Map temMap = new HashMap();
         sql = "select b from BilledBill b where b.billType = :billType and b.institution.id=" + ins.getId() + " and b.retired=false and  b.createdAt between :fromDate "
-                + " and :toDate and (upper(b.patient.person.name) like '%" + searchStr.toUpperCase() + "%'  or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%'  or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.id desc  ";
+                + " and :toDate and ((b.patient.person.name) like '%" + searchStr.toUpperCase() + "%'  or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%'  or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.id desc  ";
         temMap.put("billType", type);
         temMap.put("toDate", toDate);
         temMap.put("fromDate", fromDate);
@@ -2662,7 +2662,7 @@ public class BillBeanController implements Serializable {
         if (searchStr == null || searchStr.trim().equals("")) {
             sql = "select b from BilledBill b where b.billType = :billType and b.retired=false and  b.createdAt between :fromDate and :toDate and b.creater.id = " + user.getId() + " order by b.id desc  ";
         } else {
-            sql = "select b from BilledBill b where b.billType = :billType and b.retired=false and  b.createdAt between :fromDate and :toDate and  b.creater.id = " + user.getId() + " and (upper(b.patient.person.name) like '%" + searchStr.toUpperCase() + "%'  or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%'  or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.id desc  ";
+            sql = "select b from BilledBill b where b.billType = :billType and b.retired=false and  b.createdAt between :fromDate and :toDate and  b.creater.id = " + user.getId() + " and ((b.patient.person.name) like '%" + searchStr.toUpperCase() + "%'  or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%'  or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.id desc  ";
         }
 
         temMap.put("billType", type);
@@ -2684,7 +2684,7 @@ public class BillBeanController implements Serializable {
         if (searchStr == null || searchStr.trim().equals("")) {
             sql = "select b from BilledBill b where b.billType = :billType and b.retired=false and b.institution.id=" + ins.getId() + " and b.createdAt between :fromDate and :toDate and b.creater.id = " + user.getId() + " order by b.id desc  ";
         } else {
-            sql = "select b from BilledBill b where b.billType = :billType and b.retired=false and b.institution.id=" + ins.getId() + " and b.createdAt between :fromDate and :toDate and  b.creater.id = " + user.getId() + " and (upper(b.patient.person.name) like '%" + searchStr.toUpperCase() + "%'  or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%'  or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.id desc  ";
+            sql = "select b from BilledBill b where b.billType = :billType and b.retired=false and b.institution.id=" + ins.getId() + " and b.createdAt between :fromDate and :toDate and  b.creater.id = " + user.getId() + " and ((b.patient.person.name) like '%" + searchStr.toUpperCase() + "%'  or upper(b.patient.person.phone) like '%" + searchStr.toUpperCase() + "%'  or upper(b.insId) like '%" + searchStr.toUpperCase() + "%') order by b.id desc  ";
         }
         temMap.put("billType", type);
         temMap.put("toDate", toDate);

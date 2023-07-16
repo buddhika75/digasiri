@@ -81,7 +81,7 @@ public class InvestigationItemValueController implements Serializable {
         String sql;
         sql = "select v.name from InvestigationItemValue v "
                 + "where v.investigationItem=:ii and v.retired=false and"
-                + " (upper(v.code) like :s or upper(v.name) like :s) order by v.name";
+                + " ((v.code) like :s or upper(v.name) like :s) order by v.name";
         m.put("s", "%" + qry.toUpperCase() + "%");
         m.put("ii", ii);
         List<String> sls = getFacade().findString(sql, m);

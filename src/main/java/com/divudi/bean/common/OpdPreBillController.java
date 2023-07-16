@@ -1689,7 +1689,7 @@ public class OpdPreBillController implements Serializable {
 
         sql = "select p from BilledBill p where p.retired=false and "
                 + "p.cancelled=false and p.refunded=false and p.billType=:btp "
-                + " and (upper(p.patient.person.name)  "
+                + " and ((p.patient.person.name)  "
                 + "like :q or upper(p.insId)  "
                 + "like :q) order by p.insId";
         ////// System.out.println(sql);

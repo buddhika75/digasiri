@@ -191,7 +191,7 @@ public class SheduleController implements Serializable {
                     sql = " select pi.staff from PersonInstitution pi where pi.retired=false "
                             + " and pi.type=:typ "
                             + " and pi.institution=:ins "
-                            + " and (upper(pi.staff.person.name) like '%" + query.toUpperCase() + "%'or  upper(pi.staff.code) like '%" + query.toUpperCase() + "%' )"
+                            + " and ((pi.staff.person.name) like '%" + query.toUpperCase() + "%'or  upper(pi.staff.code) like '%" + query.toUpperCase() + "%' )"
                             + " and pi.staff.speciality=:spe "
                             + " order by pi.staff.person.name ";
 
@@ -199,10 +199,10 @@ public class SheduleController implements Serializable {
                     m.put("spe", getSpeciality());
                     m.put("typ", PersonInstitutionType.Channelling);
                 } else {
-                    sql = "select p from Staff p where p.retired=false and (upper(p.person.name) like '%" + query.toUpperCase() + "%'or  upper(p.code) like '%" + query.toUpperCase() + "%' ) and p.speciality.id = " + getSpeciality().getId() + " order by p.person.name";
+                    sql = "select p from Staff p where p.retired=false and ((p.person.name) like '%" + query.toUpperCase() + "%'or  upper(p.code) like '%" + query.toUpperCase() + "%' ) and p.speciality.id = " + getSpeciality().getId() + " order by p.person.name";
                 }
             } else {
-                sql = "select p from Staff p where p.retired=false and (upper(p.person.name) like '%" + query.toUpperCase() + "%'or  upper(p.code) like '%" + query.toUpperCase() + "%' ) order by p.person.name";
+                sql = "select p from Staff p where p.retired=false and ((p.person.name) like '%" + query.toUpperCase() + "%'or  upper(p.code) like '%" + query.toUpperCase() + "%' ) order by p.person.name";
             }
             ////// System.out.println(sql);
             suggestions = getStaffFacade().findBySQL(sql, m);

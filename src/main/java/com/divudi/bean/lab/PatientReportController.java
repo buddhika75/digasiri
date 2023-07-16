@@ -120,7 +120,7 @@ public class PatientReportController implements Serializable {
         m.put("billno", getSessionController().getBillNo().toUpperCase());
         sql = "select pr from PatientInvestigation pr where pr.retired=false and "
                 + "upper(pr.billItem.bill.patient.person.phone)=:phone and "
-                + " (upper(pr.billItem.bill.insId)=:billno or upper(pr.billItem.bill.deptId)=:billno)  "
+                + " ((pr.billItem.bill.insId)=:billno or upper(pr.billItem.bill.deptId)=:billno)  "
                 + "order by pr.id desc ";
         // System.out.println("m = " + m);
         // System.out.println("sql = " + sql);

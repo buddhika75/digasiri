@@ -482,7 +482,7 @@ public class BillController implements Serializable {
                     + " and c.cancelledBill is null "
                     + " and c.refundedBill is null "
                     + " and c.retired=false "
-                    + " and (upper(c.insId) like :q or"
+                    + " and ((c.insId) like :q or"
                     + " upper(c.patient.person.name) like :q "
                     + " or upper(c.creditCompany.name) like :q ) "
                     + " order by c.creditCompany.name";
@@ -551,8 +551,8 @@ public class BillController implements Serializable {
                     + " and c.cancelledBill is null "
                     + " and c.retired=false "
                     + " and c.paymentMethod=:pm  "
-                    + " and ((upper(c.deptId) like :q ) "
-                    + " or (upper(c.fromInstitution.name)  like :q ))"
+                    + " and (((c.deptId) like :q ) "
+                    + " or ((c.fromInstitution.name)  like :q ))"
                     + " order by c.fromInstitution.name";
             hash.put("bts", billTypesListBilled);
             hash.put("pm", PaymentMethod.Credit);
@@ -581,8 +581,8 @@ public class BillController implements Serializable {
                     + " and c.retired=false "
                     + " and c.paymentMethod=:pm  "
                     + " and c.fromInstitution.institutionType=:insTp  "
-                    + " and ((upper(c.deptId) like :q ) "
-                    + " or (upper(c.fromInstitution.name)  like :q ))"
+                    + " and (((c.deptId) like :q ) "
+                    + " or ((c.fromInstitution.name)  like :q ))"
                     + " order by c.fromInstitution.name";
             hash.put("btp1", BillType.PharmacyGrnBill);
             hash.put("btp2", BillType.PharmacyPurchaseBill);
@@ -609,10 +609,10 @@ public class BillController implements Serializable {
                 + " and b.retired=false "
                 + " and b.patientEncounter.discharged=false ";
 
-        sql += " and  ((upper(b.patientEncounter.patient.person.name) like :q )";
-        sql += " or  (upper(b.patientEncounter.bhtNo) like :q )";
-        sql += " or  (upper(b.insId) like :q )";
-        sql += " or  (upper(b.procedure.item.name) like :q ))";
+        sql += " and  (((b.patientEncounter.patient.person.name) like :q )";
+        sql += " or  ((b.patientEncounter.bhtNo) like :q )";
+        sql += " or  ((b.insId) like :q )";
+        sql += " or  ((b.procedure.item.name) like :q ))";
         sql += " order by b.insId desc  ";
 
         temMap.put("billType", BillType.SurgeryBill);
@@ -2452,7 +2452,7 @@ public class BillController implements Serializable {
 
         sql = "select p from BilledBill p where p.retired=false and "
                 + "p.cancelled=false and p.refunded=false and p.billType=:btp "
-                + " and (upper(p.patient.person.name)  "
+                + " and ((p.patient.person.name)  "
                 + "like :q or upper(p.insId)  "
                 + "like :q) order by p.insId";
         ////// System.out.println(sql);

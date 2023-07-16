@@ -155,8 +155,8 @@ public class ChannelSearchController implements Serializable {
                 + " and type(bs.bill)=:class ";
 
         if (txtSearch != null && !txtSearch.trim().equals("")) {
-            sql += " and  ((upper(bs.bill.insId) like :ts ) "
-                    + " or (upper(bs.bill.deptId) like :ts ))";
+            sql += " and  (((bs.bill.insId) like :ts ) "
+                    + " or ((bs.bill.deptId) like :ts ))";
             m.put("ts", "%" + txtSearch.trim().toUpperCase() + "%");
         }
 

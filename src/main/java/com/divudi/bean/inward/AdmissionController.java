@@ -137,7 +137,7 @@ public class AdmissionController implements Serializable {
                     + " and c.paymentMethod= :pm "
                     + " and c.discharged=true "
                     + " and c.retired=false "
-                    + " and (upper(c.bhtNo) like :q"
+                    + " and ((c.bhtNo) like :q"
                     + " or upper(c.patient.person.name) like :q "
                     + " or upper(c.creditCompany.name) like :q ) "
                     + " order by c.creditCompany.name";
@@ -180,7 +180,7 @@ public class AdmissionController implements Serializable {
                 + " and b.cancelled=false "
                 + " and b.billType=:btp "
                 + " and (abs(b.netTotal)-abs(b.paidAmount)) > :val "
-                + " and (upper(b.patientEncounter.bhtNo) like :q or"
+                + " and ((b.patientEncounter.bhtNo) like :q or"
                 + " upper(b.patientEncounter.patient.person.name) like :q ) "
                 + " order by b.patientEncounter.bhtNo";
         HashMap hm = new HashMap();
@@ -205,7 +205,7 @@ public class AdmissionController implements Serializable {
                 + " and b.cancelled=false "
                 + " and b.billType=:btp"
                 + " and (abs(b.paidAmount)- abs(b.netTotal)) > :val "
-                + " and (upper(b.patientEncounter.bhtNo) like :q or"
+                + " and ((b.patientEncounter.bhtNo) like :q or"
                 + " upper(b.patientEncounter.patient.person.name) like :q ) "
                 + " order by b.patientEncounter.bhtNo";
         HashMap hm = new HashMap();
@@ -240,7 +240,7 @@ public class AdmissionController implements Serializable {
         sql = "select c from Admission c "
                 + " where c.retired=false "
                 + " and c.discharged=false "
-                + " and (upper(c.bhtNo) like :q "
+                + " and ((c.bhtNo) like :q "
                 + " or upper(c.patient.person.name) like :q "
                 + " or upper(c.patient.code) like :q) "
                 + " order by c.bhtNo ";
@@ -255,7 +255,7 @@ public class AdmissionController implements Serializable {
         String sql;
         HashMap hm = new HashMap();
         sql = "select c from Admission c"
-                + " where (upper(c.bhtNo) like :q or"
+                + " where ((c.bhtNo) like :q or"
                 + " upper(c.patient.person.name) like :q ) "
                 + " order by c.bhtNo";
         hm.put("q", "%" + query.toUpperCase() + "%");
@@ -269,7 +269,7 @@ public class AdmissionController implements Serializable {
         String sql;
         HashMap hm = new HashMap();
         sql = "select c from Admission c"
-                + " where (upper(c.bhtNo) like :q or"
+                + " where ((c.bhtNo) like :q or"
                 + " upper(c.patient.person.name) like :q ) "
                 + " and c.paymentFinalized=true"
                 + " order by c.bhtNo";
@@ -286,7 +286,7 @@ public class AdmissionController implements Serializable {
         if (query == null) {
             suggestions = new ArrayList<>();
         } else {
-            sql = "select c from Admission c where c.retired=false and c.paymentMethod=:pm  and (upper(c.bhtNo) like '%" + query.toUpperCase() + "%' or upper(c.patient.person.name) like '%" + query.toUpperCase() + "%') order by c.bhtNo";
+            sql = "select c from Admission c where c.retired=false and c.paymentMethod=:pm  and ((c.bhtNo) like '%" + query.toUpperCase() + "%' or upper(c.patient.person.name) like '%" + query.toUpperCase() + "%') order by c.bhtNo";
             hm.put("pm", PaymentMethod.Credit);
             //// System.out.println(sql);
             suggestions = getFacade().findBySQL(sql, hm, TemporalType.TIME, 20);
@@ -303,7 +303,7 @@ public class AdmissionController implements Serializable {
         } else {
             sql = "select c from Admission c where c.retired=false and "
                     + " ( c.paymentFinalized is null or c.paymentFinalized=false )"
-                    + " and ( (upper(c.bhtNo) like :q )or (upper(c.patient.person.name)"
+                    + " and ( ((c.bhtNo) like :q )or ((c.patient.person.name)"
                     + " like :q) ) order by c.bhtNo";
             //// System.out.println(sql);
             //      h.put("btp", BillType.InwardPaymentBill);
@@ -323,7 +323,7 @@ public class AdmissionController implements Serializable {
             sql = "select c from Admission c "
                     + " where c.retired=false "
                     + " and c.paymentFinalized=true "
-                    + " and (upper(c.bhtNo) like :q "
+                    + " and ((c.bhtNo) like :q "
                     + " or upper(c.patient.person.name) like :q)"
                     + "  order by c.bhtNo";
             //// System.out.println(sql);
@@ -340,7 +340,7 @@ public class AdmissionController implements Serializable {
         if (query == null) {
             suggestions = new ArrayList<>();
         } else {
-            sql = "select c from Admission c where c.retired=false and c.discharged=true and (upper(c.bhtNo) like '%" + query.toUpperCase() + "%' or upper(c.patient.person.name) like '%" + query.toUpperCase() + "%') order by c.bhtNo";
+            sql = "select c from Admission c where c.retired=false and c.discharged=true and ((c.bhtNo) like '%" + query.toUpperCase() + "%' or upper(c.patient.person.name) like '%" + query.toUpperCase() + "%') order by c.bhtNo";
             //// System.out.println(sql);
             suggestions = getFacade().findBySQL(sql, 20);
         }

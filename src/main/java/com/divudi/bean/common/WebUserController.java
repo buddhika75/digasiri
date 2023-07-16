@@ -168,7 +168,7 @@ public class WebUserController implements Serializable {
     public List<WebUser> completeUser(String qry) {
         List<WebUser> a = null;
         if (qry != null) {
-            a = getFacade().findBySQL("select c from WebUser c where c.retired=false and  (upper(c.webUserPerson.name) like '%" + qry.toUpperCase() + "%' or upper(c.code) like '%" + qry.toUpperCase() + "%') order by c.webUserPerson.name");
+            a = getFacade().findBySQL("select c from WebUser c where c.retired=false and  ((c.webUserPerson.name) like '%" + qry.toUpperCase() + "%' or upper(c.code) like '%" + qry.toUpperCase() + "%') order by c.webUserPerson.name");
         }
         if (a == null) {
             a = new ArrayList<>();

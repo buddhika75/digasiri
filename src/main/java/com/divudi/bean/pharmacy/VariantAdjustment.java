@@ -106,7 +106,7 @@ public class VariantAdjustment implements Serializable {
         } else {
             sql = "Select b From PreBill b where b.cancelledBill is null  "
                     + " and b.createdAt between :fromDate and :toDate and"
-                    + " (upper(b.toInstitution.name) like :str "
+                    + " ((b.toInstitution.name) like :str "
                     + " or upper(b.creater.webUserPerson.name) like :str "
                     + "  or upper(b.referenceBill.creater.webUserPerson.name) like :str or "
                     + " upper(b.referenceBill.deptId) like :str "

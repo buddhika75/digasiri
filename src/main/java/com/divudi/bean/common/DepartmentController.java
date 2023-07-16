@@ -209,7 +209,7 @@ public class DepartmentController implements Serializable {
         HashMap hm = new HashMap();
         sql = "select c from Department c "
                 + " where c.retired=false "
-                + " and (upper(c.name) like :q or upper(c.institution.name) like :q )"
+                + " and ((c.name) like :q or upper(c.institution.name) like :q )"
                 + " order by c.name";
         hm.put("q", "%" + qry.toUpperCase() + "%");
         return getFacade().findBySQL(sql, hm);

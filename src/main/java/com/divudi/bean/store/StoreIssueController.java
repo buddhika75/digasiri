@@ -352,9 +352,9 @@ public class StoreIssueController implements Serializable {
         m.put("dep", DepartmentType.Store);
         m.put("n", "%" + qry.toUpperCase() + "%");
         if (qry.length() > 4) {
-            sql = "select i from Stock i where i.itemBatch.item.departmentType=:dep and i.stock >:s and i.department=:d and (upper(i.itemBatch.item.name) like :n or upper(i.itemBatch.item.code) like :n or upper(i.itemBatch.item.barcode) like :n )  order by i.itemBatch.item.name, i.itemBatch.dateOfExpire";
+            sql = "select i from Stock i where i.itemBatch.item.departmentType=:dep and i.stock >:s and i.department=:d and ((i.itemBatch.item.name) like :n or upper(i.itemBatch.item.code) like :n or upper(i.itemBatch.item.barcode) like :n )  order by i.itemBatch.item.name, i.itemBatch.dateOfExpire";
         } else {
-            sql = "select i from Stock i where i.itemBatch.item.departmentType=:dep and i.stock >:s and i.department=:d and (upper(i.itemBatch.item.name) like :n or upper(i.itemBatch.item.code) like :n)  order by i.itemBatch.item.name, i.itemBatch.dateOfExpire";
+            sql = "select i from Stock i where i.itemBatch.item.departmentType=:dep and i.stock >:s and i.department=:d and ((i.itemBatch.item.name) like :n or upper(i.itemBatch.item.code) like :n)  order by i.itemBatch.item.name, i.itemBatch.dateOfExpire";
         }
         stockList = getStockFacade().findBySQL(sql, m, 20);
         itemsWithoutStocks = completeIssueItems(qry);

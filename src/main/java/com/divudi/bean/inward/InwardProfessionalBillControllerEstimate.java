@@ -124,7 +124,7 @@ public class InwardProfessionalBillControllerEstimate implements Serializable {
             sql += " and c.speciality=:sp";
             hm.put("sp", getProEncounterComponent().getBillFee().getSpeciality());
         }
-        sql += " and (upper(c.person.name) like :q "
+        sql += " and ((c.person.name) like :q "
                 + " or upper(c.code) like :q )"
                 + " order by c.person.name";
 
@@ -409,13 +409,13 @@ public class InwardProfessionalBillControllerEstimate implements Serializable {
 
         if (getCurrentBillFee() != null && getCurrentBillFee().getSpeciality() != null) {
             sql = " select p from Staff p where p.retired=false and "
-                    + " (upper(p.person.name) like :q "
+                    + " ((p.person.name) like :q "
                     + " or  upper(p.code) like :q  ) "
                     + " and p.speciality=:spe order by p.person.name";
             hm.put("spe", getCurrentBillFee().getSpeciality());
         } else {
             sql = " select p from Staff p where p.retired=false and "
-                    + " (upper(p.person.name) "
+                    + " ((p.person.name) "
                     + " like :q or  upper(p.code) like :q "
                     + " ) order by p.person.name";
         }
